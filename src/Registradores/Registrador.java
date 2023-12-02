@@ -1,4 +1,4 @@
-package src.Maquina;
+package src.Registradores;
 public class Registrador {
     private String numeroBinario;
     private int numeroInteiro;
@@ -6,7 +6,7 @@ public class Registrador {
     private String nome;
     private String identificador; 
     private String descricao;
-	private int tamanho; // Em bits
+		private int tamanho; // Em bits
 
     
 	Registrador(String nome, String identificador, String descricao){

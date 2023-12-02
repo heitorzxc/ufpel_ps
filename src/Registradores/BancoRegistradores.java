@@ -1,4 +1,4 @@
-package src.Maquina;
+package src.Registradores;
 import java.util.HashMap;
 
 public class BancoRegistradores {
@@ -21,7 +21,7 @@ public class BancoRegistradores {
       return bancoRegistradores;
   }
 
-	Registrador getRegistrador(String identificador){
+	public Registrador getRegistrador(String identificador){
 		return bancoRegistradores.get(identificador);
 	}
   

@@ -4,6 +4,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
+import src.Registradores.BancoRegistradores;
+import src.Registradores.Registrador;
+
 public class Maquina {
     public BancoRegistradores registradores;
     public Memoria memoria;
@@ -37,27 +40,34 @@ public class Maquina {
     }
     
     public void executarPrograma(){
-        // regA.setNumeroBinario("000000000000000010000000");
-        //regA.imprimirValorRegistrador();
-        // regX.setNumeroBinario("000000000000000000000000");
-        // regL.setNumeroBinario("000000000000000000000000");
-        // regB.setNumeroBinario("000000000000000000000000");
-        // regS.setNumeroBinario("000000000000000000000000");
-        // regT.setNumeroBinario("000000000000000000000000");
-        // regF.setNumeroBinario("000000000000000000000000");
-        // regPC.setNumeroBinario("000000000000000000000000");
-        // regSW.setNumeroBinario("000000000000000000000000");
         
-    //     Memoria memoria = new Memoria("camimho pro arquivo txt");
-    //     memoria.imprimirMemoria();
-    //     System.out.println("-----------------------------------------------");
-    //     regS.setNumeroInteiro(2);
-    //     regT.setNumeroInteiro(32);
-    //     List<Enderecos> listaInstrucoes = memoria.getMemoria();
-    //     System.out.println("\nA lista na memoria tem "+listaInstrucoes.size()+" instruçoes.\n");
-    //     System.out.println("-----------------------------------------------");
-    //     for (int i = 0; i < listaInstrucoes.size(); i++) {
-    //         Enderecos endereco = listaInstrucoes.get(i);
+        /*  já ta sendo feito quando instancia o banco de registradores  
+            regA.setNumeroBinario("000000000000000010000000"); 
+            regX.setNumeroBinario("000000000000000000000000");
+            regL.setNumeroBinario("000000000000000000000000");
+            regB.setNumeroBinario("000000000000000000000000");
+            regS.setNumeroBinario("000000000000000000000000");
+            regT.setNumeroBinario("000000000000000000000000");
+            regF.setNumeroBinario("000000000000000000000000");
+            regPC.setNumeroBinario("000000000000000000000000");
+            regSW.setNumeroBinario("000000000000000000000000");   */
+        
+        System.out.println("-----------------------------------------------");
+        //  regS.setNumeroInteiro(2);
+        Registrador regS = registradores.getRegistrador("S");
+        regS.setNumeroInteiro(2);
+        
+        //  regT.setNumeroInteiro(32);
+        Registrador regT = registradores.getRegistrador("T");
+        regT.setNumeroInteiro(32);
+        
+        // registradores.imprimirValoresRegistradores();
+    
+        List<Endereco> listaInstrucoes = memoria.getMemoria();
+        for (int i = 0; i < listaInstrucoes.size(); i++) {
+            Endereco endereco = listaInstrucoes.get(i);
+            System.out.println(endereco.toString());
+        }
     //         Instrucao instrucao = endereco.getPalavra();
     //         if (instrucao.getNumBin().equals("11110100")){
     //             break;

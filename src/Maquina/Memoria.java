@@ -11,7 +11,7 @@ public class Memoria {
 
     public Memoria() {
         memoria = new ArrayList<>(); // Inicializa a lista usando ArrayList
-        tamanhoMemoria = 250; // 250 células de memória (número temporário, não calculei quanto ia ficar de tamanho real considerando que cada célula tem 24 bits)
+        tamanhoMemoria = 250; // 250 posições de memória (número temporário, da pra alterar livremente)
         inicializaMemoria();
     }
     
@@ -54,7 +54,12 @@ public class Memoria {
     public void imprimirMemoria() {
         for (Endereco endereco : memoria) {
             System.out.println("Intrucao com endereço: " + endereco.getEndDeci());
-            endereco.getPalavra().imprimirDetalhesInstrucao();
+            Instrucao palavra = endereco.getPalavra();
+            
+            
+            if(palavra != null){
+                palavra.imprimirDetalhesInstrucao();
+            }
             System.out.println("--------");
         }
     }

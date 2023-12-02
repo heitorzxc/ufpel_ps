@@ -14,6 +14,5 @@ public class Main {
         // maquina.lerArquivo();
         // maquina.print();
         // maquina.lerInput();
-        // maquina.memoria.printMemoria();
     }
 }

@@ -12,7 +12,7 @@ public class BancoRegistradores {
       bancoRegistradores.put("B", new Registrador("Registrador base", "B", "Usado para endereçamento."));
       bancoRegistradores.put("S", new Registrador("Registrador de uso geral", "S", "Uso geral"));
       bancoRegistradores.put("T", new Registrador("Registrador de uso geral", "T", "Uso geral"));
-      bancoRegistradores.put("F", new Registrador("Acumulador de ponto flutuante", "F", "Armazena os dados (carregados e resultantes) das operações da Unid. de Lógica e Aritmética em ponto flutuante"));
+      // bancoRegistradores.put("F", new Registrador("Acumulador de ponto flutuante", "F", "Armazena os dados (carregados e resultantes) das operações da Unid. de Lógica e Aritmética em ponto flutuante"));
       bancoRegistradores.put("PC", new Registrador("Contador de Instruções", "PC", "Mantém o endereço da próxima instrução a ser executada"));
       bancoRegistradores.put("W", new Registrador("Palavra de status", "W", "Contém várias informações, incluindo código condicional (CC)"));
   }

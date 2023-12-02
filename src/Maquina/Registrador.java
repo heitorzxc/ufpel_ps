@@ -6,7 +6,7 @@ public class Registrador {
     private String nome;
     private String identificador; 
     private String descricao;
-		private int tamanho; // Em bits
+	private int tamanho; // Em bits
 
     
 	Registrador(String nome, String identificador, String descricao){
@@ -22,11 +22,11 @@ public class Registrador {
 		this.descricao = descricao;
 		this.nome = nome;
 		this.identificador = identificador;
-		
+
 		if (numeroBinario != null) {
 			setNumeroBinario(numeroBinario);
 		}
-		
+
 		// if (numeroInteiro != Integer.MIN_VALUE) {
 		// 		setNumeroInteiro(numeroInteiro);
 		// }
@@ -34,11 +34,11 @@ public class Registrador {
     
 	// Getters
 	public String getNumeroBinario() {  
-			return numeroBinario;
+		return numeroBinario;
 	}
 
 	public int getNumeroInteiro() {
-			return numeroInteiro;
+		return numeroInteiro;
 	}
     
 	public int getTamanho() {

@@ -24,4 +24,12 @@ public class BancoRegistradores {
 	Registrador getRegistrador(String identificador){
 		return bancoRegistradores.get(identificador);
 	}
+  
+  public void imprimirValoresRegistradores() {
+    System.out.println("Valores nos Registradores:");
+    for (Registrador registrador : bancoRegistradores.values()) {
+      registrador.imprimirValorRegistrador();
+    }
+}
+  
 }

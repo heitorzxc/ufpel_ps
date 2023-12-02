@@ -11,6 +11,7 @@ public class Main {
         Maquina maquina = new Maquina();
         maquina.carregarInstrucoes("./resources/exemplo.txt");
         maquina.memoria.imprimirMemoria();
+        maquina.executarPrograma();
         // maquina.lerArquivo();
         // maquina.print();
         // maquina.lerInput();

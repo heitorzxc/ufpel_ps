@@ -96,8 +96,10 @@ public class Registrador {
     
     public void imprimirValorRegistrador() {
         if (numeroBinario != null) {
+						System.out.format("----- REGISTRADOR %s (%s) -----", identificador, nome);
             System.out.println("Valor do Registrador (Binário): " + numeroBinario);
             System.out.println("Valor do Registrador (Inteiro): " + numeroInteiro);
+            System.out.println("----------------------------------------");
         } else {
             System.out.println("Registrador vazio.");
         }

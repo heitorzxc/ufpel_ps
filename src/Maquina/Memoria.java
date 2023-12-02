@@ -53,14 +53,13 @@ public class Memoria {
 
     public void imprimirMemoria() {
         for (Endereco endereco : memoria) {
-            System.out.println("Intrucao com endereço: " + endereco.getEndDeci());
             Instrucao palavra = endereco.getPalavra();
             
-            
             if(palavra != null){
+                System.out.println("Intrucao com endereço: " + endereco.getEndDeci());
                 palavra.imprimirDetalhesInstrucao();
+                System.out.println("--------");
             }
-            System.out.println("--------");
         }
     }
 

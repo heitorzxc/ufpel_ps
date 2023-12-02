@@ -36,12 +36,7 @@ public class Maquina {
         }
     }
     
-    
-    
-    
-    
-        
-        
+    public void executarPrograma(){
         // regA.setNumeroBinario("000000000000000010000000");
         //regA.imprimirValorRegistrador();
         // regX.setNumeroBinario("000000000000000000000000");
@@ -155,6 +150,14 @@ public class Maquina {
 
     //     memoria.imprimirMemoria();
     // }
+    }
+    
+    
+    
+    
+    
+        
+     
     //     public static void printExemplos(){
 
     //     String binario1 = "11000100"; // 8 bits

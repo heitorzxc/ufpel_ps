@@ -1,3 +1,4 @@
+package src.Maquina;
 import java.math.BigInteger;
 
 public class Instrucao {

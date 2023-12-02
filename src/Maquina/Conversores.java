@@ -1,3 +1,4 @@
+package src.Maquina;
 public class Conversores {
 
     // Inteiro para Hexadecimal

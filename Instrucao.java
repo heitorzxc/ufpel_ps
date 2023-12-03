@@ -31,6 +31,7 @@ public class Instrucao {
             int numeroDecimal = Integer.parseInt(numBin.substring(0, 8), 2);
             opcode = Integer.toHexString(numeroDecimal).toUpperCase();
             insHexa = Integer.toHexString(Integer.parseInt(numBin, 2)).toUpperCase();
+            enderecoBinario = numBin.substring(8, 16);
         } else if (tamanho == 24) {
             int numeroDecimal = Integer.parseInt(numBin.substring(0, 6) + "00", 2);
             opcode = Integer.toHexString(numeroDecimal).toUpperCase();

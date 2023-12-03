@@ -3,6 +3,7 @@ public class Enderecos {
     private String endHexa;
     private String endBina;
     private Instrucao palavra;
+    private int indice;
 
     public Enderecos(String endereco) {
         setEndereco(endereco);
@@ -68,6 +69,12 @@ public class Enderecos {
     // Setter para o atributo 'palavra'
     public void setPalavra(Instrucao palavra) {
         this.palavra = palavra;
+    }
+    public void setIndice(int index){
+        this.indice = index;
+    }
+    public int getIndice() {
+        return indice;
     }
 
     @Override

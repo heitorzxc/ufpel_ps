@@ -16,17 +16,19 @@ public class Memoria {
         try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
             String linha;
             int endereco = 0;
+            int posicaoIns = 0;
 
             while ((linha = br.readLine()) != null) {
                 Instrucao instrucao = new Instrucao(linha.trim());
 
-                Enderecos enderecoAtual = new Enderecos(Integer.toString(endereco));
+                Enderecos enderecoAtual = new Enderecos((endereco));
                 enderecoAtual.setPalavra(instrucao);
-
+                enderecoAtual.setIndice(posicaoIns);
                 memoria.add(enderecoAtual);
 
                 // Aumenta o endereço conforme o tamanho da instrução em bits
                 endereco += instrucao.getNumBin().length();
+                posicaoIns++;
             }
         } catch (IOException e) {
             e.printStackTrace();

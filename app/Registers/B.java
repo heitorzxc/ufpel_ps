@@ -1,0 +1,20 @@
+package app.Registers;
+
+public final class B {
+
+    static Integer value = 0;
+
+    public static Integer getValue() {
+        return value;
+    }
+
+    public static void setValue(Integer value) {
+        B.value = value;
+    }
+
+    public static String printAcumulador(){
+        return "Valor no Registrador B  = " +getValue()
+            + "\n---------------------------";
+    }
+
+}

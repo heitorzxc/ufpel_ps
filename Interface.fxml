@@ -40,10 +40,15 @@
 <?import javafx.scene.text.Font?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="774.0" prefWidth="1221.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="774.0" prefWidth="1221.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controlador.java">
    <children>
       <TextField alignment="TOP_LEFT" layoutX="806.0" layoutY="41.0" prefHeight="270.0" prefWidth="369.0" promptText="Texto entrada (hexadecimal/binário)" text="Texto entrada (hexadecimal/binário)" />
       <TextField alignment="TOP_LEFT" editable="false" layoutX="806.0" layoutY="444.0" prefHeight="297.0" prefWidth="369.0" promptText="Texto saída (código de máquina)" text="Texto saída (código de máquina)" />
+      <Button fx:id="stepButton" onAction="#handleStepButton" layoutX="806.0" layoutY="407.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Passo (Step)" />
+      <Button fx:id="playButton" onAction="#handlePlayButton" layoutX="1002.0" layoutY="407.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Rodar (Run)" />
+      <Button fx:id="loadPromptButton" onAction="#handleLoadPromptButton" layoutX="806.0" layoutY="321.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Carregar (prompt)" />
+      <Button fx:id="loadFileButton" onAction="#handleLoadFileButton" layoutX="1001.0" layoutY="321.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Carregar (arquivo)" />
       <Button layoutX="806.0" layoutY="407.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Passo (Step)" />
       <Button layoutX="1002.0" layoutY="407.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Rodar (Run)" />
       <Button layoutX="806.0" layoutY="321.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="175.0" text="Carregar (prompt)" />

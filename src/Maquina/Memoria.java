@@ -49,15 +49,20 @@ public class Memoria {
     }
 
     public void imprimirMemoria() {
+        System.err.println("============= MEMORIA ==========");
         for (Endereco endereco : memoria) {
             Instrucao palavra = endereco.getPalavra();
             
             if(palavra != null){
+                System.out.println("");
+                System.out.println("");
                 System.out.println("Intrucao com endereço: " + endereco.getEndDeci());
                 palavra.imprimirDetalhesInstrucao();
-                System.out.println("--------");
+                System.out.println("");
+                System.out.println("");
             }
         }
+        System.err.println("========== FIM MEMORIA ========");
     }
 
 }

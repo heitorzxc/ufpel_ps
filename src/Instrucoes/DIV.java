@@ -16,6 +16,8 @@ public class DIV {
           System.out.println("A intruçao é DIV imediato, que divide o acumulador com o valor inteiro do binário "+endereco.getPalavra().getEnderecoBinario());
           String pegaDado = endereco.getPalavra().getEnderecoBinario();//copiou o endereço binário daquela palavra, que na verdade é um dado. 
           int dadoConvertido = Integer.parseInt(pegaDado, 2); // Converte para inteiro
+          System.out.println(regA.getNumeroInteiro());
+          System.out.println(dadoConvertido);
           regA.setNumeroInteiro((regA.getNumeroInteiro()/dadoConvertido));//divide pelo valor
           System.out.println("O valor no Registrador A = "+regA.getNumeroInteiro()+"\n");
         }    

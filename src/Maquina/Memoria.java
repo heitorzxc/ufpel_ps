@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.Instrucoes.Instrucao;
+
 public class Memoria {
     private ArrayList<Endereco> memoria;
     private Integer tamanhoMemoria;
@@ -22,29 +24,24 @@ public class Memoria {
         }
     }
 
-    // private void carregarInstrucoes(String arquivo) {
-    //     try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
-    //         String linha;
-    //         int endereco = 0;
-
-    //         while ((linha = br.readLine()) != null) {
-    //             Instrucao instrucao = new Instrucao(linha.trim());
-
-    //             Endereco enderecoAtual = new Endereco(Integer.toString(endereco));
-    //             enderecoAtual.setPalavra(instrucao);
-
-    //             memoria.add(enderecoAtual);
-
-    //             // Aumenta o endereço conforme o tamanho da instrução em bits
-    //             endereco += instrucao.getNumBin().length();
-    //         }
-    //     } catch (IOException e) {
-    //         e.printStackTrace();
-    //     }
-    // }
+ 
 
     public List<Endereco> getMemoria() {
         return memoria;
+    }
+    
+    public List<Endereco> getMemoriaComInstrucoes() {
+        List<Endereco> memoriaComInstrucoes = new ArrayList<>();
+
+        for (Endereco endereco : memoria) {
+            Instrucao palavra = endereco.getPalavra();
+
+            if (palavra != null) {
+                memoriaComInstrucoes.add(endereco);
+            }
+        }
+
+        return memoriaComInstrucoes;
     }
     
     public void setPosicaoMemoria(int index, Endereco endereco){

@@ -1,4 +1,4 @@
-package src.Maquina;
+package src.Instrucoes;
 import java.math.BigInteger;
 
 public class Instrucao {
@@ -94,7 +94,7 @@ public class Instrucao {
     }
 
     public void imprimirDetalhesInstrucao() {
-        System.out.println("--------");
+        System.out.println("----------------------");
         System.out.println("Detalhes da Instrucao:");
         System.out.println("Número binário da instruçao: " + numBin);
         System.out.println("Número hexadecimal da instruçao: " + insHexa);
@@ -105,5 +105,6 @@ public class Instrucao {
         if (nixbpq != null) {
             System.out.println("nixbpq: " + nixbpq);
         }
+        System.out.println("----------------------");
     }
 }

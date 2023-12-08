@@ -4,6 +4,23 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
+import src.Instrucoes.ADD;
+import src.Instrucoes.ADDR;
+import src.Instrucoes.CLEAR;
+import src.Instrucoes.DIV;
+import src.Instrucoes.DIVR;
+import src.Instrucoes.Instrucao;
+import src.Instrucoes.LDA;
+import src.Instrucoes.LDB;
+import src.Instrucoes.LDL;
+import src.Instrucoes.LDS;
+import src.Instrucoes.LDT;
+import src.Instrucoes.MUL;
+import src.Instrucoes.MULR;
+import src.Instrucoes.RMO;
+import src.Instrucoes.STA;
+import src.Instrucoes.SUB;
+import src.Instrucoes.SUBR;
 import src.Registradores.BancoRegistradores;
 import src.Registradores.Registrador;
 
@@ -15,6 +32,29 @@ public class Maquina {
         this.memoria = new Memoria();
         this.registradores = new BancoRegistradores();
     }
+    
+    
+       // private void carregarInstrucoes(String arquivo) {
+    //     try (BufferedReader br = new BufferedReader(new FileReader(arquivo))) {
+    //         String linha;
+    //         int endereco = 0;
+
+    //         while ((linha = br.readLine()) != null) {
+    //             Instrucao instrucao = new Instrucao(linha.trim());
+
+    //             Endereco enderecoAtual = new Endereco(Integer.toString(endereco));
+    //             enderecoAtual.setPalavra(instrucao);
+
+    //             memoria.add(enderecoAtual);
+
+    //             // Aumenta o endereço conforme o tamanho da instrução em bits
+    //             endereco += instrucao.getNumBin().length();
+    //         }
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+    
     
     public void carregarInstrucoes(String pathArquivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(pathArquivo))) {
@@ -40,134 +80,86 @@ public class Maquina {
     }
     
     public void executarPrograma(){
+        memoria.imprimirMemoria();
         
-        /*  já ta sendo feito quando instancia o banco de registradores  
-            regA.setNumeroBinario("000000000000000010000000"); 
-            regX.setNumeroBinario("000000000000000000000000");
-            regL.setNumeroBinario("000000000000000000000000");
-            regB.setNumeroBinario("000000000000000000000000");
-            regS.setNumeroBinario("000000000000000000000000");
-            regT.setNumeroBinario("000000000000000000000000");
-            regF.setNumeroBinario("000000000000000000000000");
-            regPC.setNumeroBinario("000000000000000000000000");
-            regSW.setNumeroBinario("000000000000000000000000");   */
         
-        System.out.println("-----------------------------------------------");
-        //  regS.setNumeroInteiro(2);
         Registrador regS = registradores.getRegistrador("S");
         regS.setNumeroInteiro(2);
         
-        //  regT.setNumeroInteiro(32);
         Registrador regT = registradores.getRegistrador("T");
         regT.setNumeroInteiro(32);
         
-        Registrador regA = registradores.getRegistrador("A");
+        Registrador regB = registradores.getRegistrador("B");
+        regB.setNumeroInteiro(1);
         
+        List<Endereco> listaInstrucoes = memoria.getMemoriaComInstrucoes();     
         
-        // registradores.imprimirValoresRegistradores();
-    
-        List<Endereco> listaInstrucoes = memoria.getMemoria();
-        for (int i = 0; i < listaInstrucoes.size(); i++) {
+        for(int i = 0; i < listaInstrucoes.size(); i++){
             Endereco endereco = listaInstrucoes.get(i);
-            System.out.println(endereco.toString());
-            
             Instrucao instrucao = endereco.getPalavra();
+            
             if (instrucao.getNumBin().equals("11110100")){
                 break;
             }
-            if (instrucao.getOpcode().equals("0")) {
-                System.out.println("A instrucao é: "+endereco.getPalavra().getInsHexa()+".");
-                System.out.println("Já que o opcode é = "+endereco.getPalavra().getOpcode()+".");
-                System.out.println("A intruçao é LDA, que carrega 0 no registrador acumulador.");
-                regA.setNumeroInteiro(0);
-                System.out.println("O valor no acumulador (Registrador A) = "+regA.getNumeroInteiro()+"");
-                System.out.println("--------");
-            }
-            if (instrucao.getOpcode().equals("18")){
-                System.out.println("A instrucao é: "+instrucao.getInsHexa()+".");
-                System.out.println("Já que o opcode é = "+instrucao.getOpcode()+".");
-                if (instrucao.getNixbpq().equals("010001")){
-                    System.out.println("A intruçao é ADD imediato, que soma o valor no endereço "+endereco.getPalavra().getEnderecoBinario()+" no acumulador (Registrador A).");
-                    String enderecoDesejado = endereco.getPalavra().getEnderecoBinario();
-                    int enderecoDesejadoInt = Integer.parseInt(enderecoDesejado, 2); // Converte para inteiro
-                    // Percorre a lista de endereços na memória
-                    for (Endereco enderecoComparado : memoria.getMemoria()) {
-                        if (enderecoComparado.getEndDeci() == enderecoDesejadoInt) {
-                            // Quando encontra o endereço desejado, acessa o endereço e a instrução associada
-                            String numeroBinario = enderecoComparado.getPalavra().getNumBin();
-                            int numeroConvertido = Integer.parseInt(numeroBinario, 2);
-                            System.out.println("O valor no endereço é = "+numeroConvertido);
-                            regA.setNumeroInteiro((numeroConvertido+regA.getNumeroInteiro()));
-                            break; // Sai do loop quando encontra o endereço
-                        }
-                    }                   
-                    System.out.println("O valor no acumulador (Registrador A) = "+regA.getNumeroInteiro()+"\n");
-                    System.out.println("--------");
-                }
-            }
-            if (instrucao.getOpcode().equals("1C")){
-                System.out.println("A instrucao é: "+instrucao.getInsHexa()+".");
-                System.out.println("Já que o opcode é = "+instrucao.getOpcode()+".");
-                if (instrucao.getNixbpq().equals("010001")){
-                    System.out.println("A intruçao é SUB imediato, que subtrai o valor positivo no endereço "+endereco.getPalavra().getEnderecoBinario()+" do acumulador (Registrador A).");
-                    String enderecoDesejado = endereco.getPalavra().getEnderecoBinario();
-                    int enderecoDesejadoInt = Integer.parseInt(enderecoDesejado, 2); // Converte para inteiro
-                    // Percorre a lista de endereços na memória
-                    for (Endereco enderecoComparado : memoria.getMemoria()) {
-                        if (enderecoComparado.getEndDeci() == enderecoDesejadoInt) {
-                            // Quando encontra o endereço desejado, acessa o endereço e a instrução associada
-                            String numeroBinario = enderecoComparado.getPalavra().getNumBin();
-                            int numeroConvertido = Integer.parseInt(numeroBinario, 2);
-                            System.out.println("O valor no endereço é = "+numeroConvertido);
-                            regA.setNumeroInteiro((regA.getNumeroInteiro()-numeroConvertido));
-                            break; // Sai do loop quando encontra o endereço
-                        }
-                    }                   
-                    System.out.println("O valor no acumulador (Registrador A) = "+regA.getNumeroInteiro()+"\n");
-                    System.out.println("--------");
-                }
-            }
-            if (instrucao.getOpcode().equals("98")){
-                System.out.println("A instrucao é: "+instrucao.getInsHexa()+".");
-                System.out.println("Já que o opcode é = "+instrucao.getOpcode()+".");
-                System.out.println("Essa instrucao MULR multiplica dois registradores.");
-                System.out.println("O registrador S será multiplicado com o valor no acumulador.");
-                System.out.println("O registrador S é = " +regS.getNumeroInteiro());
-                System.out.println("O acumulador é = " +regA.getNumeroInteiro());
-                regA.setNumeroInteiro(regA.getNumeroInteiro()*regS.getNumeroInteiro());
-                System.out.println("O valor no acumulador (Registrador A) = "+regA.getNumeroInteiro()+"\n");
-                System.out.println("--------");
-            }
-            if (instrucao.getOpcode().equals("9C")){
-                System.out.println("A instrucao é: "+instrucao.getInsHexa()+".");
-                System.out.println("Já que o opcode é = "+instrucao.getOpcode()+".");
-                System.out.println("Essa instrucao DIVR divide dois registradores.");
-                System.out.println("O registrador A será dividido com o valor no Registrador T.");
-                System.out.println("O registrador T é = " +regT.getNumeroInteiro());
-                System.out.println("O acumulador é = " +regA.getNumeroInteiro());
-                regA.setNumeroInteiro(regA.getNumeroInteiro()/regT.getNumeroInteiro());
-                System.out.println("O valor no acumulador (Registrador A) = "+regA.getNumeroInteiro()+"\n");
-                System.out.println("--------");
-            }
-            if (instrucao.getOpcode().equals("4")){
-                System.out.println("A instrucao é: "+instrucao.getInsHexa()+".");
-                System.out.println("Já que o opcode é = "+instrucao.getOpcode()+".");
-                System.out.println("Essa instrucao CLEAR torna um registrador 0.");
-                System.out.println("O acumulador será zerado.");
-                System.out.println("O acumulador é = " +regA.getNumeroInteiro());
-                regA.setNumeroInteiro(0);
-                System.out.println("O valor no acumulador (Registrador A) = "+regA.getNumeroInteiro()+"\n");
-                System.out.println("--------");
-            }
             
-            if(instrucao.getOpcode().equals("44")){
-                System.out.println("A instrucao é: "+instrucao.getInsHexa()+".");
-                System.out.println("Já que o opcode é = "+instrucao.getOpcode()+".");
-                regA.setNumeroInteiro(0);
+            switch(instrucao.getOpcode()){
+                case "0":
+                    LDA.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                case "68":
+                    LDB.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                case "8":
+                    LDL.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                case "6C":
+                    LDS.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                case "74":
+                    LDT.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                case "18":
+                    ADD.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                case "1C":
+                    SUB.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                case "24":
+                    DIV.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                case "20":
+                    MUL.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                case "98":
+                    MULR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
+                case "9C":
+                    DIVR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
+                case "90":
+                    ADDR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
+                case "94":
+                    SUBR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
+                case "AC":
+                    RMO.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
+                case "3C":
+                    if (instrucao.getNixbpq().equals("010000")){//endereçamento imediato e palavra de 32 bits
+                        Registrador regPC = registradores.getRegistrador("PC");
+                        
+                        System.out.println("A intruçao é J imediato, que transfere o valor binário "+endereco.getPalavra().getEnderecoBinario()+" para o Registrador PC.");
+                        String pegaDado = endereco.getPalavra().getEnderecoBinario();//copiou o endereço binário daquela palavra, que na verdade é um dado. 
+                        int dadoConvertido = Integer.parseInt(pegaDado, 2); // Converte para inteiro
+                        regPC.setNumeroInteiro(dadoConvertido);//seta o PC com o novo endereço.
+                        int enderecoDesejadoInt = regPC.getNumeroInteiro();
+                        // Percorre a lista de endereços na memória
+                        for (Endereco enderecoComparado : memoria.getMemoria()) {
+                            if (enderecoComparado.getEndDeci() == enderecoDesejadoInt) {
+                                // Quando encontra o endereço desejado ele encontrou a instrucao que o jump manda ir de volta ou pra frente.
+                                System.out.println("O Registrador PC aponta para = " +regPC.getNumeroInteiro()); 
+                                System.out.println("O i era: "+i+".");
+                                i = (enderecoComparado.getIndice()-1);
+                                System.out.println("O novo i será: "+i+".");
+                                break; // Sai do loop quando encontra o endereço
+                            }
+                        } 
+                    }
+                case "0C":
+                    STA.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                case "4":
+                    CLEAR.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
+                
             }
         }
-
-        memoria.imprimirMemoria();
+        
     }
    
 }

@@ -1,4 +1,7 @@
 package src.Maquina;
+
+import src.Instrucoes.Instrucao;
+
 public class Endereco {
     private int endDeci;
     private String endHexa;

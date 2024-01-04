@@ -6,7 +6,7 @@ public class Registrador {
     private String nome;
     private String identificador; 
     private String descricao;
-		private int tamanho; // Em bits
+	private int tamanho; // Em bits
 
     
 	Registrador(String nome, String identificador, String descricao){
@@ -26,10 +26,6 @@ public class Registrador {
 		if (numeroBinario != null) {
 			setNumeroBinario(numeroBinario);
 		}
-
-		// if (numeroInteiro != Integer.MIN_VALUE) {
-		// 		setNumeroInteiro(numeroInteiro);
-		// }
 	}
     
 	// Getters
@@ -96,7 +92,7 @@ public class Registrador {
     
     public void imprimirValorRegistrador() {
         if (numeroBinario != null) {
-						System.out.format("----- REGISTRADOR %s (%s) -----", identificador, nome);
+			System.out.format("----- REGISTRADOR %s (%s) -----", identificador, nome);
             System.out.println("Valor do Registrador (Binário): " + numeroBinario);
             System.out.println("Valor do Registrador (Inteiro): " + numeroInteiro);
             System.out.println("----------------------------------------");

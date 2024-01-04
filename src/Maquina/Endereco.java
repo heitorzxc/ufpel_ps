@@ -1,15 +1,19 @@
-public class Enderecos {
+package src.Maquina;
+
+import src.Instrucoes.Instrucao;
+
+public class Endereco {
     private int endDeci;
     private String endHexa;
     private String endBina;
     private Instrucao palavra;
     private int indice;
 
-    public Enderecos(String endereco) {
+    public Endereco(String endereco) {
         setEndereco(endereco);
     }
 
-    public Enderecos(int enderecoInteiro) {
+    public Endereco(int enderecoInteiro) {
         this.endDeci = enderecoInteiro;
         this.endHexa = Integer.toHexString(enderecoInteiro);
         this.endBina = Integer.toBinaryString(enderecoInteiro);
@@ -28,16 +32,16 @@ public class Enderecos {
     }
 
     public void setEndereco(String endereco) {
-        if (endereco.startsWith("0x")) {
+        if (endereco.startsWith("0x")) { // Hexa
             this.endHexa = endereco.substring(2);
             this.endDeci = Integer.parseInt(endereco.substring(2), 16);
             this.endBina = Integer.toBinaryString(this.endDeci);
-        } else if (endereco.matches("[01]+")) {
+        } else if (endereco.matches("[01]+")) { // Binário
             this.endBina = endereco;
             this.endDeci = Integer.parseInt(endereco, 2);
             this.endHexa = Integer.toHexString(this.endDeci);
         } else {
-            this.endDeci = Integer.parseInt(endereco);
+            this.endDeci = Integer.parseInt(endereco); // Decimal
             this.endHexa = Integer.toHexString(this.endDeci);
             this.endBina = Integer.toBinaryString(this.endDeci);
         }
@@ -79,7 +83,7 @@ public class Enderecos {
 
     @Override
     public String toString() {
-        return "Enderecos{" +
+        return "Endereco{" +
                 "endDeci=" + endDeci +
                 ", endHexa='" + endHexa + '\'' +
                 ", endBina='" + endBina + '\'' +

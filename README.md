@@ -45,8 +45,8 @@ Leonardo Madruga Wille Duarte; Pedro Luis Rodrigues Porto; Rafael Silva da Silva
 
 ### Interface (main/src/interface):
 
-1. Interface.fxml
-2. Interface.java
+1. Interface.fxml - desenho do JavaFX (GUI)
+2. Interface.java - instância do JavaFX (GUI)
 
 ### Maquina (main/src/maquina):
 1. Endereco.java

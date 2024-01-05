@@ -48,6 +48,15 @@ Leonardo Madruga Wille Duarte; Pedro Luis Rodrigues Porto; Rafael Silva da Silva
 1. Interface.fxml
 2. Interface.java
 
+### Maquina (main/src/maquina):
+1. Endereco.java
+2. Maquina.java
+3. Memoria.java
+
+### Registradores (main/src/registradores):
+1. BancoRegistradores.java - Representa o banco de registradores da máquina simulada.
+2. Registrador.java - Representa um único registrador (Orientação à Objetos).
+
 ## Branch patch-1:
 1. Trabalha com um registrador por classe (A.java, B.java, F.java, L.java, ...).
 2. Faz uso de métodos para decodificação de NIXBPQ e impressão das instruções lógicas simuladas.

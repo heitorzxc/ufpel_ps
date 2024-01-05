@@ -20,23 +20,23 @@ Leonardo Madruga Wille Duarte; Pedro Luis Rodrigues Porto; Rafael Silva da Silva
 
 ### Pacote de instruções implementado (main/src/instrucoes):
 
-1. ADD.java
-2. ADDR.java
-3. CLEAR.java
-4. DIV.java
-5. DIVR.java
-6. J.java
-7. LDA.java
-8. LDB.java
-9. LDL.java
-10. LDS.java
-11. LDT.java
-12. MUL.java
-13. MULR.java
-14. RMO.java
-15. STA.java
-16. SUB.java
-17. SUBR.java
+1. ADD.java - Realiza a adição de dois operandos e armazena o resultado no acumulador.
+2. ADDR.java - Realiza a adição de dois registradores e armazena o resultado no registrador especificado.
+3. CLEAR.java - Limpa o conteúdo de um registrador.
+4. DIV.java - Realiza a divisão de dois operandos e armazena o quociente (divisão inteira) no acumulador.
+5. DIVR.java - Realiza a divisão de dois registradores e armazena o quociente (divisão inteira) no registrador especificado.
+6. J.java - Desvia a execução do programa para o endereço especificado.
+7. LDA.java - Carrega o conteúdo de um endereço de memória no acumulador.
+8. LDB.java - Carrega o conteúdo de um endereço de memória no registrador B.
+9. LDL.java - Carrega o conteúdo de um endereço de memória no registrador L.
+10. LDS.java - Carrega o conteúdo de um endereço de memória no registrador S.
+11. LDT.java - Carrega o conteúdo de um endereço de memória no registrador T.
+12. MUL.java - Realiza a multiplicação de dois operandos e armazena o resultado no acumulador.
+13. MULR.java - Realiza a multiplicação de dois registradores e armazena o resultado no registrador especificado.
+14. RMO.java - Move (copia) o conteúdo de um registrador para outro registrador.
+15. STA.java - Armazena o conteúdo do acumulador em um endereço de memória especificado.
+16. SUB.java - Realiza a subtração de dois operandos e armazena o resultado no acumulador.
+17. SUBR.java - Realiza a subtração de dois registradores e armazena o resultado no registrador especificado.
 
 ### Decodificação e Simulação (main/src/instrucoes):
 
@@ -62,4 +62,4 @@ Checkpoint 1 - OK. </br>
 Checkpoint 2 - Pendente. </br>
 Checkpoint 3 - Pendente. </br>
 
-<!-- Última modificação: 04/01/2024, 22:42 -->
+<!-- Última modificação: 04/01/2024, 22:54 -->

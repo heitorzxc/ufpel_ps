@@ -45,22 +45,13 @@ Leonardo Madruga Wille Duarte; Pedro Luis Rodrigues Porto; Rafael Silva da Silva
 
 ### Interface (main/src/interface):
 
-1. Interface.fxml - desenho (POO) do JavaFX (GUI)
-2. Interface.java - instância (POO) do JavaFX (GUI)
-
-### Maquina (main/src/maquina):
-1. Endereco.java
-2. Maquina.java
-3. Memoria.java
-
-### Registradores (main/src/registradores):
-1. Registrador.java - Representa um único registrador (Objeto - POO).
-2. BancoRegistradores.java - Representa o banco de registradores da máquina simulada (Coleção - POO).
+1. Interface.fxml
+2. Interface.java
 
 ## Branch patch-1:
-1. Trabalha com um registrador por classe.
-2. Métodos para decoder do NIXBPQ e exibição das instruções simuladas.
-3. Conceito de aplicativo para o simulador, e não de "software" - diretório "app".
+1. Trabalha com um registrador por classe (A.java, B.java, F.java, L.java, ...).
+2. Faz uso de métodos para decodificação de NIXBPQ e impressão das instruções lógicas simuladas.
+3. Usa o conceito de aplicativo para o simulador, e não de um software propriamente dito (diretório app).
 
 ## Branch intefaceparcial:
 1. Implementado preloader do FXML para carregar Interface.fxml para o simulador SicSim.
@@ -71,4 +62,4 @@ Checkpoint 1 - OK. </br>
 Checkpoint 2 - Pendente. </br>
 Checkpoint 3 - Pendente. </br>
 
-<!-- Última modificação: 04/01/2024, 22:54 -->
+<!-- Última modificação: 04/01/2024 -->

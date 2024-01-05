@@ -40,26 +40,26 @@ Leonardo Madruga Wille Duarte; Pedro Luis Rodrigues Porto; Rafael Silva da Silva
 
 ### Decodificação e Simulação (main/src/instrucoes):
 
-1. Instrucao.java
-2. Instrucoes.java
+1. Instrucao.java - Verifica e interpreta diferentes tamanhos de instruções VÁLIDAS, dando suporte ao número binário (numBin), código da instrução (opcode), tamanho do código (tamanho), instrução em hexadecimal (insHexa), endereço em binário (enderecoBinario) e os flags nixbpq (nixbpq) - da máquina SIC-XE.
 
 ### Interface (main/src/interface):
 
-1. Interface.fxml
-2. Interface.java
+1. Interface.fxml - protótipo (desenho da interface) em JavaFX
+2. Interface.java - instância (OO) do protótipo JavaFX
 
 ## Branch patch-1:
-1. Trabalha com um registrador por classe (A.java, B.java, F.java, L.java, ...).
-2. Faz uso de métodos para decodificação de NIXBPQ e impressão das instruções lógicas simuladas.
-3. Usa o conceito de aplicativo para o simulador, e não de um software propriamente dito (diretório app).
+1. Trabalha com um registrador por classe.
+2. Métodos para decodec do NIXBPQ e suporte das instruções.
+3. Usa o conceito de aplicativo, e não de um software (app).
 
 ## Branch intefaceparcial:
-1. Implementado preloader do FXML para carregar Interface.fxml para o simulador SicSim.
-2. Implementado controladores FXML por meio de overrides (faltando as lógicas).
+1. Preloader do FXML para o simulador.
+2. Implementado controladores FXML.
+3. (Pendente) Implementação da lógica nos controladores FXML.
 
 ## Controle do grupo:
 Checkpoint 1 - OK. </br>
 Checkpoint 2 - Pendente. </br>
 Checkpoint 3 - Pendente. </br>
 
-<!-- Última modificação: 04/01/2024 -->
+<!-- Última modificação: 05/01/2024 -->

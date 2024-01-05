@@ -40,7 +40,14 @@ Leonardo Madruga Wille Duarte; Pedro Luis Rodrigues Porto; Rafael Silva da Silva
 
 ### Decodificação e Simulação (main/src/instrucoes):
 
-1. Instrucao.java - Verifica e interpreta diferentes tamanhos de instruções VÁLIDAS, dando suporte ao número binário (numBin), código da instrução (opcode), tamanho do código (tamanho), instrução em hexadecimal (insHexa), endereço em binário (enderecoBinario) e os flags nixbpq (nixbpq) - da máquina SIC-XE.
+1. Instrucao.java - Verifica e interpreta diferentes tamanhos de instruções VÁLIDAS, dando suporte ao conjunto de atributos da máquina SIC-XE:
+
+1. Número binário (numBin)
+2. Código da instrução (opcode)
+3. Tamanho do código (tamanho)
+4. Instrução em hexadecimal (insHexa)
+5. Endereço em binário (enderecoBinario)
+6. Flags nixbpq (nixbpq)
 
 ### Interface (main/src/interface):
 

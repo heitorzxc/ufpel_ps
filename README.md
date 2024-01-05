@@ -4,9 +4,15 @@ Cursos: Ciência da Computação e Engenharia de Computação. </br>
 Semestre letivo: 2023/2. </br>
 
 ## Grupo Avangers
-Christian Holz; Eloisa Leal Barros; Guilherme Stark; </br>
-Heitor Silva Avila; Jean Carlo Silva Dos Santos; Leonardo Antonietti Ferreira; </br>
-Leonardo Madruga Wille Duarte; Pedro Luis Rodrigues Porto; Rafael Silva da Silva; </br>
+1. Christian Holz.
+2. Eloisa Leal Barros.
+3. Guilherme Stark.
+4. Heitor Silva Avila.
+5. Jean Carlo Silva Dos Santos.
+6. Leonardo Antonietti Ferreira.
+7. Leonardo Madruga Wille Duarte.
+8. Pedro Luis Rodrigues Porto.
+9. Rafael Silva da Silva.
 
 ## Em andamento:
 1. Criação do SicSim - Simulador para a máquina SIC/SIC-XE.
@@ -19,7 +25,6 @@ Leonardo Madruga Wille Duarte; Pedro Luis Rodrigues Porto; Rafael Silva da Silva
 5. Pacotes: Instrucoes, Interface, Maquina, Registradores, Utils.
 
 ### Pacote de instruções implementado (main/src/instrucoes):
-
 1. ADD.java - Realiza a adição de dois operandos e armazena o resultado no acumulador.
 2. ADDR.java - Realiza a adição de dois registradores e armazena o resultado no registrador especificado.
 3. CLEAR.java - Limpa o conteúdo de um registrador.
@@ -39,20 +44,19 @@ Leonardo Madruga Wille Duarte; Pedro Luis Rodrigues Porto; Rafael Silva da Silva
 17. SUBR.java - Realiza a subtração de dois registradores e armazena o resultado no registrador especificado.
 
 ### Decodificação e Simulação (main/src/instrucoes):
-
 1. Instrucao.java - Verifica e interpreta diferentes tamanhos de instruções VÁLIDAS, dando suporte ao conjunto de atributos da máquina SIC-XE:
 
-1. Número binário (numBin)
-2. Código da instrução (opcode)
-3. Tamanho do código (tamanho)
-4. Instrução em hexadecimal (insHexa)
-5. Endereço em binário (enderecoBinario)
-6. Flags nixbpq (nixbpq)
+1. Número binário (numBin).
+2. Código da instrução (opcode).
+3. Tamanho do código (tamanho).
+4. Instrução em hexadecimal (insHexa).
+5. Endereço em binário (enderecoBinario).
+6. Flags nixbpq (nixbpq).
 
 ### Interface (main/src/interface):
 
-1. Interface.fxml - protótipo (desenho da interface) em JavaFX
-2. Interface.java - instância (OO) do protótipo JavaFX
+1. Interface.fxml - protótipo (desenho da interface) em JavaFX.
+2. Interface.java - instância (OO) do protótipo JavaFX.
 
 ## Branch patch-1:
 1. Trabalha com um registrador por classe.

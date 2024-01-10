@@ -63,14 +63,9 @@ Semestre letivo: 2023/2. </br>
 2. Métodos para decodec do NIXBPQ e suporte das instruções.
 3. Usa o conceito de aplicativo, e não de um software (app).
 
-## Branch intefaceparcial:
-1. Preloader do FXML para o simulador.
-2. Implementado controladores FXML.
-3. (Pendente) Implementação da lógica nos controladores FXML.
-
 ## Controle do grupo:
 Checkpoint 1 - OK. </br>
 Checkpoint 2 - Pendente. </br>
 Checkpoint 3 - Pendente. </br>
 
-<!-- Última modificação: 05/01/2024 -->
+<!-- Última modificação: 10/01/2024 -->

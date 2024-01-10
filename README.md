@@ -17,7 +17,7 @@ Semestre letivo: 2023/2. </br>
 ## Em andamento:
 1. Criação do SicSim - Simulador para a máquina SIC/SIC-XE.
 
-## Branch main (mergeado do "pe-refatorando" e aguardando o merge de "interface")
+## Branch main (mergeado do "pe-refatorando" e futuro merge de "interface")
 1. Separação das instruções por classe (modularidade do código).
 2. Virtualização da memória (banco de registradores).
 3. Correção da forma no qual o código exibe dados na tela.
@@ -53,10 +53,12 @@ Semestre letivo: 2023/2. </br>
 5. Endereço em binário (enderecoBinario).
 6. Flags nixbpq (nixbpq).
 
-### Interface (main/src/interface):
-
-1. Interface.fxml - protótipo (desenho da interface) em JavaFX.
-2. Interface.java - instância (OO) do protótipo JavaFX.
+### Interface -- a ser absorvido futuramente (interface/src/interface):
+1. Para executar a Interface, rode o arquivo "TesteInterface.java".
+2. Selecione o arquivo de texto, ou cole o codigo no campo de texto e clique em "Load Prompt".
+3. Depois escolha o metodo de execução, "Run" ou "Step".
+4. Falta ainda implementar o slider para controle da velocidade de execução, bem como dispor as informações nos devidos campos.
+5. README.md específico em (interface/src/interface).
 
 ## Branch patch-1:
 1. Trabalha com um registrador por classe.

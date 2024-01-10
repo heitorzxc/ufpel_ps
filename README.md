@@ -17,7 +17,7 @@ Semestre letivo: 2023/2. </br>
 ## Em andamento:
 1. Criação do SicSim - Simulador para a máquina SIC/SIC-XE.
 
-## Branch main (mergeado do "pe-refatorando")
+## Branch main (mergeado do "pe-refatorando" e aguardando o merge de "interface")
 1. Separação das instruções por classe (modularidade do código).
 2. Virtualização da memória (banco de registradores).
 3. Correção da forma no qual o código exibe dados na tela.

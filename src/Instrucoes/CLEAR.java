@@ -4,20 +4,19 @@ import src.Maquina.Endereco;
 import src.Maquina.Memoria;
 import src.Registradores.BancoRegistradores;
 import src.Registradores.Registrador;
-import src.Interface.Controller;
 
 /*******
  * ADD *
  *******/
 public class CLEAR {
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria, Controller controller){
+    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regA = registradores.getRegistrador("A");
         
-        controller.handleTERMINAL("Essa instrucao CLEAR torna um registrador 0.");
-        controller.handleTERMINAL("O acumulador será zerado.");
-        controller.handleTERMINAL("O acumulador é = " +regA.getNumeroInteiro());
+        System.out.println("Essa instrucao CLEAR torna um registrador 0.");
+        System.out.println("O acumulador será zerado.");
+        System.out.println("O acumulador é = " +regA.getNumeroInteiro());
         regA.setNumeroInteiro(0);
-        controller.handleTERMINAL("O valor no acumulador (Registrador A) = "+regA.getNumeroInteiro()+"\n");
-        controller.handleTERMINAL("--------");
+        System.out.println("O valor no acumulador (Registrador A) = "+regA.getNumeroInteiro()+"\n");
+        System.out.println("--------");
     }
 }

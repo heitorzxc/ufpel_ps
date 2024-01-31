@@ -3,16 +3,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import src.Instrucoes.Instrucao;
-import src.Interface.Controller;
 
 public class Memoria {
     private ArrayList<Endereco> memoria;
     private Integer tamanhoMemoria;
-    Controller controller;
-    
-    public void setController(Controller controller){
-        this.controller = controller;
-    }
 
     public Memoria() {
         memoria = new ArrayList<>(); // Inicializa a lista usando ArrayList
@@ -50,20 +44,20 @@ public class Memoria {
     }
 
     public void imprimirMemoria() {
-        //alteração
-        controller.handleTERMINAL("============= MEMORIA ==========");
+        System.err.println("============= MEMORIA ==========");
         for (Endereco endereco : memoria) {
             Instrucao palavra = endereco.getPalavra();
             
-            
             if(palavra != null){
-            //alteração
-                palavra.setController(controller); 
-                controller.handleTERMINAL(" \n \n Intrucao com endereço: " + endereco.getEndDeci() + " \n");
+                System.out.println("");
+                System.out.println("");
+                System.out.println("Intrucao com endereço: " + endereco.getEndDeci());
                 palavra.imprimirDetalhesInstrucao();
+                System.out.println("");
+                System.out.println("");
             }
         }
-        controller.handleTERMINAL("========== FIM MEMORIA ========");
+        System.err.println("========== FIM MEMORIA ========");
     }
 
 }

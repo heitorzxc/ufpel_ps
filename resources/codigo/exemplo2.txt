@@ -1,0 +1,12 @@
+FIRST: LDA  NUMBER  ; Carrega o conteúdo do endereço NUMBER no acumulador
+       ADD  VALUE   ; Adiciona o conteúdo do endereço VALUE ao acumulador
+SEC:   ADDR A X
+       DIVR A S
+       ADD #15
+       ADD @10
+       J SEC
+       STA  RESULT  ; Armazena o conteúdo do acumulador no endereço RESULT
+       CLEAR A      ; Limpa o acumulador
+NUMBER: WORD 5       ; Define uma palavra com o valor 5
+VALUE:  WORD 3       ; Define uma palavra com o valor 3
+RESULT: RESW 1       ; Reserva espaço para uma palavra

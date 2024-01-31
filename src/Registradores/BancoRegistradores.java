@@ -25,6 +25,39 @@ public class BancoRegistradores {
 		return bancoRegistradores.get(identificador);
 	}
 
+	public static String getNumeroRegistrador(String identificador){
+		switch (identificador) {
+			case "A":
+				return "0";
+
+			case "X":
+				return "1";
+
+			case "L":
+				return "2";
+
+			case "B":
+				return "3";
+		
+			case "S":
+				return "4";
+
+			case "T":
+				return "5";
+
+			case "PC":
+				return "8";
+
+			case "SW":
+				return "9";
+
+			default:
+				break;
+		}
+
+		return "";
+	}
+
 	public void imprimirValoresRegistradores() {
 		System.out.println("Valores nos Registradores:");
 		for (Registrador registrador : bancoRegistradores.values()) {

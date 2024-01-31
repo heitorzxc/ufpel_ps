@@ -1,6 +1,5 @@
 package src.Instrucoes;
 import java.math.BigInteger;
-import src.Interface.Controller;
 
 public class Instrucao {
     protected String numBin;
@@ -9,7 +8,6 @@ public class Instrucao {
     protected String insHexa;
     protected String enderecoBinario;
     protected String nixbpq; // Adicionando o atributo nixbpq
-    private Controller controller;
 
     public Instrucao(String numBin) {
         this.numBin = numBin.toUpperCase();
@@ -18,13 +16,10 @@ public class Instrucao {
         if (numBin.length() == 8 || numBin.length() == 16 || numBin.length() == 24 || numBin.length() == 32) {
             interpretarInstrucao();
         } else {
-            controller.handleTERMINAL("Número binário inválido. Deve ter 8, 16, 24 ou 32 bits.");
+            System.out.println("Número binário inválido. Deve ter 8, 16, 24 ou 32 bits.");
         }
     }
 
-    public void setController(Controller A){
-        this.controller = A;
-    }
     protected void interpretarInstrucao() {
         tamanho = numBin.length();
 
@@ -99,17 +94,17 @@ public class Instrucao {
     }
 
     public void imprimirDetalhesInstrucao() {
-        controller.handleTERMINAL("----------------------");
-        controller.handleTERMINAL("Detalhes da Instrucao:");
-        controller.handleTERMINAL("Número binário da instruçao: " + numBin);
-        controller.handleTERMINAL("Número hexadecimal da instruçao: " + insHexa);
-        controller.handleTERMINAL("Opcode: " + opcode);
+        System.out.println("----------------------");
+        System.out.println("Detalhes da Instrucao:");
+        System.out.println("Número binário da instruçao: " + numBin);
+        System.out.println("Número hexadecimal da instruçao: " + insHexa);
+        System.out.println("Opcode: " + opcode);
         if (enderecoBinario != null) {
-            controller.handleTERMINAL("Endereço em binário: " + enderecoBinario);
+            System.out.println("Endereço em binário: " + enderecoBinario);
         }
         if (nixbpq != null) {
-            controller.handleTERMINAL("nixbpq: " + nixbpq);
+            System.out.println("nixbpq: " + nixbpq);
         }
-        controller.handleTERMINAL("----------------------");
+        System.out.println("----------------------");
     }
 }

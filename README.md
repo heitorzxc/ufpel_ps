@@ -38,7 +38,7 @@ Semestre letivo: 2023/2. </br>
 3. Divisão do código em pacotes (packages).
 
 ### Resumo do projeto:
-1. main/src: Arquivo main que que está instanciando o montador.
+1. main/src: Arquivos de inicialização para o simulador e o montador.
 2. main/src/Instrucoes: Pacote de instruções SIC/SIC-XE em uma instruções por arquivo.
 3. main/src/Interface: Arquivos fxml e java que dão suporte à interface gráfica do simulador.
 4. main/src/Maquina: Suporte à decodificação do endereço, instância da máquina virtual e banco de registradores.

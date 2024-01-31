@@ -47,7 +47,8 @@ Semestre letivo: 2023/2. </br>
 7. main/stc/Utils: Conversores entre sistemas de numeração e tipos de dados.
 
 ### Aos desenvolvedores:
-1. main/src: O arquivo main.java permite a instância do simulador ou montador, bastando alterar as linhas comentadas.
+1. main/src/Main_Montador.java: Carrega o montador no sistema.
+2. main/src/Main_Simulador.java: Carrega o simulador no sistema.
 
 ### Arquivos usados no desenvolvimento:
 1. main/resources/binarios: Arquivos binários a serem usados na simulação do programa.

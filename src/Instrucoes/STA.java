@@ -4,12 +4,13 @@ import src.Maquina.Endereco;
 import src.Maquina.Memoria;
 import src.Registradores.BancoRegistradores;
 import src.Registradores.Registrador;
+import src.Interface.Controller;
 
 /*******
  * ADD *
  *******/
 public class STA {
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria, Controller controller){
         Registrador regA = registradores.getRegistrador("A");
         
         String enderecoDesejado = endereco.getPalavra().getEnderecoBinario();
@@ -25,7 +26,7 @@ public class STA {
               salvarInstrucao.setNumBin(valorRegistrador);
   
               // Imprime a instrução modificada
-              System.out.println("Instrucao modificada no endereço " + enderecoDesejado + ": " + salvarInstrucao.getNumBin() +" em inteiro e "+regA.getNumeroInteiro()+".");
+              controller.handleTERMINAL("Instrucao modificada no endereço " + enderecoDesejado + ": " + salvarInstrucao.getNumBin() +" em inteiro e "+regA.getNumeroInteiro()+".");
               break; // Sai do loop quando encontra o endereço
           }
       }   

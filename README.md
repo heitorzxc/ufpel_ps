@@ -49,6 +49,10 @@ Semestre letivo: 2023/2. </br>
 ### Aos desenvolvedores:
 1. main/src: O arquivo main.java permite a instância do simulador ou montador, bastando alterar as linhas comentadas.
 
+### Arquivos usados no desenvolvimento:
+1. main/resources/binarios: Arquivos binários a serem usados na simulação do programa.
+2. main/resources/codigo: Arquivos em formato de código-objeto a serem convertidos em código-binário para simulação.
+
 ### Instruções adicionadas até primeiro checkpoint:
 1. ADD.java - Realiza a adição de dois operandos e armazena o resultado no acumulador.
 2. ADDR.java - Realiza a adição de dois registradores e armazena o resultado no registrador especificado.

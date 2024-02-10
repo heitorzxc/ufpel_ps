@@ -94,5 +94,6 @@ Semestre letivo: 2023/2. </br>
 1. Correções na interface e back-end do simulador.
 2. Correções na interface e back-end do montador.
 3. Desenvolvimento do processador de macros.
+4. Desenvolvimento do ligador.
 
-Última atualização: 31/01/2024.
+Última atualização: 10/02/2024.

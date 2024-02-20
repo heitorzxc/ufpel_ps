@@ -8,11 +8,12 @@ import src.Registradores.Registrador;
 /*******
  * ADD *
  *******/
-public class RMO {
-    public static void executar(String enderecoBinario, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+public class RMO implements InstrucaoExecutavel {
+    public  void executar(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regA = registradores.getRegistrador("A");
         Registrador regB = registradores.getRegistrador("S");
         
+        String enderecoBinario = instrucao.getEnderecoBinario();
         
         if (enderecoBinario.equals("00110000")){// vê quais são os dois registradores, nesse caso S e T
           System.out.println("B <- (A)");

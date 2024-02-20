@@ -9,7 +9,7 @@ import src.Registradores.*;
  *******/
 public class SHIFTR {
 
-    public static void executar(String enderecoBinario, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+    public   void executar(String enderecoBinario, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
 
         Registrador regA = registradores.getRegistrador("A");
         

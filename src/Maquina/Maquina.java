@@ -66,7 +66,7 @@ public class Maquina {
 
             if (instrucao.getNumBin().equals("11110100")){
                 break;
-            } else if(instrucao.getOpcode() == "3C"){
+            } else if(instrucao.getOpcode().equals("3C")){
                 i = J.executar(instrucao.getNixbpq(), endereco, registradores, memoria, i);
                 break;
             } else {

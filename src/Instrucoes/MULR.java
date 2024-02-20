@@ -8,10 +8,12 @@ import src.Registradores.Registrador;
 /*******
  * ADD *
  *******/
-public class MULR {
-    public static void executar(String enderecoBinario, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+public class MULR implements InstrucaoExecutavel {
+    public   void executar(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regA = registradores.getRegistrador("A");
         Registrador regS = registradores.getRegistrador("S");
+
+        String enderecoBinario = instrucao.getEnderecoBinario();
         
         if(enderecoBinario.equals("00000100")){
           System.out.println("A <- (A) * (S)");

@@ -8,9 +8,11 @@ import src.Registradores.Registrador;
 /*******
  * ADD *
  *******/
-public class ADD {
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+public class ADD implements InstrucaoExecutavel {
+    public void executar(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regA = registradores.getRegistrador("A");
+        
+        String nixbpq = instrucao.getNixbpq();
         
         if(nixbpq.equals("010001")){
           System.out.println("A intruçao é ADD imediato, que soma o valor binário "+endereco.getPalavra().getEnderecoBinario()+" no acumulador (Registrador A) como se fosse um dado.");

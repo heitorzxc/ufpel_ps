@@ -8,7 +8,7 @@ import src.Registradores.*;
  * RSUB *
  *******/
 public class RSUB {
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+    public   void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regPC = registradores.getRegistrador("PC");
         Registrador regL = registradores.getRegistrador("L");
         

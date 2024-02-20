@@ -8,8 +8,8 @@ import src.Registradores.Registrador;
 /*******
  * ADD *
  *******/
-public class CLEAR {
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+public class CLEAR implements InstrucaoExecutavel {
+    public void executar(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regA = registradores.getRegistrador("A");
         
         System.out.println("Essa instrucao CLEAR torna um registrador 0.");

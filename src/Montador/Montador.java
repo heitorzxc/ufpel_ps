@@ -9,16 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
+import src.Instrucoes.Instrucoes;
 import src.Registradores.BancoRegistradores;
 
 public class Montador {
-    private HashMap<String, Integer> tabelaSimbolos = new HashMap<>();
-    private ArrayList<String> code = new ArrayList<>();
-    private ArrayList<String> codeSemLabels = new ArrayList<>();
-    private ArrayList<String> binaryCode = new ArrayList<>();
+	private HashMap<String, Integer> tabelaSimbolos = new HashMap<>();
+	private ArrayList<String> code = new ArrayList<>();
+	private ArrayList<String> codeSemLabels = new ArrayList<>();
+	private ArrayList<String> binaryCode = new ArrayList<>();
+	private Instrucoes instrucoes = new Instrucoes();
 
     public Montador(String nomeArquivoFonte, String nomeArquivoDestino) {
-
 		try {
 			leArquivo(nomeArquivoFonte);
 			
@@ -36,20 +37,11 @@ public class Montador {
 			System.out.println(e.getMessage());
 		}
         
-		// for(String linha: code)
-		// 	System.out.println(linha);
-
-		// for(String key: tabelaSimbolos.keySet())
-		// 	System.out.println(key + ": " + tabelaSimbolos.get(key));
-
 		removeLabels(code);
 		System.out.println("\n\n codigo sem os labels: \n");
 			for(String linha: codeSemLabels)
 				System.out.println(linha);
 
-		// System.out.println("\nsem os labels:");
-		// for(String linha: codeSemLabels)
-		// 	System.out.println(linha);
 		segundaEtapa(codeSemLabels);
 
 		try {
@@ -222,74 +214,18 @@ public class Montador {
 
 	}
 
-	private String getBinarioOpcode(String opcode){
-		String cod = new String("");
-
-		switch(opcode){
-			case "LDA":
-				cod = "00";
-				break;
-			case "LDB":
-				cod = "68";
-				break;
-			case "LDL":
-				cod = "08";
-				break;
-			case "LDS":
-				cod = "6C";
-				break;
-			case "LDT":
-				cod = "74";
-				break;
-			case "ADD":
-				cod = "18";
-				break;
-			case "SUB":
-				cod = "1C";				
-				break;
-			case "DIV":
-				cod = "24";
-				break;
-			case "MUL":
-				cod = "20";				
-				break;
-			case "MULR":
-				cod = "98";
-				break;
-			case "DIVR":
-				cod = "9C";
-				break;
-			case "ADDR":
-				cod = "90";
-				break;
-			case "SUBR":
-				cod = "94";
-				break;
-			case "RMO":
-				cod = "AC";
-				break;
-			case "J":
-				cod = "3C";
-				break;
-			case "STA":
-				cod = "0C";
-				break;
-			case "CLEAR":
-				cod = "04";
-				break;
-			
-			case "WORD":
-				cod = "AA";
-				break;	
-
-			case "RESW":
-				cod = "AB";
-				break;
-					
-			default:
-				break;
+	private String getBinarioOpcode(String nomeInstrucao){
+		String cod;
+		if(nomeInstrucao.equals("J")){
+			cod = "3C";
+		} else if(nomeInstrucao.equals("WORD")){
+			cod = "AA";
+		} else if(nomeInstrucao.equals("RESW")){
+			cod = "AB";
+		} else {
+			cod = instrucoes.getOpcodePorNome(nomeInstrucao);
 		}
-
+	
 		int i = Integer.parseInt(cod, 16);
 		return toBin(Integer.toString(i), 8);
 	}

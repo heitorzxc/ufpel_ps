@@ -1,64 +1,50 @@
 package src.Instrucoes;
 
+import java.util.HashMap;
 import src.Maquina.Endereco;
 import src.Maquina.Memoria;
 import src.Registradores.BancoRegistradores;
 
 public class Instrucoes {
-  public Instrucoes(){
+    private HashMap<String, InstrucaoExecutavel> instrucoes;
+    private HashMap<String, String> opcodesPorNome;
+    
+    public Instrucoes(){
+        instrucoes = new HashMap<>();
+        opcodesPorNome = new HashMap<>();
+        inicializaInstrucoes("0", new LDA(), "LDA");
+        inicializaInstrucoes("68", new LDB(), "LDB");
+        inicializaInstrucoes("8", new LDL(), "LDL");
+        inicializaInstrucoes("6C", new LDS(), "LDS");
+        inicializaInstrucoes("74", new LDT(), "LDT");
+        inicializaInstrucoes("18", new ADD(), "ADD");
+        inicializaInstrucoes("1C", new SUB(), "SUB");
+        inicializaInstrucoes("24", new DIV(), "DIV");
+        inicializaInstrucoes("20", new MUL(), "MUL");
+        inicializaInstrucoes("98", new MULR(), "MULR");
+        inicializaInstrucoes("9C", new DIVR(), "DIVR");
+        inicializaInstrucoes("90", new ADDR(), "ADDR");
+        inicializaInstrucoes("94", new SUBR(), "SUBR");
+        inicializaInstrucoes("AC", new RMO(), "RMO");
+        inicializaInstrucoes("0C", new STA(), "STA");
+        inicializaInstrucoes("4", new CLEAR(), "CLEAR");
+    }
 
-  }
-  
-  public void executaInstrucao(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
-    switch(instrucao.getOpcode()){
-      case "0":
-          LDA.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      case "68":
-          LDB.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      case "8":
-          LDL.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      case "6C":
-          LDS.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      case "74":
-          LDT.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      case "18":
-          ADD.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      case "1C":
-          SUB.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      case "24":
-          DIV.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      case "20":
-          MUL.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      case "98":
-          MULR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
-          break;
-      case "9C":
-          DIVR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
-          break;
-      case "90":
-          ADDR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
-          break;
-      case "94":
-          SUBR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
-          break;
-      case "AC":
-          RMO.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
-          break;
-      case "0C":
-          STA.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      case "4":
-          CLEAR.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-          break;
-      }
-  }
+    public void inicializaInstrucoes(String opcode, InstrucaoExecutavel instrucao, String nome){
+        instrucoes.put(opcode, instrucao);
+        opcodesPorNome.put(nome, opcode);
+    }
+
+    public String getOpcodePorNome(String nome) {
+        return opcodesPorNome.get(nome);
+    }
+
+    public InstrucaoExecutavel getInstrucaoPorOpcode(String opcode){
+        return instrucoes.get(opcode);
+    }
+
+    public void executaInstrucao(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+        InstrucaoExecutavel inst = getInstrucaoPorOpcode(instrucao.getOpcode());
+        inst.executar(instrucao, endereco, registradores, memoria);
+    }
 }

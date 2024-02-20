@@ -8,10 +8,12 @@ import src.Registradores.Registrador;
 /*******
  * ADD *
  *******/
-public class MUL {
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+public class MUL implements InstrucaoExecutavel {
+    public   void executar(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regA = registradores.getRegistrador("A");
         
+        String nixbpq = instrucao.getNixbpq();
+
         if(nixbpq.equals("010000")){
           System.out.println("A intruçao é MUL imediato, que multiplica o acumulador com o valor inteiro do binário "+endereco.getPalavra().getEnderecoBinario());
           String pegaDado = endereco.getPalavra().getEnderecoBinario();//copiou o endereço binário daquela palavra, que na verdade é um dado. 

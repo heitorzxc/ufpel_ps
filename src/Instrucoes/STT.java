@@ -8,7 +8,7 @@ import src.Registradores.*;
  * STT *
  *******/
 public class STT {
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+    public   void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
 
         System.out.println("A instrucao é: "+endereco.getPalavra().getInsHexa()+".");
         System.out.println("Já que o opcode é = "+endereco.getPalavra().getOpcode()+".");

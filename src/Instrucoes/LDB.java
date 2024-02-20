@@ -6,10 +6,12 @@ import src.Registradores.*;
 /*******
  * LDB *
  *******/
-public class LDB {
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+public class LDB implements InstrucaoExecutavel{
+    public void executar(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regB = registradores.getRegistrador("B");
         
+        String nixbpq = instrucao.getNixbpq();
+
         System.out.println("A instrucao é: "+endereco.getPalavra().getInsHexa()+".");
         System.out.println("Já que o opcode é = "+endereco.getPalavra().getOpcode()+".");
         System.out.println("Essa instrucao tem indice: "+endereco.getIndice()+".");

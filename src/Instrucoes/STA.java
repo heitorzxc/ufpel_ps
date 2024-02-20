@@ -8,9 +8,11 @@ import src.Registradores.Registrador;
 /*******
  * ADD *
  *******/
-public class STA {
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+public class STA implements InstrucaoExecutavel {
+    public   void executar(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regA = registradores.getRegistrador("A");
+
+        // String nixbpq = instrucao.getNixbpq();
         
         String enderecoDesejado = endereco.getPalavra().getEnderecoBinario();
         int enderecoDesejadoInt = Integer.parseInt(enderecoDesejado, 2);

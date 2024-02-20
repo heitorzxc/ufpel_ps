@@ -7,9 +7,11 @@ import src.Registradores.*;
 /*******
  * LDB *
  *******/
-public class LDT {
-	public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+public class LDT implements InstrucaoExecutavel{
+	public  void executar(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
 		Registrador regT = registradores.getRegistrador("T");
+
+		String nixbpq = instrucao.getNixbpq();
 		
 		if(nixbpq.equals("010000")){
 			System.out.println("A intruçao é LDT imediato, que insere o valor inteiro do binário "+endereco.getPalavra().getEnderecoBinario()+" no Registrador T.");

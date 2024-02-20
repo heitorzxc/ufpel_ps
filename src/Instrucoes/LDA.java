@@ -7,10 +7,11 @@ import src.Registradores.*;
 /*******
  * LDA *
  *******/
-public class LDA {    
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+public class LDA implements InstrucaoExecutavel {
+    public void executar(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regA = registradores.getRegistrador("A");
 
+        String nixbpq = instrucao.getNixbpq();
         System.out.println("A instrucao é: "+endereco.getPalavra().getInsHexa()+".");
         System.out.println("Já que o opcode é = "+endereco.getPalavra().getOpcode()+".");
         System.out.println("Essa instrucao tem indice: "+endereco.getIndice()+".");

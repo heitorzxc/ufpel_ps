@@ -8,13 +8,14 @@ import src.Registradores.Registrador;
 /*******
  * ADD *
  *******/
-public class ADDR {
-    public static void executar(String endercoBinario, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+public class ADDR implements InstrucaoExecutavel{
+    public   void executar(Instrucao instrucao, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
         Registrador regT = registradores.getRegistrador("T");
         Registrador regS = registradores.getRegistrador("S");
+      
+        String enderecoBinario = instrucao.getEnderecoBinario();
         
-        
-        if (endercoBinario.equals("00010011")){// vê quais são os dois registradores, nesse caso S e T
+        if (enderecoBinario.equals("00010011")){// vê quais são os dois registradores, nesse caso S e T
           System.out.println("S <- (S) + (T)");
           System.out.println("O valor no registrador S será somado com o valor no Registrador T.");
           System.out.println("O registrador S tem valor = " +regS.getNumeroInteiro());

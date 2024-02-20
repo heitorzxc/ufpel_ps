@@ -9,7 +9,7 @@ import src.Registradores.*;
  *******/
 public class OR {
 
-    public static void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
+    public   void executar(String nixbpq, Endereco endereco, BancoRegistradores registradores, Memoria memoria){
 
         Registrador regA = registradores.getRegistrador("A");
         String pegaDado = endereco.getPalavra().getEnderecoBinario();

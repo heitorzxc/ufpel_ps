@@ -4,36 +4,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
-import src.Instrucoes.ADD;
-import src.Instrucoes.ADDR;
-import src.Instrucoes.CLEAR;
-import src.Instrucoes.DIV;
-import src.Instrucoes.DIVR;
 import src.Instrucoes.Instrucao;
+import src.Instrucoes.Instrucoes;
 import src.Instrucoes.J;
-import src.Instrucoes.LDA;
-import src.Instrucoes.LDB;
-import src.Instrucoes.LDL;
-import src.Instrucoes.LDS;
-import src.Instrucoes.LDT;
-import src.Instrucoes.MUL;
-import src.Instrucoes.MULR;
-import src.Instrucoes.RMO;
-import src.Instrucoes.STA;
-import src.Instrucoes.SUB;
-import src.Instrucoes.SUBR;
 import src.Registradores.BancoRegistradores;
 import src.Registradores.Registrador;
 
 public class Maquina {
     public BancoRegistradores registradores;
     public Memoria memoria;
+    public Instrucoes instrucoes;
     
     public Maquina(){
         this.memoria = new Memoria();
         this.registradores = new BancoRegistradores();
+        this.instrucoes = new Instrucoes();
     }
-    
     
     public void carregarInstrucoes(String pathArquivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(pathArquivo))) {
@@ -61,7 +47,6 @@ public class Maquina {
     public void executarPrograma(){
         memoria.imprimirMemoria();
         
-        
         Registrador regS = registradores.getRegistrador("S");
         regS.setNumeroInteiro(2);
         
@@ -81,62 +66,14 @@ public class Maquina {
 
             if (instrucao.getNumBin().equals("11110100")){
                 break;
+            } else if(instrucao.getOpcode() == "3C"){
+                i = J.executar(instrucao.getNixbpq(), endereco, registradores, memoria, i);
+                break;
+            } else {
+                instrucoes.executaInstrucao(instrucao, endereco, registradores, memoria);
             }
-            
-            switch(instrucao.getOpcode()){
-                case "0":
-                    LDA.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                case "68":
-                    LDB.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                case "8":
-                    LDL.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                case "6C":
-                    LDS.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                case "74":
-                    LDT.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                case "18":
-                    ADD.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                case "1C":
-                    SUB.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                case "24":
-                    DIV.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                case "20":
-                    MUL.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                case "98":
-                    MULR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
-                    break;
-                case "9C":
-                    DIVR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
-                    break;
-                case "90":
-                    ADDR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
-                    break;
-                case "94":
-                    SUBR.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
-                    break;
-                case "AC":
-                    RMO.executar(instrucao.getEnderecoBinario(), endereco, registradores, memoria);
-                    break;
-                case "3C":
-                    i = J.executar(instrucao.getNixbpq(), endereco, registradores, memoria, i);
-                    break;
-                case "0C":
-                    STA.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                case "4":
-                    CLEAR.executar(instrucao.getNixbpq(), endereco, registradores, memoria);
-                    break;
-                
-            }
+
+          
         }
         
     }

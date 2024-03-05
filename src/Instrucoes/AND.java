@@ -1,8 +1,11 @@
 package src.Instrucoes;
 
+import src.Exceptions.RegisterIdenfierError;
+import src.Exceptions.ValueOutOfBoundError;
 import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Registradores.*;
+import src.Utils.Conversao;
 
 /*******
  * AND *
@@ -12,34 +15,14 @@ public class AND extends Instrucao {
     super("AND", "40", 1);
   }
 
-  public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) {
-    String nixbpe = instrucao.getNIXBPE();
-    instrucao.getNIXBPE().substring(0, 0);
-    // Registrador regA = registradores.getRegistrador("A");
-    // String pegaDado = endereco.getPalavra().getEnderecoBinario();
-    // int dadoConvertido = Integer.parseInt(pegaDado, 2);
+  public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria)
+      throws RegisterIdenfierError, ValueOutOfBoundError {
+    Integer endereco = Conversao.StrNumBinC2(instrucao.getEndereco());
 
-    // if (nixbpq.equals("010001")) {
-    // System.out.println("A intruçao é AND imediato, que armazena o valor binário "
-    // + endereco.getPalavra().getEnderecoBinario() + " no acumulador (Registrador
-    // A).");
-    // } else if (nixbpq.equals("110001")) {
+    Integer regA = registradores.getValor("A");
 
-    // System.out.println("A intruçao é AND direto, que armazena o valor no endereço
-    // "
-    // + endereco.getPalavra().getEnderecoBinario() + " no acumulador (Registrador
-    // A).");
+    Integer valor = Conversao.stringToInt(memoria.getValor(endereco).getEndereco());
 
-    // for (Endereco enderecoComparado : memoria.getMemoria()) {
-    // if (enderecoComparado.getEndDeci() == dadoConvertido) {
-
-    // String numeroBinario = enderecoComparado.getPalavra().getNumBin();
-    // dadoConvertido = Integer.parseInt(numeroBinario, 2);
-    // System.out.println("O valor no endereço é = " + dadoConvertido);
-    // break;
-    // }
-    // }
-    // }
-    // regA.setNumeroInteiro((dadoConvertido & regA.getNumeroInteiro()));
+    registradores.setValor("A", regA & valor);
   }
 }

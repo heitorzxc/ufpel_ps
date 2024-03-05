@@ -1,0 +1,2 @@
+FIRST: LDA  NUMBER  ; Carrega o conteúdo do endereço NUMBER no acumulador
+NUMBER: WORD 5       ; Define uma palavra com o valor 5

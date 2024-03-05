@@ -1,0 +1,9 @@
+;START 1000          ; Início do programa no endereço 1000
+FIRST: LDA  NUMBER  ; Carrega o conteúdo do endereço NUMBER no acumulador
+       ADD  VALUE   ; Adiciona o conteúdo do endereço VALUE ao acumulador
+       STA  RESULT  ; Armazena o conteúdo do acumulador no endereço RESULT
+       CLEAR A      ; Limpa o acumulador
+NUMBER: WORD 5       ; Define uma palavra com o valor 5
+VALUE:  WORD 3       ; Define uma palavra com o valor 3
+RESULT: RESW 1       ; Reserva espaço para uma palavra
+;END:    FIRST       ; Fim do programa, com o primeiro executável em FIRST

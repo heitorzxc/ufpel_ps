@@ -1,0 +1,41 @@
+  {
+    "version": "10.0.0",
+    "configurations": [
+      {
+        "type": "java",
+        "name": "Main_Simulador",
+        "request": "launch",
+        "mainClass": "src.Main_Simulador",
+        "projectName": "ufpel_ps-refatorando_26abc00a"
+      },
+      {
+        "type": "java",
+        "name": "Main",
+        "request": "launch",
+        "mainClass": "src.Main",
+        "projectName": "ufpel_ps_455a9f07"
+      },
+      {
+        "type": "java",
+        "name": "Main",
+        "request": "launch",
+        "mainClass": "src.Main",
+        "projectName": "ufpel_ps",
+        "vmArgs": "--module-path --module-path /resources/javafx-sdk-21.0.1/lib/ --add-modules javafx.controls,javafx.fxml --add-modules javafx.controls,javafx.fxml"
+      },
+      {
+        "type": "java",
+        "name": "Current File",
+        "request": "launch",
+        "mainClass": "${file}"
+      },
+      {
+        "type": "java",
+        "name": "Interface",
+        "request": "launch",
+        "mainClass": "src.Interface",
+        "projectName": "ufpel_ps",
+        "vmArgs": "--module-path /resources/javafx-sdk-21.0.1/lib/ --add-modules javafx.controls,javafx.fxml"
+      }
+    ]
+  }

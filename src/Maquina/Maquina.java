@@ -68,10 +68,10 @@ public class Maquina {
 
     }
 
-    public void executarPrograma() throws Exception {
+    public Boolean executarPrograma() throws Exception {
         while (true) {
             if (!step()) // programa parou
-                break;
+                return false;
         }
     }
 

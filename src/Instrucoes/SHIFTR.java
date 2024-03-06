@@ -12,20 +12,11 @@ public class SHIFTR extends Instrucao {
     super("SHIFTR", "A8", 0);
   }
 
-  public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) {
+  public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {
+    String[] operandos = instrucao.getOperandos();
+    Integer valorReg = registradores.getValor(operandos[0]);
+    int n = Integer.parseInt(operandos[1]);
 
-    // Registrador regA = registradores.getRegistrador("A");
-
-    // if (enderecoBinario.equals("00000100")) {
-    // System.out.println("A <- (A) >>2");
-    // System.out.println("Realiza o deslocamento a direita de n bits .");
-
-    // System.out.println("Valor do Registrador A = " + regA.getNumeroInteiro());
-
-    // regA.setNumeroInteiro(regA.getNumeroInteiro() >> 2);
-    // System.out.println("Valor deslocado a direita = " + regA.getNumeroInteiro() +
-    // "\n");
-
-    // }
+    registradores.setValor(operandos[0], valorReg >> n);
   }
 }

@@ -3,6 +3,7 @@ package src.Instrucoes;
 import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Registradores.*;
+import src.Utils.Conversao;
 
 /*******
  * LDB *
@@ -12,8 +13,23 @@ public class LDL extends Instrucao {
 		super("LDL", "8", 1);
 	}
 
-	public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) {
-		// Registrador regL = registradores.getRegistrador("L");
+ public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {
+		String nixbpe = instrucao.getNIXBPE();
+		Integer enderecoDestino = Conversao.StrNumBinC2(instrucao.getEndereco());
+
+		if (nixbpe.startsWith("11")) { // Direto
+				enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
+		}
+
+		Integer valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+
+		registradores.setValor("L", valorMem);
+	}
+
+}
+
+
+	// Registrador regL = registradores.getRegistrador("L");
 
 		// String nixbpq = instrucao.getNixbpq();
 		// System.out.println("A instrucao é: " + endereco.getPalavra().getInsHexa() +
@@ -58,6 +74,3 @@ public class LDL extends Instrucao {
 
 		// System.out.println("O valor no Registrador L = " + regL.getNumeroInteiro() +
 		// "\n");
-
-	}
-}

@@ -3,6 +3,7 @@ package src.Instrucoes;
 import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Registradores.*;
+import src.Utils.Conversao;
 
 /*******
  * OR *
@@ -12,33 +13,18 @@ public class OR extends Instrucao {
     super("OR", "44", 2);
   }
 
-  public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) {
+  public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {
+    String nixbpe = instrucao.getNIXBPE();
+    Integer valorRegA = registradores.getValor("A");
 
-    // Registrador regA = registradores.getRegistrador("A");
-    // String pegaDado = endereco.getPalavra().getEnderecoBinario();
-    // int dadoConvertido = Integer.parseInt(pegaDado, 2);
+    Integer enderecoDestino = Conversao.StrNumBinC2(instrucao.getEndereco());
 
-    // if (nixbpq.equals("010001")) {
-    // System.out.println("A intruçao é OR imediato, que armazena o valor binário "
-    // + endereco.getPalavra().getEnderecoBinario() + " no acumulador (Registrador
-    // A).");
-    // } else if (nixbpq.equals("110001")) {
+    if (nixbpe.startsWith("11")) { // Direto
+        enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
+    }
 
-    // System.out.println("A intruçao é OR direto, que armazena o valor no endereço
-    // "
-    // + endereco.getPalavra().getEnderecoBinario() + " no acumulador (Registrador
-    // A).");
+    Integer valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
 
-    // for (Endereco enderecoComparado : memoria.getMemoria()) {
-    // if (enderecoComparado.getEndDeci() == dadoConvertido) {
-
-    // String numeroBinario = enderecoComparado.getPalavra().getNumBin();
-    // dadoConvertido = Integer.parseInt(numeroBinario, 2);
-    // System.out.println("O valor no endereço é = " + dadoConvertido);
-    // break;
-    // }
-    // }
-    // }
-    // regA.setNumeroInteiro((dadoConvertido | regA.getNumeroInteiro()));
+    registradores.setValor("A", valorRegA | valorMem);
   }
 }

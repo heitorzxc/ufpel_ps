@@ -14,6 +14,15 @@ public class STA extends Instrucao {
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {
+        String nixbpe = instrucao.getNIXBPE();
+        Integer valorRegA = registradores.getValor("A");
 
+        Integer enderecoDestino = Conversao.StrNumBinC2(instrucao.getEndereco());
+
+        if (nixbpe.startsWith("11")) { // Direto
+            enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
+        }
+
+        memoria.setValor(enderecoDestino, String.valueOf(valorRegA));
     }
 }

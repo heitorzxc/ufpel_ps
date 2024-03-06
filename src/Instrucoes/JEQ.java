@@ -7,12 +7,24 @@ import src.Utils.Conversao;
 
 public class JEQ extends Instrucao {
     public JEQ() {
-        super("JEQ", "30", 1); 
+        super("JEQ", "30", 1);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {
-        if (registradores.getValor("SW") == 0) { // é isso mesmo?
+        String nixbpe = instrucao.getNIXBPE();
+
+        if (registradores.getValor("SW") == 0) {
             Integer enderecoDestino = Conversao.StrNumBinC2(instrucao.getEndereco());
+
+            if (nixbpe.startsWith("11")) { // Direto
+                enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
+            }
+
+            if (nixbpe.startsWith("10")) { // INDIRETO
+                Endereco enderecoMemoria = memoria.getValor(enderecoDestino);
+                enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
+            }
+
             registradores.setValor("PC", enderecoDestino);
         }
     }

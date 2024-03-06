@@ -23,6 +23,11 @@ public class STA extends Instrucao {
             enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
         }
 
+        if (nixbpe.startsWith("10")) { // INDIRETO
+            Endereco enderecoMemoria = memoria.getValor(enderecoDestino);
+            enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
+        }
+
         memoria.setValor(enderecoDestino, String.valueOf(valorRegA));
     }
 }

@@ -17,13 +17,24 @@ public class DIV extends Instrucao {
     String nixbpe = instrucao.getNIXBPE();
     Integer valorReg = registradores.getValor("A");
 
+    Integer valorMem = 0;
+
     Integer enderecoDestino = Conversao.StrNumBinC2(instrucao.getEndereco());
 
-    if (nixbpe.startsWith("11")) { // DIRETO
-      enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
-    }
+    if (nixbpe.startsWith("01")) { // IMEDIATO
+      valorMem = enderecoDestino;
+    } else {
+      if (nixbpe.startsWith("11")) { // DIRETO
+        enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
+      }
 
-    Integer valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+      if (nixbpe.startsWith("10")) { // INDIRETO
+        Endereco enderecoMemoria = memoria.getValor(enderecoDestino);
+        enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
+      }
+
+      valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+    }
 
     registradores.setValor("A", valorReg / valorMem);
   }

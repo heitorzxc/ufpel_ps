@@ -23,7 +23,12 @@ public class STX extends Instrucao {
             enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
         }
 
-        memoria.setValor(enderecoDestino, String.valueOf(valorRegX)); 
+        if (nixbpe.startsWith("10")) { // INDIRETO
+            Endereco enderecoMemoria = memoria.getValor(enderecoDestino);
+            enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
+        }
+
+        memoria.setValor(enderecoDestino, String.valueOf(valorRegX));
     }
 
 }

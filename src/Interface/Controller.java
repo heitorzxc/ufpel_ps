@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +20,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
+import src.Memoria.Endereco;
+import src.Memoria.Memoria;
 import src.Montador.*;
+import src.Maquina.*;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -29,18 +32,20 @@ import javafx.scene.effect.DropShadow;
 
 public class Controller {
 
+    //Gerais
     @FXML
     private File selectedFile;
 
     @FXML
-    private Boolean flagD = true;
+    private Maquina maquina;
 
     @FXML
-    private MenuButton buttonChoiceRun;
+    private Memoria memoria;
 
     @FXML
-    private RadioButton buttonShowDetails;
+    private String textoPrompt;
 
+    //TextFields
     @FXML
     private TextField registerA;
 
@@ -69,50 +74,31 @@ public class Controller {
     private TextField textOutput;
 
     @FXML
-    private TextField textNumInst;
-
-    @FXML
-    private Maquina maquina;
-
-    @FXML
-    private String textoPrompt;
-
-    @FXML
-    private Montador montador;
-
-    @FXML
     private TextField textInstrucao;
 
+    //TableView
     @FXML
-    private TableView<DadosMemoria> tableView;
+    private TableView<Endereco> tableView;
 
     @FXML
-    private TableColumn<DadosMemoria, String> colunaEndereco;
+    private TableColumn<Endereco, String> colunaEndereco;
 
     @FXML
-    private TableColumn<DadosMemoria, String> colunaNumBin;
+    private TableColumn<Endereco, String> colunaNumBin;
 
     @FXML
-    private TableColumn<DadosMemoria, String> colunaInsHexa;
+    private TableColumn<Endereco, String> colunaInsHexa;
 
     @FXML
-    private TableColumn<DadosMemoria, String> colunaOpcode;
+    private TableColumn<Endereco, String> colunaOpcode;
 
     @FXML
-    private TableColumn<DadosMemoria, String> colunaEnderecoBinario;
+    private TableColumn<Endereco, String> colunaEnderecoBinario;
 
     @FXML
-    private TableColumn<DadosMemoria, String> colunaNixbpq;
+    private TableColumn<Endereco, String> colunaNixbpq;
 
-    @FXML
-    private int step = 0;
-
-    @FXML
-    private String loadTo = "Default";
-
-    @FXML
-    private boolean stepMode;
-
+    //ImageView
     @FXML
     private ImageView LOADimg;
 
@@ -121,6 +107,9 @@ public class Controller {
 
     @FXML
     private ImageView STEPimg;
+
+    @FXML
+    private ImageView MOUNTimg;
 
     // Caixa onde digitamos ou sobrescrevemos códigos!!
     @FXML
@@ -153,7 +142,8 @@ public class Controller {
 
     // ÍCONE RUN - CLIQUE
     @FXML
-    void RUNimgclick(MouseEvent event) throws IOException {
+    void RUNimgclick(MouseEvent event) throws Exception {
+        maquina = new Maquina("./resources/binarios/exemplo.txt");
     }
 
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
@@ -216,8 +206,32 @@ public class Controller {
 
     // Criação e exibição da tabela que representa a memória
     @FXML
-    public void handleTABLE(ObservableList<DadosMemoria> dados, int linhaAtual) {
+    public void handleTABLE() {
+        colunaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
+        colunaNumBin.setCellValueFactory(new PropertyValueFactory<>("instrucaoBinario"));
+        colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("insHexa"));
+        colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
+        colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("enderecoBinario"));
+        colunaNixbpq.setCellValueFactory(new PropertyValueFactory<>("nixbpe"));
+        
+        //LISTENER
+        memoria.setListener((ListChangeListener<Endereco>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                   
+                    tableView.getItems().addAll(change.getAddedSubList());
+                }
+                if (change.wasRemoved()) {
+                 
+                    tableView.getItems().removeAll(change.getRemoved());
+                }
+                
+            }
+        });
+    
+        tableView.refresh();
     }
+    
 
     // Métodos auxiliares
 
@@ -227,29 +241,6 @@ public class Controller {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.show();
-    }
-
-    private void executarMontador(boolean stepMode) throws FileNotFoundException {
-        montador.leArquivo(selectedFile.getAbsolutePath());
-        handleTERMINAL("Arquivo Carregado no Montador");
-        montador.executarMontador("./resources/resultados/saida.txt", flagD);
-        maquina.carregarInstrucoes("./resources/resultados/saida.txt");
-
-    }
-
-    private void executarMaquina(boolean stepMode) {
-        maquina.carregarInstrucoes(selectedFile.getAbsolutePath());
-        handleTERMINAL("Arquivo Carregado na Máquina");
-        if (stepMode) {
-            maquina.executarProgramaStep(step);
-            step += 1;
-        } else {
-            maquina.executarPrograma();
-        }
-    }
-
-    private void executarFluxoCompleto(boolean stepMode) throws IOException {
-        handleTERMINAL("Executando Fluxo Completo");
     }
 
     // Saidas Gerais de texto
@@ -268,11 +259,6 @@ public class Controller {
     @FXML
     public void handleCODE(String code) {
         textCODE.appendText(code + "\n");
-    }
-
-    @FXML
-    public void handleNumInst(String NumInst) {
-        textNumInst.setText(NumInst);
     }
 
     @FXML
@@ -360,5 +346,7 @@ public class Controller {
     public void handleregXx(String dadoX) {
         registerX.setText(dadoX);
     }
+
+    
 
 }

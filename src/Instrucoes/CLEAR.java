@@ -9,12 +9,12 @@ import src.Registradores.BancoRegistradores;
  *******/
 public class CLEAR extends Instrucao {
     public CLEAR() {
-        super("CLEAR", "04", 1);
+        super("CLEAR", "B4", 1);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {
         String[] operandos = instrucao.getOperandos();
 
-        registradores.setValor(operandos[1], 0);
+        registradores.setValor(operandos[0], 0);
     }
 }

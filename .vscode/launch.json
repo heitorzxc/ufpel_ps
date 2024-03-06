@@ -6,6 +6,13 @@
         "name": "Main_Simulador",
         "request": "launch",
         "mainClass": "src.Main_Simulador",
+        "projectName": "ufpel_ps_8b64752b"
+      },
+      {
+        "type": "java",
+        "name": "Main_Simulador",
+        "request": "launch",
+        "mainClass": "src.Main_Simulador",
         "projectName": "ufpel_ps-refatorando_26abc00a"
       },
       {

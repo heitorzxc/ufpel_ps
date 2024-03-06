@@ -1,5 +1,7 @@
 package src.Memoria;
 
+import src.Utils.Conversao;
+
 public class Endereco {
     private String instrucaoBinario;
     private String opcode;
@@ -62,5 +64,9 @@ public class Endereco {
     public void setInstrucao(String instrucao) {
         this.enderecoBinario = instrucao;
         interpretarInstrucao();
+    }
+
+    public String getValor() {
+        return Conversao.hexToBin(insHexa);
     }
 }

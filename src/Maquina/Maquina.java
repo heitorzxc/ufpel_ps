@@ -27,6 +27,7 @@ public class Maquina {
     public Maquina(String caminho_arquivo) throws Exception {
         this.memoria = new Memoria();
         this.registradores = new BancoRegistradores();
+        Instrucoes.inicializaInstrucoes(); // seta as instrucoes disponiveis
 
         this.arquivo = caminho_arquivo;
 
@@ -68,29 +69,29 @@ public class Maquina {
     }
 
     public void executarPrograma() throws Exception {
-        registradores.setValor("S", 2);
-        registradores.setValor("T", 32);
-        registradores.setValor("B", 1);
-
         while (true) {
-            step();
+            if (!step()) // programa parou
+                break;
         }
-
     }
 
-    public void step() throws Exception {
+    public Boolean step() throws Exception {
         Integer end = registradores.getValor("PC");
 
         Endereco instrucao = memoria.getValor(end);
 
-        if (instrucao.getOpcode().equals("11110100")) {
-            return;
+        System.out.println("Opcode: " + instrucao.getOpcode());
+        if (instrucao.getOpcode().equals("F4")) {
+            // registradores.setValor("SW", 0);
+            return false;
         }
 
         Instrucao operacao = Instrucoes.getInstrucaoPorOpcode(instrucao.getOpcode());
         operacao.executar(instrucao, registradores, memoria);
 
+        System.out.println(registradores);
         registradores.setValor("PC", end + 1);
-    }
 
+        return true;
+    }
 }

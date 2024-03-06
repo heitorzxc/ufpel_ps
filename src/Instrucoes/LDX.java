@@ -14,15 +14,15 @@ public class LDX extends Instrucao {
 	}
 
 	public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {
- 			String nixbpe = instrucao.getNIXBPE();
-			Integer enderecoDestino = Conversao.StrNumBinC2(instrucao.getEndereco());
+		String nixbpe = instrucao.getNIXBPE();
+		Integer enderecoDestino = Conversao.StrNumBinC2(instrucao.getEndereco());
 
-			if (nixbpe.startsWith("11")) { // Direto
-					enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
-			}
+		if (nixbpe.startsWith("11")) { // Direto
+			enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
+		}
 
-			Integer valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+		Integer valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getValor());
 
-			registradores.setValor("X", valorMem);
+		registradores.setValor("X", valorMem);
 	}
 }

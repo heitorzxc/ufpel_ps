@@ -26,6 +26,13 @@ public class Registrador {
 		this.setValor(valor);
 	}
 
+	Registrador(String nome, String identificador, String valor) throws Exception {
+		this.nome = nome;
+		this.identificador = identificador;
+
+		this.setValor(valor);
+	}
+
 	// Getters
 	public Integer getValor() {
 		return valor;

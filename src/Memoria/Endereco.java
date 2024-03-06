@@ -28,7 +28,7 @@ public class Endereco {
 
             if (tamanho == 16) {
                 operando1 = instrucaoBinario.substring(8, 12);
-                operando2 = instrucaoBinario.substring(13, 16);
+                operando2 = instrucaoBinario.substring(12, 16);
             }
 
         } else {

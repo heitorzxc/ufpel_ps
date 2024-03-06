@@ -3,7 +3,6 @@ package src.Instrucoes;
 import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Registradores.BancoRegistradores;
-import src.Utils.Conversao;
 
 /*******
  * ADD *

@@ -6,6 +6,21 @@
         "name": "Main_Simulador",
         "request": "launch",
         "mainClass": "src.Main_Simulador",
+        "projectName": "ufpel_ps_455a9f07"
+      },
+      {
+        "type": "java",
+        "name": "Main_Interface",
+        "request": "launch",
+        "mainClass": "src.Interface.Main_Interface",
+        "projectName": "ufpel_ps_455a9f07",
+        "vmArgs": "--module-path /resources/javafx-sdk-21.0.2/lib/ --add-modules javafx.controls, javafx.fxml"
+      },
+      {
+        "type": "java",
+        "name": "Main_Simulador",
+        "request": "launch",
+        "mainClass": "src.Main_Simulador",
         "projectName": "ufpel_ps_8b64752b"
       },
       {
@@ -24,14 +39,6 @@
       },
       {
         "type": "java",
-        "name": "Main",
-        "request": "launch",
-        "mainClass": "src.Main",
-        "projectName": "ufpel_ps",
-        "vmArgs": "--module-path --module-path /resources/javafx-sdk-21.0.1/lib/ --add-modules javafx.controls,javafx.fxml --add-modules javafx.controls,javafx.fxml"
-      },
-      {
-        "type": "java",
         "name": "Current File",
         "request": "launch",
         "mainClass": "${file}"
@@ -42,7 +49,7 @@
         "request": "launch",
         "mainClass": "src.Interface",
         "projectName": "ufpel_ps",
-        "vmArgs": "--module-path /resources/javafx-sdk-21.0.1/lib/ --add-modules javafx.controls,javafx.fxml"
+        "vmArgs": "--module-path /resources/javafx-sdk-21.0.2/lib/ --add-modules javafx.controls,javafx.fxml"
       }
     ]
   }

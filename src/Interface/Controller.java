@@ -219,6 +219,7 @@ public class Controller {
     }
     //Atualiza Registradores
     public void atualizarRegistradores() throws RegisterIdenfierError {
+        handleTERMINAL("Atualizando Registradores");
         registerA.setText(String.valueOf(maquina.registradores.getValor("A")));
         registerB.setText(String.valueOf(maquina.registradores.getValor("B")));
         registerL.setText(String.valueOf(maquina.registradores.getValor("L")));
@@ -227,6 +228,7 @@ public class Controller {
         registerT.setText(String.valueOf(maquina.registradores.getValor("T")));
         registerW.setText(String.valueOf(maquina.registradores.getValor("SW")));
         registerX.setText(String.valueOf(maquina.registradores.getValor("X")));
+        handleTERMINAL("Registradores Atualizados");
     }
     
 
@@ -267,6 +269,8 @@ public void handleTABLE() {
     public void updateInterface(){
             maquina.registradores.setListener((MapChangeListener<String, Registrador>) change  -> {
             if(change.wasAdded() || change.wasRemoved()){
+                handleTERMINAL("Alteração nos registradores detectada. Chamando atualizarRegistradores...");
+            
             try {
                 atualizarRegistradores();
             } catch (RegisterIdenfierError e) {
@@ -274,15 +278,17 @@ public void handleTABLE() {
             }
         }
         });
+        handleTERMINAL("UpdateInterface");
     }
 
 
     //METODOS DE TEXTE
     @FXML
     void testeRUN(ActionEvent event) throws Exception{
+        maquina.executarPrograma();
+        atualizarRegistradores();
         updateInterface();
         handleTABLE();
-        maquina.executarPrograma();
         
         
 

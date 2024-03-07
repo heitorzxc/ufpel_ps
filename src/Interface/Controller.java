@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +26,8 @@ import javafx.stage.Stage;
 import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Montador.*;
+import src.Registradores.Registrador;
+import src.Exceptions.RegisterIdenfierError;
 import src.Maquina.*;
 
 import javafx.scene.image.ImageView;
@@ -210,9 +213,23 @@ public class Controller {
         RUNimg.setEffect(null);
     }
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
+
     public void setMaquina(Maquina maquina){
         this.maquina = maquina;
     }
+    //Atualiza Registradores
+    public void atualizarRegistradores() throws RegisterIdenfierError {
+        registerA.setText(String.valueOf(maquina.registradores.getValor("A")));
+        registerB.setText(String.valueOf(maquina.registradores.getValor("B")));
+        registerL.setText(String.valueOf(maquina.registradores.getValor("L")));
+        registerPC.setText(String.valueOf(maquina.registradores.getValor("PC")));
+        registerS.setText(String.valueOf(maquina.registradores.getValor("S")));
+        registerT.setText(String.valueOf(maquina.registradores.getValor("T")));
+        registerW.setText(String.valueOf(maquina.registradores.getValor("SW")));
+        registerX.setText(String.valueOf(maquina.registradores.getValor("X")));
+    }
+    
+
     // Criação e exibição da tabela que representa a memória
   @FXML
 public void handleTABLE() {
@@ -245,14 +262,30 @@ public void handleTABLE() {
     tableView.setItems(observableList);
     tableView.refresh();
 }
+    @FXML
+
+    public void updateInterface(){
+            maquina.registradores.setListener((MapChangeListener<String, Registrador>) change  -> {
+            if(change.wasAdded() || change.wasRemoved()){
+            try {
+                atualizarRegistradores();
+            } catch (RegisterIdenfierError e) {
+                e.printStackTrace();
+            }
+        }
+        });
+    }
 
 
     //METODOS DE TEXTE
     @FXML
     void testeRUN(ActionEvent event) throws Exception{
-        
-        maquina.executarPrograma();
+        updateInterface();
         handleTABLE();
+        maquina.executarPrograma();
+        
+        
+
     }
     @FXML
     void testeSTEP(ActionEvent event){

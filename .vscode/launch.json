@@ -1,49 +1,36 @@
-  {
-    "version": "10.0.0",
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
     "configurations": [
-      {
-        "type": "java",
-        "name": "Main_Simulador",
-        "request": "launch",
-        "mainClass": "src.Main_Simulador",
-        "projectName": "ufpel_ps_455a9f07"
-      },
-      {
-        "type": "java",
-        "name": "Main_Interface",
-        "request": "launch",
-        "mainClass": "src.Interface.Main_Interface",
-        "projectName": "ufpel_ps_455a9f07",
-        "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-21.0.1/lib\" --add-modules javafx.fxml, javafx.controls"
-        
-      },
-      {
-        "type": "java",
-        "name": "Main_Simulador",
-        "request": "launch",
-        "mainClass": "src.Main_Simulador",
-        "projectName": "ufpel_ps_8b64752b"
-      },
-      {
-        "type": "java",
-        "name": "Main_Simulador",
-        "request": "launch",
-        "mainClass": "src.Main_Simulador",
-        "projectName": "ufpel_ps-refatorando_26abc00a"
-      },
-      {
-        "type": "java",
-        "name": "Main",
-        "request": "launch",
-        "mainClass": "src.Main",
-        "projectName": "ufpel_ps_455a9f07"
-      },
-      {
-        "type": "java",
-        "name": "Current File",
-        "request": "launch",
-        "mainClass": "${file}"
-      }
-      
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Main_Interface",
+            "request": "launch",
+            "mainClass": "src.Interface.Main_Interface",
+            "projectName": "ufpel_ps_455a9f07",
+            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-21.0.1/lib\" --add-modules javafx.fxml,javafx.controls"
+        },
+        {
+            "type": "java",
+            "name": "Main_Montador",
+            "request": "launch",
+            "mainClass": "src.Main_Montador",
+            "projectName": "ufpel_ps_455a9f07"
+        },
+        {
+            "type": "java",
+            "name": "Main_Simulador",
+            "request": "launch",
+            "mainClass": "src.Main_Simulador",
+            "projectName": "ufpel_ps_455a9f07"
+        }
     ]
-  }
+}

@@ -12,6 +12,8 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import src.Maquina.Maquina;
+
 
 
 
@@ -29,6 +31,8 @@ public class Main_Interface extends Application {
         Parent root = loader.load();
         Controller controller= loader.getController();
 
+        Maquina maquina = new Maquina("./resources/binarios/ex.txt");
+        controller.setMaquina(maquina);
 
         // Carregar a imagem de fundo
      //   Image image = new Image("./resources/img/fundo3.png");
@@ -36,10 +40,10 @@ public class Main_Interface extends Application {
         //BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
 
         // Verificar se o root é uma instância de Pane e, em caso afirmativo, definir o plano de fundo
-        if (root instanceof Pane) {
-            Pane pane = (Pane) root;
+      //  if (root instanceof Pane) {
+        //    Pane pane = (Pane) root;
            // pane.setBackground(new Background(backgroundImage));
-        }
+        //}
         
         // Configurar a cena
         Scene scene = new Scene(root);

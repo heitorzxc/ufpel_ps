@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Montador.*;
+import src.Registradores.BancoRegistradores;
 import src.Registradores.Registrador;
 import src.Exceptions.RegisterIdenfierError;
 import src.Maquina.*;
@@ -37,7 +38,7 @@ import javafx.scene.effect.DropShadow;
 
 public class Controller {
 
-    //Gerais
+    // Gerais
     @FXML
     private File selectedFile;
 
@@ -49,13 +50,13 @@ public class Controller {
 
     @FXML
     private String textoPrompt;
-    
+
     @FXML
     private Button RUNBUTTON;
 
     @FXML
     private Button STEPBUTTON;
-    //TextFields
+    // TextFields
     @FXML
     private TextField registerA;
 
@@ -86,7 +87,7 @@ public class Controller {
     @FXML
     private TextField textInstrucao;
 
-    //TableView
+    // TableView
     @FXML
     private TableView<Endereco> tableView;
 
@@ -108,7 +109,7 @@ public class Controller {
     @FXML
     private TableColumn<Endereco, String> colunaNixbpq;
 
-    //ImageView
+    // ImageView
     @FXML
     private ImageView LOADimg;
 
@@ -153,7 +154,7 @@ public class Controller {
     // ÍCONE RUN - CLIQUE
     @FXML
     void RUNimgclick(MouseEvent event) throws Exception {
-        maquina = new Maquina("./resources/binarios/exemplo.txt");
+        Maquina.getInstance().executarPrograma();
     }
 
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
@@ -214,87 +215,83 @@ public class Controller {
     }
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
 
-    public void setMaquina(Maquina maquina){
-        this.maquina = maquina;
-    }
-    //Atualiza Registradores
+    // Atualiza Registradores
     public void atualizarRegistradores() throws RegisterIdenfierError {
         handleTERMINAL("Atualizando Registradores");
-        registerA.setText(String.valueOf(maquina.registradores.getValor("A")));
-        registerB.setText(String.valueOf(maquina.registradores.getValor("B")));
-        registerL.setText(String.valueOf(maquina.registradores.getValor("L")));
-        registerPC.setText(String.valueOf(maquina.registradores.getValor("PC")));
-        registerS.setText(String.valueOf(maquina.registradores.getValor("S")));
-        registerT.setText(String.valueOf(maquina.registradores.getValor("T")));
-        registerW.setText(String.valueOf(maquina.registradores.getValor("SW")));
-        registerX.setText(String.valueOf(maquina.registradores.getValor("X")));
+        registerA.setText(String.valueOf(BancoRegistradores.getInstance().getValor("A")));
+        registerB.setText(String.valueOf(BancoRegistradores.getInstance().getValor("B")));
+        registerL.setText(String.valueOf(BancoRegistradores.getInstance().getValor("L")));
+        registerPC.setText(String.valueOf(BancoRegistradores.getInstance().getValor("PC")));
+        registerS.setText(String.valueOf(BancoRegistradores.getInstance().getValor("S")));
+        registerT.setText(String.valueOf(BancoRegistradores.getInstance().getValor("T")));
+        registerW.setText(String.valueOf(BancoRegistradores.getInstance().getValor("SW")));
+        registerX.setText(String.valueOf(BancoRegistradores.getInstance().getValor("X")));
         handleTERMINAL("Registradores Atualizados");
     }
-    
 
     // Criação e exibição da tabela que representa a memória
-  @FXML
-public void handleTABLE() {
-    //colunaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
-    colunaNumBin.setCellValueFactory(new PropertyValueFactory<>("instrucaoBinario"));
-    colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("insHexa"));
-    colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
-    colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("enderecoBinario"));
-    colunaNixbpq.setCellValueFactory(new PropertyValueFactory<>("nixbpe"));
-    
 
-    // Cria um ObservableList vinculado à ObservableList da classe Memoria
-    ObservableList<Endereco> observableList = FXCollections.observableArrayList(maquina.memoria.getMemoria());
+    @FXML
+    public void handleTABLE() {
+        // colunaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
+        colunaNumBin.setCellValueFactory(new PropertyValueFactory<>("instrucaoBinario"));
+        colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("insHexa"));
+        colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
+        colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("enderecoBinario"));
+        colunaNixbpq.setCellValueFactory(new PropertyValueFactory<>("nixbpe"));
 
-    // Adicione o Listener à lista
-    maquina.memoria.setListener((ListChangeListener<Endereco>) change -> {
-        while (change.next()) {
-            if (change.wasAdded()) {
-                // Adicione os itens adicionados à ObservableList
-                observableList.addAll(change.getAddedSubList());
+        // Cria um ObservableList vinculado à ObservableList da classe Memoria
+        ObservableList<Endereco> observableList = FXCollections.observableArrayList(Memoria.getInstance().getMemoria());
+
+        // Adicione o Listener à lista
+        Memoria.getInstance().setListener((ListChangeListener<Endereco>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    // Adicione os itens adicionados à ObservableList
+                    observableList.addAll(change.getAddedSubList());
+                }
+                if (change.wasRemoved()) {
+                    // Remova os itens removidos da ObservableList
+                    observableList.removeAll(change.getRemoved());
+                }
             }
-            if (change.wasRemoved()) {
-                // Remova os itens removidos da ObservableList
-                observableList.removeAll(change.getRemoved());
-            }
-        }
-    });
+        });
 
-    // Configura a TableView com a ObservableList
-    tableView.setItems(observableList);
-    tableView.refresh();
-}
+        // Configura a TableView com a ObservableList
+        tableView.setItems(observableList);
+        tableView.refresh();
+    }
+
     @FXML
 
-    public void updateInterface(){
-            maquina.registradores.setListener((MapChangeListener<String, Registrador>) change  -> {
-            if(change.wasAdded() || change.wasRemoved()){
+    public void updateInterface() {
+        BancoRegistradores.getInstance().setListener((MapChangeListener<String, Registrador>) change -> {
+            System.out.println(change);
+
+            if (change.wasAdded() || change.wasRemoved()) {
                 handleTERMINAL("Alteração nos registradores detectada. Chamando atualizarRegistradores...");
-            
-            try {
-                atualizarRegistradores();
-            } catch (RegisterIdenfierError e) {
-                e.printStackTrace();
+
+                try {
+                    atualizarRegistradores();
+                } catch (RegisterIdenfierError e) {
+                    e.printStackTrace();
+                }
             }
-        }
         });
         handleTERMINAL("UpdateInterface");
     }
 
-
-    //METODOS DE TEXTE
+    // METODOS DE TEXTE
     @FXML
-    void testeRUN(ActionEvent event) throws Exception{
-        maquina.executarPrograma();
-        updateInterface();
-        handleTABLE();
-        
-        
+    void testeRUN(ActionEvent event) throws Exception {
+        System.out.println("ENTROU");
+        Maquina.getInstance().executarPrograma();
 
+        // handleTABLE();
     }
+
     @FXML
-    void testeSTEP(ActionEvent event) throws Exception{
-             
+    void testeSTEP(ActionEvent event) throws Exception {
 
     }
 
@@ -330,88 +327,5 @@ public void handleTABLE() {
     public void handleOutput(String output) {
         textOutput.setText(output);
     }
-
-    // Métodos para setar os textos das caixas de texto
-    @FXML
-    void texto_Reg_A(String dadoA) {
-        registerA.setText(dadoA);
-    }
-
-    @FXML
-    public void handleregAa(String dadoA) {
-        registerA.setText(dadoA);
-    }
-
-    @FXML
-    void handleregB(String dadoB) {
-        registerB.setText(dadoB);
-    }
-
-    @FXML
-    public void handleregBb(String dadoB) {
-        registerB.setText(dadoB);
-    }
-
-    @FXML
-    void handleregL(String dadoL) {
-        registerL.setText(dadoL);
-    }
-
-    @FXML
-    public void handleregLl(String dadoL) {
-        registerL.setText(dadoL);
-    }
-
-    @FXML
-    void handleregPC(String dadoPC) {
-        registerPC.setText(dadoPC);
-    }
-
-    @FXML
-    public void handleregPCpc(String dadoPC) {
-        registerPC.setText(dadoPC);
-    }
-
-    @FXML
-    void handleregS(String dadoS) {
-        registerS.setText(dadoS);
-    }
-
-    @FXML
-    public void handleregSs(String dadoS) {
-        registerS.setText(dadoS);
-    }
-
-    @FXML
-    void handleregT(String dadoT) {
-        registerT.setText(dadoT);
-    }
-
-    @FXML
-    public void handleregTt(String dadoT) {
-        registerT.setText(dadoT);
-    }
-
-    @FXML
-    void handleregW(String dadoW) {
-        registerW.setText(dadoW);
-    }
-
-    @FXML
-    public void handleregWw(String dadoW) {
-        registerW.setText(dadoW);
-    }
-
-    @FXML
-    void handleregX(String dadoX) {
-        registerX.setText(dadoX);
-    }
-
-    @FXML
-    public void handleregXx(String dadoX) {
-        registerX.setText(dadoX);
-    }
-
-    
 
 }

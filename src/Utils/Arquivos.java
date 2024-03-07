@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.PrintWriter;
 
 public class Arquivos {
     public static ArrayList<String> lerArquivo(String caminho) throws FileNotFoundException {
@@ -26,5 +27,20 @@ public class Arquivos {
         }
 
         return code;
+    }
+
+    public static void salvaArquivo(String nomeArquivo, ArrayList<String> binaryCode) throws FileNotFoundException {
+        try {
+            PrintWriter writer = new PrintWriter(nomeArquivo);
+
+            for (String linha : binaryCode) {
+                writer.println(linha);
+            }
+
+            writer.close();
+        } catch (Exception e) {
+            throw new FileNotFoundException("Arquivo não encontrado!");
+        }
+
     }
 }

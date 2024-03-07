@@ -286,7 +286,6 @@ public void handleTABLE() {
     @FXML
     void testeRUN(ActionEvent event) throws Exception{
         maquina.executarPrograma();
-        atualizarRegistradores();
         updateInterface();
         handleTABLE();
         
@@ -294,7 +293,8 @@ public void handleTABLE() {
 
     }
     @FXML
-    void testeSTEP(ActionEvent event){
+    void testeSTEP(ActionEvent event) throws Exception{
+             
 
     }
 

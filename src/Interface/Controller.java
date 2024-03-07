@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -23,6 +26,8 @@ import javafx.stage.Stage;
 import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Montador.*;
+import src.Registradores.Registrador;
+import src.Exceptions.RegisterIdenfierError;
 import src.Maquina.*;
 
 import javafx.scene.image.ImageView;
@@ -44,7 +49,12 @@ public class Controller {
 
     @FXML
     private String textoPrompt;
+    
+    @FXML
+    private Button RUNBUTTON;
 
+    @FXML
+    private Button STEPBUTTON;
     //TextFields
     @FXML
     private TextField registerA;
@@ -204,34 +214,89 @@ public class Controller {
     }
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
 
-    // Criação e exibição da tabela que representa a memória
-    @FXML
-    public void handleTABLE() {
-        colunaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
-        colunaNumBin.setCellValueFactory(new PropertyValueFactory<>("instrucaoBinario"));
-        colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("insHexa"));
-        colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
-        colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("enderecoBinario"));
-        colunaNixbpq.setCellValueFactory(new PropertyValueFactory<>("nixbpe"));
-        
-        //LISTENER
-        memoria.setListener((ListChangeListener<Endereco>) change -> {
-            while (change.next()) {
-                if (change.wasAdded()) {
-                   
-                    tableView.getItems().addAll(change.getAddedSubList());
-                }
-                if (change.wasRemoved()) {
-                 
-                    tableView.getItems().removeAll(change.getRemoved());
-                }
-                
-            }
-        });
-    
-        tableView.refresh();
+    public void setMaquina(Maquina maquina){
+        this.maquina = maquina;
+    }
+    //Atualiza Registradores
+    public void atualizarRegistradores() throws RegisterIdenfierError {
+        handleTERMINAL("Atualizando Registradores");
+        registerA.setText(String.valueOf(maquina.registradores.getValor("A")));
+        registerB.setText(String.valueOf(maquina.registradores.getValor("B")));
+        registerL.setText(String.valueOf(maquina.registradores.getValor("L")));
+        registerPC.setText(String.valueOf(maquina.registradores.getValor("PC")));
+        registerS.setText(String.valueOf(maquina.registradores.getValor("S")));
+        registerT.setText(String.valueOf(maquina.registradores.getValor("T")));
+        registerW.setText(String.valueOf(maquina.registradores.getValor("SW")));
+        registerX.setText(String.valueOf(maquina.registradores.getValor("X")));
+        handleTERMINAL("Registradores Atualizados");
     }
     
+
+    // Criação e exibição da tabela que representa a memória
+  @FXML
+public void handleTABLE() {
+    //colunaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
+    colunaNumBin.setCellValueFactory(new PropertyValueFactory<>("instrucaoBinario"));
+    colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("insHexa"));
+    colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
+    colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("enderecoBinario"));
+    colunaNixbpq.setCellValueFactory(new PropertyValueFactory<>("nixbpe"));
+    
+
+    // Cria um ObservableList vinculado à ObservableList da classe Memoria
+    ObservableList<Endereco> observableList = FXCollections.observableArrayList(maquina.memoria.getMemoria());
+
+    // Adicione o Listener à lista
+    maquina.memoria.setListener((ListChangeListener<Endereco>) change -> {
+        while (change.next()) {
+            if (change.wasAdded()) {
+                // Adicione os itens adicionados à ObservableList
+                observableList.addAll(change.getAddedSubList());
+            }
+            if (change.wasRemoved()) {
+                // Remova os itens removidos da ObservableList
+                observableList.removeAll(change.getRemoved());
+            }
+        }
+    });
+
+    // Configura a TableView com a ObservableList
+    tableView.setItems(observableList);
+    tableView.refresh();
+}
+    @FXML
+
+    public void updateInterface(){
+            maquina.registradores.setListener((MapChangeListener<String, Registrador>) change  -> {
+            if(change.wasAdded() || change.wasRemoved()){
+                handleTERMINAL("Alteração nos registradores detectada. Chamando atualizarRegistradores...");
+            
+            try {
+                atualizarRegistradores();
+            } catch (RegisterIdenfierError e) {
+                e.printStackTrace();
+            }
+        }
+        });
+        handleTERMINAL("UpdateInterface");
+    }
+
+
+    //METODOS DE TEXTE
+    @FXML
+    void testeRUN(ActionEvent event) throws Exception{
+        maquina.executarPrograma();
+        updateInterface();
+        handleTABLE();
+        
+        
+
+    }
+    @FXML
+    void testeSTEP(ActionEvent event) throws Exception{
+             
+
+    }
 
     // Métodos auxiliares
 

@@ -3,17 +3,10 @@
     "configurations": [
       {
         "type": "java",
-        "name": "Main_Montador",
+        "name": "Main_Interface",
         "request": "launch",
-        "mainClass": "src.Main_Montador",
+        "mainClass": "src.Interface.Main_Interface",
         "projectName": "ufpel_ps_8b64752b"
-      },
-      {
-        "type": "java",
-        "name": "Main_Simulador",
-        "request": "launch",
-        "mainClass": "src.Main_Simulador",
-        "projectName": "ufpel_ps_455a9f07"
       },
       {
         "type": "java",
@@ -22,33 +15,6 @@
         "mainClass": "src.Interface.Main_Interface",
         "projectName": "ufpel_ps_455a9f07",
         "vmArgs": "--module-path /resources/javafx-sdk-21.0.2/lib/ --add-modules javafx.controls, javafx.fxml"
-      },
-      {
-        "type": "java",
-        "name": "Main_Simulador",
-        "request": "launch",
-        "mainClass": "src.Main_Simulador",
-        "projectName": "ufpel_ps_8b64752b"
-      },
-      {
-        "type": "java",
-        "name": "Main_Simulador",
-        "request": "launch",
-        "mainClass": "src.Main_Simulador",
-        "projectName": "ufpel_ps-refatorando_26abc00a"
-      },
-      {
-        "type": "java",
-        "name": "Main",
-        "request": "launch",
-        "mainClass": "src.Main",
-        "projectName": "ufpel_ps_455a9f07"
-      },
-      {
-        "type": "java",
-        "name": "Current File",
-        "request": "launch",
-        "mainClass": "${file}"
       },
       {
         "type": "java",

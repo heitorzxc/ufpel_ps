@@ -57,6 +57,10 @@ public class Memoria {
     public Endereco getValor(Integer endereco) {
         return memoria.get(endereco);
     }
+    
+    public ObservableList getMemoria(){
+        return memoria;
+    }
 
     // public Boolean addInstrucao(String inst) {
     // try {

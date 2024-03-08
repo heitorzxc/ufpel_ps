@@ -15,9 +15,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import src.Maquina.Maquina;
-import src.Memoria.Endereco;
-import src.Memoria.Memoria;
-import src.Registradores.BancoRegistradores;
+import src.Memoria.*;
 import src.Registradores.Registrador;
 
 public class Main_Interface extends Application {
@@ -32,9 +30,13 @@ public class Main_Interface extends Application {
     // Carregar o arquivo FXML
     FXMLLoader loader = new FXMLLoader(getClass().getResource("Interface.fxml"));
     Parent root = loader.load();
+    Controller controller = loader.getController();
 
-    Maquina.getInstance().setAquivo("./resources/binarios/ex.txt");
-    BancoRegistradores.getInstance()
+    Maquina maquina = new Maquina("./resources/binarios/ex.txt");
+    controller.setMaquina(maquina);
+
+
+    maquina.registradores
         .setListener((MapChangeListener.Change<? extends String, ? extends Registrador> change) -> {
           System.out.println("ENTROU DENTROOO");
 

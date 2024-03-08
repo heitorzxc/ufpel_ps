@@ -6,22 +6,15 @@
         "name": "Main_Interface",
         "request": "launch",
         "mainClass": "src.Interface.Main_Interface",
-        "projectName": "ufpel_ps_8b64752b"
+        "projectName": "ufpel_ps_455a9f07",
+        "vmArgs": "--module-path \"c:/Program Files/Java/javafx-sdk-21.0.2/lib\" --add-modules javafx.controls,javafx.fxml"
       },
       {
         "type": "java",
         "name": "Main_Interface",
         "request": "launch",
         "mainClass": "src.Interface.Main_Interface",
-        "projectName": "ufpel_ps_455a9f07",
-        "vmArgs": "--module-path /resources/javafx-sdk-21.0.2/lib/ --add-modules javafx.controls, javafx.fxml"
-      },
-      {
-        "type": "java",
-        "name": "Interface",
-        "request": "launch",
-        "mainClass": "src.Interface",
-        "projectName": "ufpel_ps",
+        "projectName": "ufpel_ps_8b64752b",
         "vmArgs": "--module-path /resources/javafx-sdk-21.0.2/lib/ --add-modules javafx.controls,javafx.fxml"
       }
     ]

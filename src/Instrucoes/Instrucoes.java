@@ -2,7 +2,7 @@ package src.Instrucoes;
 
 import java.util.HashMap;
 
-import src.Exceptions.InvalidInstructionError;
+import src.Exceptions.*;
 
 public class Instrucoes {
     private static HashMap<String, Instrucao> instrucaoPorOpcode;

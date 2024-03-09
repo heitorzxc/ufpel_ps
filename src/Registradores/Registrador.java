@@ -13,8 +13,8 @@ public class Registrador {
 	// tamanho 24 bits
 	private Integer tamanho = 24;
 
-	Registrador(String nome, String identificador) throws Exception {
-		this.setValor(0);
+	Registrador(String nome, String identificador) {
+		this.valor = 0;
 		this.nome = nome;
 		this.identificador = identificador;
 	}

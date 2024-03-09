@@ -51,7 +51,8 @@ public class Endereco {
     public String getInstrucaoHexa() {
         return this.insHexa;
     }
-    public String getInstrucaoBinario(){
+
+    public String getInstrucaoBinario() {
         return this.instrucaoBinario;
     }
 

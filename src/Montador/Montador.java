@@ -41,15 +41,15 @@ public class Montador {
 		try {
 			code = Arquivos.lerArquivo(this.srcArquivo);
 
-			System.out.println("\n\n leitura do codigo: \n");
-			for (String linha : code)
-				System.out.println(linha);
+			// System.out.println("\n\n leitura do codigo: \n");
+			// for (String linha : code)
+			// System.out.println(linha);
 
-			// primeiraEtapa(code);
+			primeiraEtapa(code);
 
-			// System.out.println("\n\n primeira Etapa: \n");
-			// for (String key : tabelaSimbolos.keySet())
-			// System.out.println(key + ": " + tabelaSimbolos.get(key));
+			System.out.println("\n\n primeira Etapa: \n");
+			for (String key : tabelaSimbolos.keySet())
+				System.out.println(key + ": " + tabelaSimbolos.get(key));
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

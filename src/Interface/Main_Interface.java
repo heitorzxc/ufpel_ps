@@ -32,21 +32,11 @@ public class Main_Interface extends Application {
     Parent root = loader.load();
     Controller controller = loader.getController();
 
-    Maquina maquina = new Maquina("./resources/binarios/ex.txt");
-    controller.setMaquina(maquina);
+    // Maquina maquina = Maquina.getInstance();
+    // maquina.setAquivo("./resources/binarios/ex.txt");
+    // controller.updateInterface();
+    // controller.handleTABLE();
 
-
-    maquina.registradores
-        .setListener((MapChangeListener.Change<? extends String, ? extends Registrador> change) -> {
-          System.out.println("ENTROU DENTROOO");
-
-          if (change.wasAdded()) {
-            System.out.println("Chave(s) Adicionada(s): " + change.getKey() + " = " + change.getValueAdded());
-          }
-          if (change.wasRemoved()) {
-            System.out.println("Chave(s) Removida(s): " + change.getKey() + " = " + change.getValueRemoved());
-          }
-        });
     // Carregar a imagem de fundo
     // Image image = new Image("./resources/img/fundo3.png");
     // BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true,

@@ -68,8 +68,7 @@ public class Memoria {
         return memoria.get(endereco);
     }
 
-    @SuppressWarnings("rawtypes")
-    public ObservableList getMemoria() {
+    public ObservableList<Endereco> getMemoria() {
         return memoria;
     }
 

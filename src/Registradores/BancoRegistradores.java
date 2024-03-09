@@ -1,7 +1,7 @@
 package src.Registradores;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;
 import src.Exceptions.RegisterIdenfierError;
 import src.Exceptions.ValueOutOfBoundError;
@@ -106,8 +106,10 @@ public class BancoRegistradores {
 		return bancoRegistradores.get(reg).getIdentificador();
 	}
 
-	public void setListener(MapChangeListener<? super String, ? super Registrador> listener) {
-		bancoRegistradores.addListener(listener);
+	public void setListener(ChangeListener<? super Number> listener) {
+		for (String reg : bancoRegistradores.keySet()) {
+			bancoRegistradores.get(reg).setListener(listener);
+		}
 	}
 
 	@Override

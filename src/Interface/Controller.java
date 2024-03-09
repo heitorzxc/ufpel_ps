@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,11 +25,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import src.Memoria.Endereco;
 import src.Memoria.Memoria;
-import src.Montador.*;
+import src.Montador.Montador;
 import src.Registradores.BancoRegistradores;
-import src.Registradores.Registrador;
 import src.Exceptions.RegisterIdenfierError;
-import src.Maquina.*;
+import src.Maquina.Maquina;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -43,9 +42,6 @@ public class Controller {
     private File selectedFile;
 
     @FXML
-    private Maquina maquina;
-
-    @FXML
     private Memoria memoria;
 
     @FXML
@@ -56,7 +52,8 @@ public class Controller {
 
     @FXML
     private Button STEPBUTTON;
-    // TextFields
+
+    // Exibição dos registradores
     @FXML
     private TextField registerA;
 
@@ -87,7 +84,7 @@ public class Controller {
     @FXML
     private TextField textInstrucao;
 
-    // TableView
+    // Tabela de represenação da memória
     @FXML
     private TableView<Endereco> tableView;
 
@@ -107,9 +104,9 @@ public class Controller {
     private TableColumn<Endereco, String> colunaEnderecoBinario;
 
     @FXML
-    private TableColumn<Endereco, String> colunaNixbpq;
+    private TableColumn<Endereco, String> colunaNixbpe;
 
-    // ImageView
+    // Botões LOAD, RUN, STEP, MOUNT...
     @FXML
     private ImageView LOADimg;
 
@@ -132,11 +129,6 @@ public class Controller {
 
     DropShadow dropShadow = new DropShadow();
 
-    @FXML
-    public void setMaquina(Maquina a){
-        this.maquina = a;
-    }
-
     // ÍCONE LOAD - CLIQUE
     @FXML
     void LOADimgClick(MouseEvent event) throws FileNotFoundException {
@@ -148,7 +140,7 @@ public class Controller {
     // ÍCONE MOUNT - CLIQUE
     @FXML
     void MOUNTimgClick(MouseEvent event) {
-        // Invoca o montador e imprime no
+        // Invoca o montador e imprime no ?
     }
 
     // ÍCONE STEP - CLIQUE
@@ -158,8 +150,13 @@ public class Controller {
 
     // ÍCONE RUN - CLIQUE
     @FXML
-    void RUNimgclick(MouseEvent event) throws Exception {
-        maquina.executarPrograma();
+    void RUNimgclick(MouseEvent event) {
+        try {
+
+            Maquina.getInstance().executarPrograma();
+        } catch (Exception e) {
+            exibirMensagemErro("Erro de execução", "", "Insira um código assembly ou selecione um arquivo!");
+        }
     }
 
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
@@ -221,17 +218,25 @@ public class Controller {
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
 
     // Atualiza Registradores
-    public void atualizarRegistradores() throws RegisterIdenfierError {
-        handleTERMINAL("Atualizando Registradores");
-        registerA.setText(String.valueOf(maquina.registradores.getValor("A")));
-        registerL.setText(String.valueOf(maquina.registradores.getValor("L")));
-        registerB.setText(String.valueOf(maquina.registradores.getValor("B")));
-        registerPC.setText(String.valueOf(maquina.registradores.getValor("PC")));
-        registerS.setText(String.valueOf(maquina.registradores.getValor("S")));
-        registerT.setText(String.valueOf(maquina.registradores.getValor("T")));
-        registerW.setText(String.valueOf(maquina.registradores.getValor("SW")));
-        registerX.setText(String.valueOf(maquina.registradores.getValor("X")));
-        handleTERMINAL("Registradores Atualizados");
+    public void atualizarRegistradores() {
+        try {
+            BancoRegistradores regs = BancoRegistradores.getInstance();
+            handleTERMINAL("Atualizando Registradores");
+
+            registerA.setText(String.valueOf(regs.getValor("A")));
+            registerL.setText(String.valueOf(regs.getValor("L")));
+            registerB.setText(String.valueOf(regs.getValor("B")));
+            registerPC.setText(String.valueOf(regs.getValor("PC")));
+            registerS.setText(String.valueOf(regs.getValor("S")));
+            registerT.setText(String.valueOf(regs.getValor("T")));
+            registerW.setText(String.valueOf(regs.getValor("SW")));
+            registerX.setText(String.valueOf(regs.getValor("X")));
+
+            handleTERMINAL("Registradores Atualizados");
+        } catch (RegisterIdenfierError e) {
+            exibirMensagemErro("Rigistrador não encontrado", "", "registrador não foi encontrado. Revise o codigo");
+        }
+
     }
 
     // Criação e exibição da tabela que representa a memória
@@ -243,71 +248,48 @@ public class Controller {
         colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("InstrucaoHexa"));
         colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
         colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
-        colunaNixbpq.setCellValueFactory(new PropertyValueFactory<>("NIXBPE"));
-
+        colunaNixbpe.setCellValueFactory(new PropertyValueFactory<>("NIXBPE"));
+        // tableView.setItems(Memoria.getInstance().getMemoria());
         // Cria um ObservableList vinculado à ObservableList da classe Memoria
-        ObservableList<Endereco> observableList = FXCollections.observableArrayList(maquina.memoria.getMemoria());
-        
+        // ObservableList<Endereco> observableList =
+        // FXCollections.observableArrayList(Memoria.getInstance().getMemoria());
+
         // Adicione o Listener à lista
-        maquina.memoria.setListener((ListChangeListener<Endereco>) change -> {
-            while (change.next()) {
-                if (change.wasAdded()) {
-                    // Adicione os itens adicionados à ObservableList
-                    observableList.addAll(change.getAddedSubList());
-                }
-                if (change.wasRemoved()) {
-                    // Remova os itens removidos da ObservableList
-                    observableList.removeAll(change.getRemoved());
-                }
-            }
-        });
+        // Memoria.getInstance().setListener((ListChangeListener<Endereco>) change -> {
+        // while (change.next()) {
+        // // if (change.wasAdded() || change.wasRemoved() || change.wasUpdated()) {
+        // tableView.refresh(); // update tabela da memoria;
+        // // tableView.setItems(Memoria.getInstance().getMemoria());
+        // // }
+        // }
+        // });
 
         // Configura a TableView com a ObservableList
-        tableView.setItems(observableList);
-        tableView.refresh();
+
     }
 
+    // Atualização da interface
     @FXML
-
     public void updateInterface() {
-        maquina.registradores.setListener((MapChangeListener<String, Registrador>) change -> {
-            System.out.println(change);
-
-            if (change.wasAdded() || change.wasRemoved()) {
-                handleTERMINAL("Alteração nos registradores detectada. Chamando atualizarRegistradores...");
-
-                try {
-                    atualizarRegistradores();
-                } catch (RegisterIdenfierError e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        handleTERMINAL("UpdateInterface");
+        ChangeListener<Number> listener = (observable, oldValue, newValue) -> {
+            atualizarRegistradores();
+        };
+        BancoRegistradores.getInstance().setListener(listener);
     }
 
-    // METODOS DE TEXTE
+    // TESTE RUN
     @FXML
     void testeRUN(ActionEvent event) throws Exception {
-        System.out.println("ENTROU");
-        updateInterface();
-        handleTABLE();
-        maquina.executarPrograma();
-        updateInterface();
-
-        // handleTABLE();
+        Maquina.getInstance().executarPrograma();
     }
 
+    // TESTE STEP
     @FXML
     void testeSTEP(ActionEvent event) throws Exception {
-        updateInterface();
-        handleTABLE();
-        maquina.step();
-        atualizarRegistradores();
+        Maquina.getInstance().step();
     }
 
-    // Métodos auxiliares
-
+    // Exibir mensagem de erro
     private void exibirMensagemErro(String title, String header, String content) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
@@ -316,27 +298,15 @@ public class Controller {
         alert.show();
     }
 
-    // Saidas Gerais de texto
-    @FXML
-    public void handleTextInstrucao(String text) {
-        textInstrucao.setText(text);
-    }
-
-    // Aqui é um método para imprimir no terminal!!
+    // Imprimir no terminal
     @FXML
     public void handleTERMINAL(String dado) {
         textTERMINAL.appendText(dado + "\n");
     }
 
-    // Aqui é um método para imprimir na célula de código!!
+    // Imprimir na caixa de código
     @FXML
     public void handleCODE(String code) {
         textCODE.appendText(code + "\n");
     }
-
-    @FXML
-    public void handleOutput(String output) {
-        textOutput.setText(output);
-    }
-
 }

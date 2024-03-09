@@ -1,10 +1,12 @@
 package src.Registradores;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import src.Exceptions.ValueOutOfBoundError;
 import src.Utils.Conversao;
 
 public class Registrador {
-	private Integer valor;
+	private SimpleIntegerProperty valor;
 
 	private String nome;
 	private String identificador;
@@ -14,7 +16,7 @@ public class Registrador {
 	private Integer tamanho = 24;
 
 	Registrador(String nome, String identificador) {
-		this.valor = 0;
+		this.valor = new SimpleIntegerProperty(0);
 		this.nome = nome;
 		this.identificador = identificador;
 	}
@@ -23,19 +25,23 @@ public class Registrador {
 		this.nome = nome;
 		this.identificador = identificador;
 
-		this.setValor(valor);
+		this.valor = new SimpleIntegerProperty(valor);
 	}
 
 	Registrador(String nome, String identificador, String valor) throws Exception {
 		this.nome = nome;
 		this.identificador = identificador;
 
-		this.setValor(valor);
+		this.valor = new SimpleIntegerProperty(Conversao.binToInt(valor));
 	}
 
-	// Getters
+	// Método para adicionar um ChangeListener ao valor
+	public void setListener(ChangeListener<? super Number> listener) {
+		valor.addListener(listener);
+	}
+
 	public Integer getValor() {
-		return valor;
+		return valor.get();
 	}
 
 	public String getNome() {
@@ -61,12 +67,12 @@ public class Registrador {
 			throw new ValueOutOfBoundError("Valor " + novoValor + " está foram do limite de 24 bits!");
 		}
 
-		this.valor = novoValor;
+		this.valor.set(novoValor);
 	}
 
 	@Override
 	public String toString() {
-		return "Valor do Registrador " + identificador + " (" + nome + "): " + valor;
+		return "Valor do Registrador " + identificador + " (" + nome + "): " + valor.get();
 	}
 
 }

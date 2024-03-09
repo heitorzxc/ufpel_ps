@@ -1,10 +1,11 @@
 package src.Registradores;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import src.Exceptions.ValueOutOfBoundError;
 import src.Utils.Conversao;
 
 public class Registrador {
-	private Integer valor;
+	private SimpleIntegerProperty valor;
 
 	private String nome;
 	private String identificador;
@@ -35,7 +36,7 @@ public class Registrador {
 
 	// Getters
 	public Integer getValor() {
-		return valor;
+		return valor.get();
 	}
 
 	public String getNome() {
@@ -61,7 +62,11 @@ public class Registrador {
 			throw new ValueOutOfBoundError("Valor " + novoValor + " está foram do limite de 24 bits!");
 		}
 
-		this.valor = novoValor;
+		this.valor.set(novoValor);
+	}
+
+	public void setListener(listener){
+
 	}
 
 	@Override

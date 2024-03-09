@@ -9,10 +9,19 @@ import src.Exceptions.ValueOutOfBoundError;
 public class BancoRegistradores {
 	private ObservableMap<String, Registrador> bancoRegistradores;
 
-	public BancoRegistradores() throws Exception {
+	private static BancoRegistradores instance;
+
+	public static BancoRegistradores getInstance() {
+		if (instance == null)
+			instance = new BancoRegistradores();
+
+		return instance;
+	}
+
+	private BancoRegistradores() {
 		bancoRegistradores = FXCollections.observableHashMap();
-		setRegistrador(new Registrador("Acumulador", "A", 128));
-		setRegistrador(new Registrador("Registrador de índice", "X", 0));
+		setRegistrador(new Registrador("Acumulador", "A"));
+		setRegistrador(new Registrador("Registrador de índice", "X"));
 		setRegistrador(new Registrador("Registrador de ligação", "L"));
 		setRegistrador(new Registrador("Registrador base", "B"));
 		setRegistrador(new Registrador("Registrador de uso geral", "S"));
@@ -97,7 +106,7 @@ public class BancoRegistradores {
 		return bancoRegistradores.get(reg).getIdentificador();
 	}
 
-	public void setListener(MapChangeListener<String, Registrador> listener) {
+	public void setListener(MapChangeListener<? super String, ? super Registrador> listener) {
 		bancoRegistradores.addListener(listener);
 	}
 

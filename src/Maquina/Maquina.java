@@ -24,11 +24,20 @@ public class Maquina {
 
     private List<Integer> FORMATOSVALIDOS = Arrays.asList(8, 16, 24, 32);
 
-    public Maquina(String caminho_arquivo) throws Exception {
-        this.memoria = new Memoria();
-        this.registradores = new BancoRegistradores();
+    private static Maquina instance = null;
+
+    public static Maquina getInstance() {
+        if (instance == null)
+            instance = new Maquina();
+        return instance;
+    }
+
+    private Maquina() {
+        this.memoria = Memoria.getInstance();
+        this.registradores = BancoRegistradores.getInstance();
         Instrucoes.inicializaInstrucoes(); // seta as instrucoes disponiveis
 
+    public void setAquivo(String caminho_arquivo) throws RegisterIdenfierError, ValueOutOfBoundError {
         this.arquivo = caminho_arquivo;
 
         carregarCodigo();
@@ -69,6 +78,7 @@ public class Maquina {
     }
 
     public Boolean executarPrograma() throws Exception {
+        System.out.println("ENTROU EXECUTAR");
         while (true) {
             if (!step()) // programa parou
                 return false;
@@ -81,7 +91,7 @@ public class Maquina {
         Endereco instrucao = memoria.getValor(end);
 
         System.out.println("Opcode: " + instrucao.getOpcode());
-        if (instrucao.getOpcode().equals("F4")) {
+        if (instrucao.getOpcode().equals("F4")) { // encontrou um "end"
             // registradores.setValor("SW", 0);
             return false;
         }
@@ -89,7 +99,7 @@ public class Maquina {
         Instrucao operacao = Instrucoes.getInstrucaoPorOpcode(instrucao.getOpcode());
         operacao.executar(instrucao, registradores, memoria);
 
-        System.out.println(registradores);
+        // System.out.println(registradores);
         registradores.setValor("PC", end + 1);
 
         return true;

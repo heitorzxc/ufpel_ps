@@ -11,14 +11,24 @@ public class Memoria {
 
     private ObservableList<Endereco> memoria;
 
+    private static Memoria instance = null;
+
     private final Integer TAMANHOMEMORIA = 250;
 
-    public Memoria() throws SpaceExceededError, ValueOutOfBoundError {
+    private Memoria() {
         memoria = FXCollections.observableArrayList();
     }
 
+    public static Memoria getInstance() {
+        if (instance == null) {
+            instance = new Memoria();
+        }
+
+        return instance;
+    }
+
     //// interface deve setar um listener para monitoriar as mudancas na memoria
-    public void setListener(ListChangeListener<Endereco> listener) {
+    public void setListener(ListChangeListener<? super Endereco> listener) {
         memoria.addListener(listener);
     }
 
@@ -57,8 +67,9 @@ public class Memoria {
     public Endereco getValor(Integer endereco) {
         return memoria.get(endereco);
     }
-    
-    public ObservableList getMemoria(){
+
+    @SuppressWarnings("rawtypes")
+    public ObservableList getMemoria() {
         return memoria;
     }
 

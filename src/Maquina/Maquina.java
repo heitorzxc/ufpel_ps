@@ -36,6 +36,7 @@ public class Maquina {
         this.memoria = Memoria.getInstance();
         this.registradores = BancoRegistradores.getInstance();
         Instrucoes.inicializaInstrucoes(); // seta as instrucoes disponiveis
+    }
 
     public void setAquivo(String caminho_arquivo) throws RegisterIdenfierError, ValueOutOfBoundError {
         this.arquivo = caminho_arquivo;

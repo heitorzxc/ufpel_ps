@@ -132,6 +132,11 @@ public class Controller {
 
     DropShadow dropShadow = new DropShadow();
 
+    @FXML
+    public void setMaquina(Maquina a){
+        this.maquina = a;
+    }
+
     // ÍCONE LOAD - CLIQUE
     @FXML
     void LOADimgClick(MouseEvent event) throws FileNotFoundException {
@@ -154,7 +159,7 @@ public class Controller {
     // ÍCONE RUN - CLIQUE
     @FXML
     void RUNimgclick(MouseEvent event) throws Exception {
-        Maquina.getInstance().executarPrograma();
+        maquina.executarPrograma();
     }
 
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
@@ -218,14 +223,14 @@ public class Controller {
     // Atualiza Registradores
     public void atualizarRegistradores() throws RegisterIdenfierError {
         handleTERMINAL("Atualizando Registradores");
-        registerA.setText(String.valueOf(BancoRegistradores.getInstance().getValor("A")));
-        registerB.setText(String.valueOf(BancoRegistradores.getInstance().getValor("B")));
-        registerL.setText(String.valueOf(BancoRegistradores.getInstance().getValor("L")));
-        registerPC.setText(String.valueOf(BancoRegistradores.getInstance().getValor("PC")));
-        registerS.setText(String.valueOf(BancoRegistradores.getInstance().getValor("S")));
-        registerT.setText(String.valueOf(BancoRegistradores.getInstance().getValor("T")));
-        registerW.setText(String.valueOf(BancoRegistradores.getInstance().getValor("SW")));
-        registerX.setText(String.valueOf(BancoRegistradores.getInstance().getValor("X")));
+        registerA.setText(String.valueOf(maquina.registradores.getValor("A")));
+        registerL.setText(String.valueOf(maquina.registradores.getValor("L")));
+        registerB.setText(String.valueOf(maquina.registradores.getValor("B")));
+        registerPC.setText(String.valueOf(maquina.registradores.getValor("PC")));
+        registerS.setText(String.valueOf(maquina.registradores.getValor("S")));
+        registerT.setText(String.valueOf(maquina.registradores.getValor("T")));
+        registerW.setText(String.valueOf(maquina.registradores.getValor("SW")));
+        registerX.setText(String.valueOf(maquina.registradores.getValor("X")));
         handleTERMINAL("Registradores Atualizados");
     }
 
@@ -234,17 +239,17 @@ public class Controller {
     @FXML
     public void handleTABLE() {
         // colunaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
-        colunaNumBin.setCellValueFactory(new PropertyValueFactory<>("instrucaoBinario"));
-        colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("insHexa"));
+        colunaNumBin.setCellValueFactory(new PropertyValueFactory<>("InstrucaoBinario"));
+        colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("InstrucaoHexa"));
         colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
-        colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("enderecoBinario"));
-        colunaNixbpq.setCellValueFactory(new PropertyValueFactory<>("nixbpe"));
+        colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
+        colunaNixbpq.setCellValueFactory(new PropertyValueFactory<>("NIXBPE"));
 
         // Cria um ObservableList vinculado à ObservableList da classe Memoria
-        ObservableList<Endereco> observableList = FXCollections.observableArrayList(Memoria.getInstance().getMemoria());
-
+        ObservableList<Endereco> observableList = FXCollections.observableArrayList(maquina.memoria.getMemoria());
+        
         // Adicione o Listener à lista
-        Memoria.getInstance().setListener((ListChangeListener<Endereco>) change -> {
+        maquina.memoria.setListener((ListChangeListener<Endereco>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
                     // Adicione os itens adicionados à ObservableList
@@ -265,7 +270,7 @@ public class Controller {
     @FXML
 
     public void updateInterface() {
-        BancoRegistradores.getInstance().setListener((MapChangeListener<String, Registrador>) change -> {
+        maquina.registradores.setListener((MapChangeListener<String, Registrador>) change -> {
             System.out.println(change);
 
             if (change.wasAdded() || change.wasRemoved()) {
@@ -285,14 +290,20 @@ public class Controller {
     @FXML
     void testeRUN(ActionEvent event) throws Exception {
         System.out.println("ENTROU");
-        Maquina.getInstance().executarPrograma();
+        updateInterface();
+        handleTABLE();
+        maquina.executarPrograma();
+        updateInterface();
 
         // handleTABLE();
     }
 
     @FXML
     void testeSTEP(ActionEvent event) throws Exception {
-
+        updateInterface();
+        handleTABLE();
+        maquina.step();
+        atualizarRegistradores();
     }
 
     // Métodos auxiliares

@@ -20,7 +20,6 @@ public class Montador {
 	private ArrayList<String> code = new ArrayList<>();
 	private ArrayList<String> codeSemLabels = new ArrayList<>();
 	private ArrayList<String> binaryCode = new ArrayList<>();
-	private Instrucoes instrucoes = new Instrucoes();
 	private String srcArquivo;
 	private String dstArquivo;
 	private boolean retornarCode;

@@ -14,9 +14,9 @@ public class DIVR extends Instrucao {
 
   public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {
     String[] operandos = instrucao.getOperandos();
-    Integer reg1 = registradores.getValor(operandos[1]);
-    Integer reg2 = registradores.getValor(operandos[2]);
+    Integer reg1 = registradores.getValor(operandos[0]);
+    Integer reg2 = registradores.getValor(operandos[1]);
 
-    registradores.setValor(operandos[2], reg1 + reg2);
+    registradores.setValor(operandos[0], reg1 / reg2);
   }
 }

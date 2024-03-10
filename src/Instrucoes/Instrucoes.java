@@ -15,7 +15,7 @@ public class Instrucoes {
     private static final char INDIRETO = '@';
     private static final char IMEDIATO = '#';
 
-    public Instrucoes() {
+    private Instrucoes() { // impedir de instanciar
 
     }
 

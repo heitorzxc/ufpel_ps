@@ -68,7 +68,11 @@ public class Memoria {
         return memoria.get(endereco);
     }
 
-cd ..    // public Boolean addInstrucao(String inst) {
+    public ObservableList<Endereco> getMemoria() {
+        return memoria;
+    }
+
+    // public Boolean addInstrucao(String inst) {
     // try {
     // this.setValor(posicaoAdicionar, inst);
     // } catch (Exception e) {

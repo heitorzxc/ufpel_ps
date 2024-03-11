@@ -32,30 +32,29 @@ public class Main_Interface extends Application {
     Parent root = loader.load();
     Controller controller = loader.getController();
 
-    // Maquina maquina = Maquina.getInstance();
-    // maquina.setAquivo("./resources/binarios/ex.txt");
-    // controller.updateInterface();
-    // controller.handleTABLE();
+     Maquina maquina = Maquina.getInstance();
+     maquina.setAquivo("./resources/binarios/exemplo.txt");
+        
 
     // Carregar a imagem de fundo
-    // Image image = new Image("./resources/img/fundo3.png");
-    // BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true,
-    // false, true);
-    // BackgroundImage backgroundImage = new BackgroundImage(image,
-    // BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-    // BackgroundPosition.CENTER, backgroundSize);
+     Image image = new Image("./resources/img/fundo1-ferrugem.png");
+     BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
+     BackgroundImage backgroundImage = new BackgroundImage(image,
+     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+     BackgroundPosition.CENTER, backgroundSize);
 
-    // Verificar se o root é uma instância de Pane e, em caso afirmativo, definir o
+    //Verificar se o root é uma instância de Pane e, em caso afirmativo, definir o
     // plano de fundo
-    // if (root instanceof Pane) {
-    // Pane pane = (Pane) root;
-    // pane.setBackground(new Background(backgroundImage));
-    // }
+    if (root instanceof Pane) {
+      Pane pane = (Pane) root;
+      pane.setBackground(new Background(backgroundImage));
+    }
 
     // Configurar a cena
     Scene scene = new Scene(root);
 
     // Configurar o palco (Stage)
+    primaryStage.getIcons().add(new Image("./resources/img/iconferrugem.png"));
     primaryStage.setTitle("SIC/XE");
     primaryStage.setScene(scene);
 

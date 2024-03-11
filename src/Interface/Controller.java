@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import javax.print.DocFlavor.STRING;
+
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -27,6 +29,7 @@ import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Montador.Montador;
 import src.Registradores.BancoRegistradores;
+import src.Utils.Arquivos;
 import src.Exceptions.RegisterIdenfierError;
 import src.Maquina.Maquina;
 
@@ -131,23 +134,53 @@ public class Controller {
 
     // ÍCONE LOAD - CLIQUE
     @FXML
-    void LOADimgClick(MouseEvent event) throws FileNotFoundException {
-        // Carrega o arquivo para o montador
-        // Ou para o simulador?
-        // Ou para ambos?
-    }
+    void LOADimgClick(MouseEvent event) {
+        
+        FileChooser fileChooser = new FileChooser();
+           
+        fileChooser.setTitle("Escolha um Arquivo");
+   
+        // Exibir a janela de seleção de arquivo
+        Stage stage = (Stage) LOADimg.getScene().getWindow();
+        selectedFile = fileChooser.showOpenDialog(stage);
+   
+        // Processar o arquivo selecionado
+        if (selectedFile != null) {
+            handleTERMINAL("Arquivo selecionado: " + selectedFile.getName());
+            try {  //Mostrar o código do arquivo na caixa CÓDIGO
+                for (String line : Arquivos.lerArquivo(selectedFile.getAbsolutePath())) {
+                    textCODE.appendText(line + "\n"); // Adiciona cada elemento com uma quebra de linha
+                }
+            } catch (FileNotFoundException e) {
+                exibirMensagemErro("Erro de Leitura", "", "Ocorreu um erro na leitura do arquivo.");
+            }
+        } else {
+            handleTERMINAL("Nenhum arquivo selecionado.");
+        }
+       }
+
 
     // ÍCONE MOUNT - CLIQUE
     @FXML
     void MOUNTimgClick(MouseEvent event) {
-        // Invoca o montador e imprime no ?
+        
+        try {
+
+
+            //Definir a chamada ao montador.
+
+
+
+        } catch (Exception e) {
+            exibirMensagemErro("Erro na Montagem", "", "Erro na Montagem. Revise o código.");
+        }
     }
 
     // ÍCONE STEP - CLIQUE
     @FXML
-    void STEPimgclick(MouseEvent event) throws IOException {
+    void STEPimgclick(MouseEvent event)  {
+        updateInterface();
         try {
-
             Maquina.getInstance().step();
         } catch (Exception e) {
             exibirMensagemErro("Erro de execução", "", "Insira um código assembly ou selecione um arquivo!");
@@ -157,14 +190,91 @@ public class Controller {
     // ÍCONE RUN - CLIQUE
     @FXML
     void RUNimgclick(MouseEvent event) {
+        updateInterface();
         try {
-
             Maquina.getInstance().executarPrograma();
         } catch (Exception e) {
             exibirMensagemErro("Erro de execução", "", "Insira um código assembly ou selecione um arquivo!");
         }
     }
 
+
+    // Atualiza Registradores
+    public void atualizarRegistradores() {
+        try {
+            BancoRegistradores regs = BancoRegistradores.getInstance();
+
+            registerA.setText(String.valueOf(regs.getValor("A")));
+            registerL.setText(String.valueOf(regs.getValor("L")));
+            registerB.setText(String.valueOf(regs.getValor("B")));
+            registerPC.setText(String.valueOf(regs.getValor("PC")));
+            registerS.setText(String.valueOf(regs.getValor("S")));
+            registerT.setText(String.valueOf(regs.getValor("T")));
+            registerW.setText(String.valueOf(regs.getValor("SW")));
+            registerX.setText(String.valueOf(regs.getValor("X")));
+
+        } catch (RegisterIdenfierError e) {
+            exibirMensagemErro("Registrador não encontrado", "", "Registrador não foi encontrado. Revise o código");
+        }
+
+    }
+
+    // Criação e exibição da tabela que representa a memória
+    @FXML
+    public void handleTABLE() {
+        // colunaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
+        colunaNumBin.setCellValueFactory(new PropertyValueFactory<>("InstrucaoBinario"));
+        colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("InstrucaoHexa"));
+        colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
+        colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
+      //  colunaNixbpe.setCellValueFactory(new PropertyValueFactory<>("NIXBPE"));
+        tableView.setItems(Memoria.getInstance().getMemoria());
+
+        // Configura o listener para a Memória
+        Memoria.getInstance().setListener((ListChangeListener<Endereco>) change -> {
+            while (change.next()) {
+                if (change.wasAdded() || change.wasRemoved() || change.wasUpdated()) {
+                    tableView.refresh(); // atualiza o tableView sempre que houver alteração na memoria
+                }
+            }
+        });
+    }
+
+    // Atualização da interface
+    @FXML
+    public void updateInterface() {
+
+        handleTABLE();
+
+        ChangeListener<Number> listener = (observable, oldValue, newValue) -> {
+            atualizarRegistradores();
+        };
+        BancoRegistradores.getInstance().setListener(listener);
+    }
+
+    // TESTE RUN
+    @FXML
+    void testeRUN(ActionEvent event) throws Exception {
+        updateInterface();
+        Maquina.getInstance().executarPrograma();
+    }
+
+    // TESTE STEP
+    @FXML
+    void testeSTEP(ActionEvent event) throws Exception {
+        updateInterface();
+        Maquina.getInstance().step();
+    }
+
+    // Exibir mensagem de erro
+    private void exibirMensagemErro(String title, String header, String content) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.show();
+    }
+    
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
     @FXML
     void LOADimgEntered(MouseEvent event) {
@@ -222,84 +332,6 @@ public class Controller {
         RUNimg.setEffect(null);
     }
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
-
-    // Atualiza Registradores
-    public void atualizarRegistradores() {
-        try {
-            BancoRegistradores regs = BancoRegistradores.getInstance();
-
-            registerA.setText(String.valueOf(regs.getValor("A")));
-            registerL.setText(String.valueOf(regs.getValor("L")));
-            registerB.setText(String.valueOf(regs.getValor("B")));
-            registerPC.setText(String.valueOf(regs.getValor("PC")));
-            registerS.setText(String.valueOf(regs.getValor("S")));
-            registerT.setText(String.valueOf(regs.getValor("T")));
-            registerW.setText(String.valueOf(regs.getValor("SW")));
-            registerX.setText(String.valueOf(regs.getValor("X")));
-
-        } catch (RegisterIdenfierError e) {
-            exibirMensagemErro("Registrador não encontrado", "", "Registrador não foi encontrado. Revise o código");
-        }
-
-    }
-
-    // Criação e exibição da tabela que representa a memória
-
-    @FXML
-    public void handleTABLE() {
-        // colunaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
-        colunaNumBin.setCellValueFactory(new PropertyValueFactory<>("InstrucaoBinario"));
-        colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("InstrucaoHexa"));
-        colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
-        colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
-        colunaNixbpe.setCellValueFactory(new PropertyValueFactory<>("NIXBPE"));
-
-        tableView.setItems(Memoria.getInstance().getMemoria());
-
-        // Configura o listener para a Memória
-        Memoria.getInstance().setListener((ListChangeListener<Endereco>) change -> {
-            while (change.next()) {
-                if (change.wasAdded() || change.wasRemoved() || change.wasUpdated()) {
-                    tableView.refresh(); // atualiza o tableView sempre que houver alteração na memoria
-                }
-            }
-        });
-    }
-
-    // Atualização da interface
-    @FXML
-    public void updateInterface() {
-
-        handleTABLE();
-
-        ChangeListener<Number> listener = (observable, oldValue, newValue) -> {
-            atualizarRegistradores();
-        };
-        BancoRegistradores.getInstance().setListener(listener);
-    }
-
-    // TESTE RUN
-    @FXML
-    void testeRUN(ActionEvent event) throws Exception {
-        updateInterface();
-        Maquina.getInstance().executarPrograma();
-    }
-
-    // TESTE STEP
-    @FXML
-    void testeSTEP(ActionEvent event) throws Exception {
-        updateInterface();
-        Maquina.getInstance().step();
-    }
-
-    // Exibir mensagem de erro
-    private void exibirMensagemErro(String title, String header, String content) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.show();
-    }
 
     // Imprimir no terminal
     @FXML

@@ -8,238 +8,187 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 import src.Exceptions.IvalidInstructionFormatError;
 import src.Exceptions.RegisterIdenfierError;
 import src.Instrucoes.Instrucoes;
+import src.Instrucoes.Instrucao;
 import src.Registradores.BancoRegistradores;
 import src.Utils.Arquivos;
+import src.Utils.Conversao;
+
+// START -> Specify name and starting address for the program.
+// END -> Indicate the end of the source program and (optionally) specify the
+// first executable instruction in the program.
+// BYTE -> Generate character or hexadecimal constant, occupying as many
+// bytes as needed to represent the constant.
+// WORD -> Generate one-word integer constant.
+// RESB -> Reserve the indicated number of bytes for a data area.
+// RESW -> Reserve the indicated number of words for a data area.
+
+// LABEL // OPERATION // OPERANDO 1 // OPERANDO 2
 
 public class Montador {
-	private HashMap<String, Integer> tabelaSimbolos = new HashMap<>();
-	private ArrayList<String> code = new ArrayList<>();
-	private ArrayList<String> codeSemLabels = new ArrayList<>();
-	private ArrayList<String> binaryCode = new ArrayList<>();
-	private String srcArquivo;
-	private String dstArquivo;
-	private boolean retornarCode;
+    private HashMap<String, Integer> SYMTAB = new HashMap<>(); // TABELA DE
+    // TABELA DE INSTRUCOES é obtida com o uso de Instrucoes.getInstrucaoPorNome
+    private ArrayList<String> input;
+    private ArrayList<String> intermediario;
+    private ArrayList<String> finalCode;
 
-	public Montador(String nomeArquivoFonte, String nomeArquivoDestino) {
-		this.srcArquivo = nomeArquivoFonte;
-		this.dstArquivo = nomeArquivoDestino;
-		this.retornarCode = false;
-	}
+    private static final char INDIRETO = '@';
+    private static final char IMEDIATO = '#';
 
-	public Montador(String nomeArquivoFonte) {
-		this.srcArquivo = nomeArquivoFonte;
-		this.dstArquivo = "";
-		this.retornarCode = true;
-	}
+    public Montador() throws Exception {
+        input = new ArrayList<>();
+        intermediario = new ArrayList<>();
+        try {
+            primeiroPasso();
+            segundoPasso();
+        } catch (Exception exception) {
+            throw new Exception("Erro durante a montagem: " + exception.getMessage(), exception);
+        }
+    }
 
-	public ArrayList<String> executar() throws FileNotFoundException {
-		try {
-			code = Arquivos.lerArquivo(this.srcArquivo);
+    public void lerArquivo(String path) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            String linha;
 
-			// System.out.println("\n\n leitura do codigo: \n");
-			// for (String linha : code)
-			// System.out.println(linha);
+            while ((linha = br.readLine()) != null) {
+                if (!linha.trim().isEmpty()) { // pulando linhas vázias
+                    input.add(linha.split(";")[0]); // adicionando no input sem os comentários
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-			primeiraEtapa(code);
+    private void primeiroPasso() throws Exception {
+        int LOCCTR = 0;
 
-			System.out.println("\n\n primeira Etapa: \n");
-			for (String key : tabelaSimbolos.keySet())
-				System.out.println(key + ": " + tabelaSimbolos.get(key));
+        String linha = input.get(0);
+        String label;
+        String opcode = getOpcode(linha);
+        String[] operandos;
 
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+        int contadorLinha = 0;
 
-		// removeLabels(code);
-		// System.out.println("\n\n codigo sem os labels: \n");
-		// for (String linha : codeSemLabels)
-		// System.out.println(linha);
+        if (opcode != null && opcode.equals("START")) {
+            LOCCTR = Conversao.binToInt(getOperandos(linha)[0]);
+            contadorLinha++;
+        }
 
-		// segundaEtapa(codeSemLabels);
+        while (opcode != "END") {
+            linha = input.get(contadorLinha);
+            label = getLabel(linha);
+            opcode = getOpcode(linha);
+            operandos = getOperandos(linha);
 
-		// try {
-		// salvaArquivo(nomeArquivoDestino);
-		// } catch (Exception e) {
-		// System.out.println(e.getMessage());
-		// }
+            if (opcode.equals("END")) {
+                break;
+            }
 
-		// Arquivos.salvaArquivo(dstArquivo == null ? dstArquivo : "./a.txt",
-		// binaryCode);
+            if (label != null) {
+                if (SYMTAB.containsKey(label)) {
+                    // se já ta na tabela de símbolos da erro
+                    throw new Exception("Erro - Label já definido");
+                } else {
+                    SYMTAB.put(label, LOCCTR);
+                }
+            }
 
-		return code;
-	}
+            LOCCTR += 1;
+            intermediario.add(linha);
+        }
+    }
 
-	private int getTamanhoOperacao(String linha) {
-		String[] t = linha.trim().split(":");
-		Integer p = t.length == 1 ? 0 : 1;
+    private void segundoPasso() throws Exception {
+        int index = 0;
+        String linha = intermediario.get(index);
 
-		return linha.split("\\s+").length - p;
-	}
+        String opcode = getOpcode(linha);
+        int end;
 
-	private void primeiraEtapa(List<String> code) throws Exception {
-		//// percorrer a primeira vez o codigo para pegar os endereços
-		int addrs = 0;
+        if (opcode.equals("START")) {
+            end = Conversao.binToInt(getOperandos(linha)[0]);
+            index++;
+        }
+        while (opcode != "END") {
+            Instrucao instrucao = Instrucoes.getInstrucaoPorNome(opcode);
+            String[] operandos = getOperandos(linha);
 
-		for (String linha : code) {
-			String label = getLabel(linha);
+            if (instrucao != null) {
+                StringBuilder linhaOutput = new StringBuilder(Conversao.hexToBin(instrucao.getOpcode()));
 
-			Integer tamanhoOperacao = getTamanhoOperacao(linha);
+                if (operandos.length == 1) {
+                    // formato 3/4
+                }
 
-			if (!label.equals("")) { // verifica se tem label
-				if (tabelaSimbolos.containsKey(label)) {
-					throw new Exception("Label repetido: " + label + " !");
-				}
-				tabelaSimbolos.put(label, addrs); // adiciona o label na tabela de simbolos
-			}
-			addrs += tamanhoOperacao;
-		}
+                else if (operandos.length == 2) {
 
-	}
+                }
 
-	public void removeLabels(ArrayList<String> code) {
-		for (String linha : code) {
-			int index = linha.indexOf(":");
+                if (operandos.length > 0 && SYMTAB.containsKey(operandos[0])) {
+                    linhaOutput.append(SYMTAB.get(operandos[0]));
+                }
+                finalCode.add(linhaOutput.toString());
+            }
 
-			if (index == -1) {
-				codeSemLabels.add(linha);
-				continue;
-			}
+            index++;
+        }
+    }
 
-			codeSemLabels.add(linha.substring(index + 1).trim());
-		}
-	}
+    public String getLabel(String linha) {
+        String[] parts = linha.trim().split("\\s+");
+        String label = parts[0].endsWith(":") ? parts[0].substring(0,
+                parts[0].length() - 1) : null;
+        return label;
+    }
 
-	public String toBin(String number, int width) {
-		String binary = Integer.toBinaryString(Integer.parseInt(number));
-		return String.format("%" + width + "s", binary).replace(' ', '0');
-	}
+    public String[] getOperandos(String linha) {
+        String[] parts = linha.trim().split("\\s+");
+        if (parts.length > 2) {
+            return Arrays.copyOfRange(parts, 2, parts.length);
+        }
+        return new String[0]; // Retorna um array vazio caso não haja operandos
+    }
 
-	private void segundaEtapa(List<String> code) throws RegisterIdenfierError, IvalidInstructionFormatError {
-		for (Integer linha = 0; linha < code.size(); ++linha) {
-			String instru = code.get(linha);
+    public static String getOpcode(String linha) {
+        String[] parts = linha.trim().split("\\s+");
+        return parts.length >= 2 ? parts[1] : null;
+    }
 
-			if (!Instrucoes.isValida(instru)) {
-				throw new IvalidInstructionFormatError(
-						"Instrucao: " + instru + "\n na linha: " + linha + " é inválida.");
-			}
+    public String getNixbpe(String opcode, String[] operandos) {
+        Integer nix;
 
-			String opcode = Instrucoes.getOpcode(instru);
-			String[] operandos = Instrucoes.getOperandos(instru);
-			String nixbpe = Instrucoes.getNixbpe(instru);
+        String operando = operandos[0];
 
-			StringBuilder operacaoBinario = new StringBuilder();
-			String operandosBinario = new String("");
+        switch (operando.charAt(0)) { // tipos de enderecamento
+            case IMEDIATO:
+                nix = 16;
+                break;
 
-			operacaoBinario.append(getBinarioOpcode(opcode));
+            case INDIRETO:
+                nix = 32;
+                break;
 
-			if (operandos.length == 1) {
-				String oprnd = verificaTabelaDeSimbolos(operandos[0]);
+            default: // direto
+                nix = 48;
+                break;
+        }
 
-				nixbpe = Instrucoes.getNixbpe(opcode, operandos);
+        if (operando.endsWith("X")) // usa o registrador X para o endereçamento
+            nix = nix | 8;
 
-				operandosBinario = toBin(getNumero(oprnd), 12);
-			}
+        if (operando.endsWith("B")) // usa o registrador B para o endereçamento
+            nix = nix | 4;
 
-			else if (operandos.length == 2) {
-				String r1 = verificaTabelaDeSimbolos(operandos[0]);
-				String r2 = verificaTabelaDeSimbolos(operandos[1]);
+        if (opcode.startsWith("+")) // opernado é 20 bits
+            return Conversao.intToBin(nix | 1);
 
-				try {
-					r1 = toBin(getNumero(r1), 4);
-					r2 = toBin(getNumero(r2), 4);
+        return Conversao.intToBin(nix.toString(), 6);
+    }
 
-				} catch (Exception e) {
-					System.out.println("deu erro na linha " + linha);
-				}
-
-				operandosBinario = r1 + r2;
-			}
-
-			operacaoBinario.append(nixbpe);
-			operacaoBinario.append(operandosBinario);
-
-			binaryCode.add(operacaoBinario.toString());
-		}
-
-	}
-
-	private String verificaTabelaDeSimbolos(String op) throws RegisterIdenfierError {
-		if (tabelaSimbolos.containsKey(op)) {
-			return tabelaSimbolos.get(op).toString();
-		}
-
-		String reg = BancoRegistradores.getNumeroRegistrador(op);
-
-		if (!reg.equals("")) {
-			return reg;
-		}
-
-		return op;
-
-	}
-
-	private String getNumero(String numero) {
-		String n = "";
-		switch (verificaEnderecamento(numero)) {
-			case "imediato":
-			case "indireto":
-				n = numero.substring(1);
-				break;
-			case "direto":
-				n = numero;
-				break;
-
-			default:
-
-				break;
-		}
-
-		return n;
-
-	}
-
-	private String getBinarioOpcode(String nomeInstrucao) {
-		String cod;
-		if (nomeInstrucao.equals("J")) {
-			cod = "3C";
-		} else if (nomeInstrucao.equals("WORD")) {
-			cod = "AA";
-		} else if (nomeInstrucao.equals("RESW")) {
-			cod = "AB";
-		} else {
-			cod = instrucoes.getOpcodePorNome(nomeInstrucao);
-		}
-
-		int i = Integer.parseInt(cod, 16);
-		return toBin(Integer.toString(i), 8);
-	}
-
-	private String verificaEnderecamento(String numero) {
-		if (numero.charAt(0) == '@') {
-			return "indireto";
-		}
-
-		if (numero.charAt(0) == '#') {
-			return "imediato";
-		}
-
-		return "direto";
-	}
-
-	private String getLabel(String linha) {
-		List<String> splitedLine = new ArrayList<String>(Arrays.asList(linha.trim().split(" ")));
-		// int lengthOfOperation = splitedLine.size();
-
-		String possivelLabel = splitedLine.get(0).trim();
-
-		if (possivelLabel.endsWith(":")) {
-			return possivelLabel.substring(0, possivelLabel.length() - 1);
-		}
-
-		return "";
-	}
 }

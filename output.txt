@@ -1,0 +1,6 @@
+Exception in thread "main" src.Exceptions.IvalidInstructionFormatError: Instrucao: STA RESULT
+ linha: 7
+        at src.Montador.MontadorAntigo.segundaEtapa(MontadorAntigo.java:146)
+        at src.Montador.MontadorAntigo.executar(MontadorAntigo.java:76)
+        at src.Main_Montador.main(Main_Montador.java:21)
+PS C:\Users\leo\Desktop\faculdade\ps\ufpel_ps>

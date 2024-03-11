@@ -146,6 +146,12 @@ public class Controller {
     // ÍCONE STEP - CLIQUE
     @FXML
     void STEPimgclick(MouseEvent event) throws IOException {
+        try {
+
+            Maquina.getInstance().step();
+        } catch (Exception e) {
+            exibirMensagemErro("Erro de execução", "", "Insira um código assembly ou selecione um arquivo!");
+        }
     }
 
     // ÍCONE RUN - CLIQUE
@@ -221,7 +227,6 @@ public class Controller {
     public void atualizarRegistradores() {
         try {
             BancoRegistradores regs = BancoRegistradores.getInstance();
-            handleTERMINAL("Atualizando Registradores");
 
             registerA.setText(String.valueOf(regs.getValor("A")));
             registerL.setText(String.valueOf(regs.getValor("L")));
@@ -232,9 +237,8 @@ public class Controller {
             registerW.setText(String.valueOf(regs.getValor("SW")));
             registerX.setText(String.valueOf(regs.getValor("X")));
 
-            handleTERMINAL("Registradores Atualizados");
         } catch (RegisterIdenfierError e) {
-            exibirMensagemErro("Rigistrador não encontrado", "", "registrador não foi encontrado. Revise o codigo");
+            exibirMensagemErro("Registrador não encontrado", "", "Registrador não foi encontrado. Revise o código");
         }
 
     }
@@ -249,28 +253,25 @@ public class Controller {
         colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
         colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
         colunaNixbpe.setCellValueFactory(new PropertyValueFactory<>("NIXBPE"));
-        // tableView.setItems(Memoria.getInstance().getMemoria());
-        // Cria um ObservableList vinculado à ObservableList da classe Memoria
-        // ObservableList<Endereco> observableList =
-        // FXCollections.observableArrayList(Memoria.getInstance().getMemoria());
 
-        // Adicione o Listener à lista
-        // Memoria.getInstance().setListener((ListChangeListener<Endereco>) change -> {
-        // while (change.next()) {
-        // // if (change.wasAdded() || change.wasRemoved() || change.wasUpdated()) {
-        // tableView.refresh(); // update tabela da memoria;
-        // // tableView.setItems(Memoria.getInstance().getMemoria());
-        // // }
-        // }
-        // });
+        tableView.setItems(Memoria.getInstance().getMemoria());
 
-        // Configura a TableView com a ObservableList
-
+        // Configura o listener para a Memória
+        Memoria.getInstance().setListener((ListChangeListener<Endereco>) change -> {
+            while (change.next()) {
+                if (change.wasAdded() || change.wasRemoved() || change.wasUpdated()) {
+                    tableView.refresh(); // atualiza o tableView sempre que houver alteração na memoria
+                }
+            }
+        });
     }
 
     // Atualização da interface
     @FXML
     public void updateInterface() {
+
+        handleTABLE();
+
         ChangeListener<Number> listener = (observable, oldValue, newValue) -> {
             atualizarRegistradores();
         };
@@ -280,12 +281,14 @@ public class Controller {
     // TESTE RUN
     @FXML
     void testeRUN(ActionEvent event) throws Exception {
+        updateInterface();
         Maquina.getInstance().executarPrograma();
     }
 
     // TESTE STEP
     @FXML
     void testeSTEP(ActionEvent event) throws Exception {
+        updateInterface();
         Maquina.getInstance().step();
     }
 

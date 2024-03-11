@@ -92,7 +92,7 @@ public class Maquina {
         Endereco instrucao = memoria.getValor(end);
 
         System.out.println("Opcode: " + instrucao.getOpcode());
-        if (instrucao.getOpcode().equals("F4")) { // encontrou um "end"
+        if (instrucao.getOpcode().equals("F4")) { // encontr0️⃣ou um "end"
             // registradores.setValor("SW", 0);
             return false;
         }

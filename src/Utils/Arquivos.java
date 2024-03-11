@@ -1,7 +1,9 @@
 package src.Utils;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.PrintWriter;
@@ -18,6 +20,10 @@ public class Arquivos {
 
                 if (!data.isEmpty()) { // Não adiciona linha vazias
                     String content = data.split(";")[0].replaceAll("\\s+", " ").trim();
+
+                    if (content.length() == 0)
+                        continue;
+
                     code.add(content); // Adiciona a linha sem o comentário
                 }
             }
@@ -29,18 +35,22 @@ public class Arquivos {
         return code;
     }
 
-    public static void salvaArquivo(String nomeArquivo, ArrayList<String> binaryCode) throws FileNotFoundException {
-        try {
-            PrintWriter writer = new PrintWriter(nomeArquivo);
+    public static void salvaArquivo(ArrayList<String> binaryCode) {
+        // Usa try-with-resources para garantir que o writer seja fechado corretamente
+        String nomeArquivo = "./teste.asm";
 
+        try (PrintWriter writer = new PrintWriter(nomeArquivo)) {
             for (String linha : binaryCode) {
                 writer.println(linha);
             }
-
-            writer.close();
-        } catch (Exception e) {
-            throw new FileNotFoundException("Arquivo não encontrado!");
+            // Não é necessário chamar writer.close() explicitamente aqui, pois o
+            // try-with-resources cuidará disso
+        } catch (FileNotFoundException e) {
+            // Esse erro pode ocorrer se o arquivo não puder ser criado ou aberto para
+            // escrita
+            System.err.println("Não foi possível criar ou abrir o arquivo: " + nomeArquivo);
+            e.printStackTrace();
         }
-
     }
+
 }

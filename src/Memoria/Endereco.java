@@ -19,7 +19,7 @@ public class Endereco {
 
     private void interpretarInstrucao() {
         int tamanho = instrucaoBinario.length();
-        insHexa = Integer.toHexString(Integer.parseInt(instrucaoBinario, 2)).toUpperCase();
+        // insHexa = Integer.toHexString(.parseInt(instrucaoBinario, 2)).toUpperCase();
 
         // interpreta os diferentes tamanhos de instrução
         if (tamanho <= 16) {
@@ -36,7 +36,6 @@ public class Endereco {
             opcode = Integer.toHexString(numeroDecimal).toUpperCase();
             nixbpe = instrucaoBinario.substring(6, 12);
             enderecoBinario = instrucaoBinario.substring(12, instrucaoBinario.length());
-
         }
     }
 
@@ -70,7 +69,7 @@ public class Endereco {
         interpretarInstrucao();
     }
 
-    public String getValor() {
-        return Conversao.hexToBin(insHexa);
-    }
+    // public String getValor() {
+    // return Conversao.hexToBin(insHexa);
+    // }
 }

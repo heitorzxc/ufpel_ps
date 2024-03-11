@@ -12,6 +12,11 @@ public class Conversao {
         return Integer.toBinaryString(number);
     }
 
+    public static String intToBin(String number, int width) {
+        String binary = Integer.toBinaryString(Integer.parseInt(number));
+        return String.format("%" + width + "s", binary).replace(' ', '0');
+    }
+
     // Hexadecimal para Inteiro
     public static int hexToInt(String hex) {
         return Integer.parseInt(hex, 16);

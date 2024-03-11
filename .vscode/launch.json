@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Main_Simulador",
+      "request": "launch",
+      "mainClass": "src.Main_Simulador",
+      "projectName": "ufpel_ps_8b64752b"
+    },
+    {
+      "type": "java",
+      "name": "Main_Macros",
+      "request": "launch",
+      "mainClass": "src.Main_Macros",
+      "projectName": "ufpel_ps_8b64752b"
+    },
+    {
+      "type": "java",
       "name": "Main_Montador",
       "request": "launch",
       "mainClass": "src.Main_Montador",

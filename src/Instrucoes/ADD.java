@@ -30,10 +30,14 @@ public class ADD extends Instrucao {
 
       if (nixbpe.startsWith("10")) { // INDIRETO
         Endereco enderecoMemoria = memoria.getValor(enderecoDestino);
-        enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
+        System.out.println(enderecoMemoria.getEndereco());
+        // enderecoDestino = enderecoMemoria.getEndereco();
       }
 
-      valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+      System.out.println(memoria.getValor(enderecoDestino).getEndereco());
+      //
+      // valorMem = Conversao.stringToInt();
+      valorMem = 0;
     }
 
     registradores.setValor("A", valorReg + valorMem);

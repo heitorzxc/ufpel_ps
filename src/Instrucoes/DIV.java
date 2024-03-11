@@ -36,6 +36,11 @@ public class DIV extends Instrucao {
       valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
     }
 
+    if (valorMem == 0) {
+      System.err.println("Não existe divisão por 0 infelizmente");
+      return;
+    }
+
     registradores.setValor("A", valorReg / valorMem);
   }
 }

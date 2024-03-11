@@ -70,10 +70,6 @@ public class Registrador {
 		this.valor.set(novoValor);
 	}
 
-	public void setListener(listener){
-
-	}
-
 	@Override
 	public String toString() {
 		return "Valor do Registrador " + identificador + " (" + nome + "): " + valor.get();

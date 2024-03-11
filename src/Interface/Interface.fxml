@@ -105,15 +105,22 @@
       <Pane layoutX="-29.0" layoutY="-2.0" opacity="0.42" prefHeight="49.0" prefWidth="399.0" style="-fx-background-color: #1E90FF; -fx-border-color: #000000; -fx-background-radius: 30; -fx-border-radius: 30;" />
       <Label layoutX="148.0" layoutY="29.0" text="STEP" />
       <Label layoutX="281.0" layoutY="29.0" text="LOAD" />
-      <ImageView fx:id="RUNimg" fitHeight="24.0" fitWidth="26.0" layoutX="19.0" layoutY="4.0" onMouseClicked="#RUNimgclick" onMouseEntered="#RUNimgEntered" onMouseExited="#RUNimgExit" pickOnBounds="true" preserveRatio="true">
-
+       <ImageView fx:id="RUNimg" fitHeight="24.0" fitWidth="26.0" layoutX="19.0" layoutY="4.0" onMouseClicked="#RUNimgclick" onMouseEntered="#RUNimgEntered" onMouseExited="#RUNimgExit" pickOnBounds="true" preserveRatio="true">
+         <image>
+          
+         </image>
       </ImageView>
       <ImageView fx:id="STEPimg" fitHeight="24.0" fitWidth="28.0" layoutX="146.0" layoutY="4.0" onMouseClicked="#STEPimgclick" onMouseEntered="#STEPimgEntered" onMouseExited="#STEPimgExit" pickOnBounds="true" preserveRatio="true">
-
+         <image>
+           
+         </image>
       </ImageView>
       <ImageView fx:id="LOADimg" fitHeight="24.0" fitWidth="28.0" layoutX="284.0" layoutY="6.0" onMouseClicked="#LOADimgClick" onMouseEntered="#LOADimgEntered" onMouseExited="#LOADimgExit" pickOnBounds="true" preserveRatio="true">
-
+         <image>
+           
+         </image>
       </ImageView>
+
       <Label layoutX="640.0" layoutY="338.0" prefHeight="17.0" prefWidth="124.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="      Nº de Instruções:">
          <padding>
             <Insets left="5.0" right="5.0" />
@@ -138,8 +145,10 @@
          <padding>
             <Insets left="5.0" right="5.0" />
          </padding></Label>
-      <ImageView fitHeight="224.0" fitWidth="305.0" layoutX="68.0" layoutY="290.0" opacity="1.5" pickOnBounds="true" preserveRatio="true">
-
+      <ImageView fitHeight="224.0" fitWidth="305.0" layoutX="68.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+           
+         </image>
       </ImageView>
       <Label layoutX="19.0" layoutY="29.0" text="RUN" />
       <Button fx:id="RUNBUTTON" layoutX="19.0" layoutY="299.0" mnemonicParsing="false" onAction="#testeRUN" text="TesteRun" />

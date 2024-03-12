@@ -100,6 +100,6 @@ Semestre letivo: 2023/2. </br>
 
 ### Código absorvido do branch "pe-instrucoes_refact":
 1. Refatoração da camada de instruções.
-2. Adaptação de meétodos para compatibilidade entre classes.
+2. Adaptação de métodos para compatibilidade entre classes.
 
 Última atualização: 11/03/2024.

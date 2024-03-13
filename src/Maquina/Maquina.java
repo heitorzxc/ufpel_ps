@@ -59,6 +59,7 @@ public class Maquina {
 
                 verificaCodigo(linha);
                 memoria.setValor(endereco, linha.trim());
+                System.out.println(memoria.getValor(endereco));
                 ++endereco;
             }
         } catch (Exception e) {
@@ -80,6 +81,7 @@ public class Maquina {
 
     public Boolean executarPrograma() throws Exception {
         System.out.println("ENTROU EXECUTAR");
+        memoria.printMemoria();
         while (true) {
             if (!step()) // programa parou
                 return false;
@@ -87,11 +89,13 @@ public class Maquina {
     }
 
     public Boolean step() throws Exception {
+        // PC PRECISA SER INICIALIZADO NA POSIÇÃO COM A PRIMEIRA INSTRUÇÃO! MAS A INSTRUÇÃO VAI TA NO 0?
         Integer end = registradores.getValor("PC");
 
         Endereco instrucao = memoria.getValor(end);
 
-        System.err.println("--- Instrução Atual ---");
+        System.out.println("--- Instrução Atual ---");
+        System.out.println("VALOR PC  => " + end);
         System.out.println("Instrução Completa: " + instrucao.getInstrucaoBinario());
         System.out.println("Tamanho da Instrução: " + instrucao.getInstrucaoBinario().length());
         System.out.println("Opcode: " + instrucao.getOpcode());
@@ -101,10 +105,10 @@ public class Maquina {
         String []operandos = instrucao.getOperandos();
 
         for (int i = 0; i < operandos.length; i++) {
-            System.out.println("Operando " + (i + 1) + ": " + operandos[i]);
+            // System.out.println("Operando " + (i + 1) + ": " + operandos[i]);
         }
        
-        System.err.println(" ");
+        // System.err.println(" ");
         
         if (instrucao.getOpcode().equals("F4")) { // encontr0️⃣ou um "end"
             // registradores.setValor("SW", 0);

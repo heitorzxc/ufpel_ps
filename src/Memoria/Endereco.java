@@ -21,6 +21,8 @@ public class Endereco {
     private void interpretarInstrucao() {
         int tamanho = instrucaoBinario.length();
 
+        if (tamanho == 8) {
+        } 
    
         System.err.println(instrucaoBinario);
         if (tamanho == 16) {

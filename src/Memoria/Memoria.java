@@ -13,7 +13,7 @@ public class Memoria {
 
     private static Memoria instance = null;
 
-    private final Integer TAMANHO_MEMORIA = 1000;
+    private final Integer TAMANHO_MEMORIA = 500;
 
     private Memoria() {
         memoria = FXCollections.observableArrayList();
@@ -22,7 +22,7 @@ public class Memoria {
 
     private void inicializaMemoria(){
         for (int i = 0; i < TAMANHO_MEMORIA; i++) {
-            memoria.add(new Endereco("0000000000000000")); // Valor padrão,
+            memoria.add(new Endereco("00000000")); // Valor padrão,
         }
     }
 
@@ -64,12 +64,23 @@ public class Memoria {
             throw new ValueOutOfBoundError(endereco + " esta fora dos limites da memoria!");
         }
 
-        if (valor.length() < 8) {
-            Conversao.expandeBinario(valor, 8);
-        }
+        String valorExpandido = valor.length() < 8 ? Conversao.expandeBinario(valor, 8) : valor;
 
-        memoria.add(new Endereco(valor));
+        memoria.set(endereco, new Endereco(valorExpandido));
     }
+
+    public void printMemoria() {
+        System.out.println("============= Conteúdo da Memória =============");
+        for (int i = 0; i < memoria.size(); i++) {
+            Endereco endereco = memoria.get(i);
+            String valor = endereco.getInstrucaoBinario(); 
+
+            if(valor != "00000000")
+                System.out.println("Endereço " + i + ": " + valor);
+        }
+        System.out.println("=========== Fim do Conteúdo da Memória ==========");
+    }
+    
 
     public Endereco getValor(Integer endereco) {
         return memoria.get(endereco);

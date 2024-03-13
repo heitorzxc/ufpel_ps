@@ -1,40 +1,40 @@
 
-import java.io.File;
-
 // import java.io.File;
 
-//montador toda vez que encontra macro x troca x por {a, b, c, d, e, ...}
-//então no final da montagem temos um assembly totalmente expandido
-//então joga pro ligador esse assembly
+// // import java.io.File;
 
-// Tabelinha da aula:
-// label (#0) | operação | operando (#1)
-// <vazio>    | operação | operando (#2) | operando (#3)
-// label (#4) | operação | operando (#5) | imediato (@32)
+// //montador toda vez que encontra macro x troca x por {a, b, c, d, e, ...}
+// //então no final da montagem temos um assembly totalmente expandido
+// //então joga pro ligador esse assembly
 
-public class Ligador {
+// // Tabelinha da aula:
+// // label (#0) | operação | operando (#1)
+// // <vazio>    | operação | operando (#2) | operando (#3)
+// // label (#4) | operação | operando (#5) | imediato (@32)
 
-  private File saida;
+// public class Ligador {
 
-  Ligador() {
-  }
+//   private File saida;
 
-  public void executar(String entrada) {
-    Object saida = step2(step1(entrada));
+//   Ligador() {
+//   }
 
-    // return saida;
-  }
+//   public void executar(String entrada) {
+//     Object saida = step2(step1(entrada));
 
-  public String step1(String entrada) {
-    File saida;
+//     // return saida;
+//   }
 
-    return "saida";
-  }
+//   public String step1(String entrada) {
+//     File saida;
 
-  public String step2(String entrada) {
-    File saida;
+//     return "saida";
+//   }
 
-    return "";
-  }
+//   public String step2(String entrada) {
+//     File saida;
 
-}
+//     return "";
+//   }
+
+// }

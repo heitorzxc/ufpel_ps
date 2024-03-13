@@ -24,6 +24,7 @@ public class LDS extends Instrucao {
         } else {
             if (nixbpe.startsWith("11")) { // DIRETO
                 enderecoDestino = calculaEnderecoDireto(enderecoDestino, nixbpe, registradores);
+                System.out.println(enderecoDestino);
             }
 
             if (nixbpe.startsWith("10")) { // INDIRETO

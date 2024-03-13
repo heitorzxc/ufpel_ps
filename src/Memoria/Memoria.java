@@ -13,10 +13,17 @@ public class Memoria {
 
     private static Memoria instance = null;
 
-    private final Integer TAMANHOMEMORIA = 250;
+    private final Integer TAMANHO_MEMORIA = 1000;
 
     private Memoria() {
         memoria = FXCollections.observableArrayList();
+        inicializaMemoria();
+    }
+
+    private void inicializaMemoria(){
+        for (int i = 0; i < TAMANHO_MEMORIA; i++) {
+            memoria.add(new Endereco("0000000000000000")); // Valor padrão,
+        }
     }
 
     public static Memoria getInstance() {
@@ -37,13 +44,13 @@ public class Memoria {
     }
 
     private Boolean enderecoValido(Integer endereco) {
-        return (endereco >= 0) && (endereco < TAMANHOMEMORIA);
+        return (endereco >= 0) && (endereco < TAMANHO_MEMORIA);
     }
 
     public void setMemoria(String[] codigo) throws SpaceExceededError, ValueOutOfBoundError {
         this.limpaMemoria();
 
-        if (codigo.length > TAMANHOMEMORIA) {
+        if (codigo.length > TAMANHO_MEMORIA) {
             throw new SpaceExceededError("O código fornecido excede o tamanho da memória!");
         }
 

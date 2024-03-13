@@ -91,7 +91,21 @@ public class Maquina {
 
         Endereco instrucao = memoria.getValor(end);
 
+        System.err.println("--- Instrução Atual ---");
+        System.out.println("Instrução Completa: " + instrucao.getInstrucaoBinario());
+        System.out.println("Tamanho da Instrução: " + instrucao.getInstrucaoBinario().length());
         System.out.println("Opcode: " + instrucao.getOpcode());
+        System.out.println("Nixbpe: " + instrucao.getNIXBPE());
+        System.out.println("Instrução => " + Instrucoes.getInstrucaoPorOpcode(instrucao.getOpcode()).getNome());
+
+        String []operandos = instrucao.getOperandos();
+
+        for (int i = 0; i < operandos.length; i++) {
+            System.out.println("Operando " + (i + 1) + ": " + operandos[i]);
+        }
+       
+        System.err.println(" ");
+        
         if (instrucao.getOpcode().equals("F4")) { // encontr0️⃣ou um "end"
             // registradores.setValor("SW", 0);
             return false;

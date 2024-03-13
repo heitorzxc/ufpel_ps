@@ -15,6 +15,7 @@ import src.Instrucoes.Instrucoes;
 import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Registradores.BancoRegistradores;
+import src.Utils.Conversao;
 
 public class Maquina {
     public BancoRegistradores registradores;
@@ -73,6 +74,7 @@ public class Maquina {
     }
 
     private void verificaCodigo(String linha) throws IvalidInstructionFormatError {
+        System.err.println(linha.length());
         if (!FORMATOSVALIDOS.contains(linha.length())) {
             throw new IvalidInstructionFormatError(linha + " é uma instrucção inválida!");
         }
@@ -94,6 +96,11 @@ public class Maquina {
 
         Endereco instrucao = memoria.getValor(end);
 
+        // TODO: Remover essa gambiarra, tratar as posições vazias da memoria
+        if (instrucao.getInstrucaoBinario().length() == 8){
+            return false;
+        }
+
         System.out.println("--- Instrução Atual ---");
         System.out.println("VALOR PC  => " + end);
         System.out.println("Instrução Completa: " + instrucao.getInstrucaoBinario());
@@ -105,10 +112,15 @@ public class Maquina {
         String []operandos = instrucao.getOperandos();
 
         for (int i = 0; i < operandos.length; i++) {
-            // System.out.println("Operando " + (i + 1) + ": " + operandos[i]);
+            if(operandos[i] != null) {
+                System.out.println("Operando " + (i + 1) + ": " + Conversao.StrNumBinC2(operandos[i]));
+            } else {
+                System.out.println("Operando " + (i + 1) + ": " + operandos[i]);
+            }
         }
        
         // System.err.println(" ");
+     
         
         if (instrucao.getOpcode().equals("F4")) { // encontr0️⃣ou um "end"
             // registradores.setValor("SW", 0);

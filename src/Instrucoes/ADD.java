@@ -30,13 +30,17 @@ public class ADD extends Instrucao {
 
       if (nixbpe.startsWith("10")) { // INDIRETO
         Endereco enderecoMemoria = memoria.getValor(enderecoDestino);
-        enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
+        enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getInstrucaoBinario());
       }
 
-      valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+      valorMem = Conversao.StrNumBinC2(memoria.getValor(enderecoDestino).getInstrucaoBinario());
     }
 
+    System.err.println("valormem" + valorMem);
+    System.err.println("valorreg" + valorReg);
+
     registradores.setValor("A", valorReg + valorMem);
+    System.err.println(registradores.getValor("A"));
   }
 
 }

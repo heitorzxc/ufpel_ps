@@ -32,10 +32,14 @@ public class LDS extends Instrucao {
                 enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
             }
 
-            valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+            System.err.println(memoria.getValor(enderecoDestino)); // Pegando endereço armazenado na posição enderecoDestino
+            System.err.println(memoria.getValor(enderecoDestino).getInstrucaoBinario());
+            System.err.println("Valor no endereço " + enderecoDestino + "=>" + memoria.getValor(enderecoDestino).getInstrucaoBinario());
+            valorMem = Conversao.StrNumBinC2(memoria.getValor(enderecoDestino).getInstrucaoBinario());
         }
 
         registradores.setValor("S", valorMem);
+         System.err.println(registradores.getValor("S"));
     }
 }
 

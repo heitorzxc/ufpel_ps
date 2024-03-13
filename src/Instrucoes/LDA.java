@@ -31,8 +31,10 @@ public class LDA extends Instrucao {
         enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
       }
 
-      valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+      valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getInstrucaoBinario());
     }
+
+    System.err.println("ValorMem =>" + valorMem);
 
     registradores.setValor("A", valorMem);
     System.err.println("VALOR DO REG A PÓS ALTERAÇÃO =>" + registradores.getValor("A"));

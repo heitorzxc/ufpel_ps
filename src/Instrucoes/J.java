@@ -21,7 +21,7 @@ public class J extends Instrucao {
 
     if (nixbpe.startsWith("10")) { // INDIRETO
       Endereco enderecoMemoria = memoria.getValor(enderecoDestino);
-      enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
+      enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getInstrucaoBinario());
     }
 
     registradores.setValor("PC", enderecoDestino); // Imediato

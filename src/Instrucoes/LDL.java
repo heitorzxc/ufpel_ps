@@ -31,7 +31,7 @@ public class LDL extends Instrucao {
 				enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
 			}
 
-			valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+			valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getInstrucaoBinario());
 		}
 
 		registradores.setValor("L", valorMem);

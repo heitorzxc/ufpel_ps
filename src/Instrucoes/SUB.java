@@ -29,10 +29,10 @@ public class SUB extends Instrucao {
 
       if (nixbpe.startsWith("10")) { // INDIRETO
         Endereco enderecoMemoria = memoria.getValor(enderecoDestino);
-        enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
+        enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getInstrucaoBinario());
       }
 
-      valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+      valorMem = Conversao.StrNumBinC2(memoria.getValor(enderecoDestino).getInstrucaoBinario());
     }
 
     registradores.setValor("A", valorRegA - valorMem);

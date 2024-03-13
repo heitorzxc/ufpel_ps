@@ -22,6 +22,7 @@ public class Endereco {
         int tamanho = instrucaoBinario.length();
 
         if (tamanho == 8) {
+            
         } 
    
         System.err.println(instrucaoBinario);
@@ -62,43 +63,6 @@ public class Endereco {
         }
     }
     
-
-    // private void interpretarInstrucao() {
-    //     int tamanho = instrucaoBinario.length();
-
-    //     System.err.println(tamanho);
-    //     // if (tamanho == 8) {
-    //     //     // Nenhuma das instruções que precisamos implementar vai ter esse tamanho
-    //     // }
-
-    //     if (tamanho == 16) {
-    //         // 2 registradores ?
-            
-    //     }
-
-    //     if (tamanho == 24) {
-
-    //     }
-
-    //     if (tamanho == 32) {
-
-    //     }
-    //     if (tamanho <= 16) {
-    //         Integer numeroDecimal = Integer.parseInt(instrucaoBinario.substring(0, 8), 2);
-    //         opcode = Integer.toHexString(numeroDecimal).toUpperCase();
-
-    //         if (tamanho == 16) {
-    //             operando1 = instrucaoBinario.substring(8, 12);
-    //             operando2 = instrucaoBinario.substring(12, 16);
-    //         }
-
-    //     } else {
-    //         Integer numeroDecimal = Integer.parseInt(instrucaoBinario.substring(0, 6) + "00", 2);
-    //         opcode = Integer.toHexString(numeroDecimal).toUpperCase();
-    //         nixbpe = instrucaoBinario.substring(6, 12);
-    //         enderecoBinario = instrucaoBinario.substring(12, instrucaoBinario.length());
-    //     }
-    // }
 
     public String getOpcode() {
         return this.opcode;

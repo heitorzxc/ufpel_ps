@@ -30,7 +30,7 @@ public class LDT extends Instrucao {
 				enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
 			}
 
-			valorMem = Conversao.stringToInt(memoria.getValor(enderecoDestino).getEndereco());
+			valorMem = Conversao.StrNumBinC2(memoria.getValor(enderecoDestino).getInstrucaoBinario());
 		}
 
 		registradores.setValor("T", valorMem);

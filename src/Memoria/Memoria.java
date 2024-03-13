@@ -13,7 +13,7 @@ public class Memoria {
 
     private static Memoria instance = null;
 
-    private final Integer TAMANHO_MEMORIA = 500;
+    private final Integer TAMANHO_MEMORIA = 5000;
 
     private Memoria() {
         memoria = FXCollections.observableArrayList();

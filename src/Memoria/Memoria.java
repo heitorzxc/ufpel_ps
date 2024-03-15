@@ -63,10 +63,11 @@ public class Memoria {
         if (!enderecoValido(endereco)) {
             throw new ValueOutOfBoundError(endereco + " esta fora dos limites da memoria!");
         }
-
         String valorExpandido = valor.length() < 8 ? Conversao.expandeBinario(valor, 8) : valor;
 
-        memoria.set(endereco, new Endereco(valorExpandido));
+
+        System.err.println("Instrução Identificada -> " + new Endereco(valorExpandido).getOpcode());
+        // memoria.set(endereco, new Endereco(valorExpandido));
     }
 
     public void printMemoria() {
@@ -74,7 +75,7 @@ public class Memoria {
         for (int i = 0; i < memoria.size(); i++) {
             Endereco endereco = memoria.get(i);
             String valor = endereco.getInstrucaoBinario(); 
-
+            
             if(valor != "00000000")
                 System.out.println("Endereço " + i + ": " + valor);
         }
@@ -90,54 +91,5 @@ public class Memoria {
         return memoria;
     }
 
-    // public Boolean addInstrucao(String inst) {
-    // try {
-    // this.setValor(posicaoAdicionar, inst);
-    // } catch (Exception e) {
-    // return false;
-    // }
-
-    // return true;
-    // }
-
-    // // Modificar o conteudo para 'Dados' ou 'conteudo'
-    // public void setValor(Integer index, String valor) throws ValueOutOfBoundError
-    // {
-    // if (!enderecoValido(index)) {
-    // throw new ValueOutOfBoundError(index + " esta fora dos limites da memoria!");
-    // }
-    // memoria.set(index, new Endereco(valor)); // Seta endereco na posição ind ex
-    // }
-
-    // public Endereco getValor(Integer endereco) throws ValueOutOfBoundError {
-    // if (!enderecoValido(endereco)) {
-    // throw new ValueOutOfBoundError(endereco + " esta fora dos limites da
-    // memoria!");
-    // }
-
-    // return memoria.get(endereco);
-    // }
-
-    // @Override
-    // public String toString() {
-    // System.err.println("============= MEMORIA ==========");
-    // for (Endereco endereco : memoria) {
-    // Instrucao palavra = endereco.getPalavra();
-
-    // if (palavra == null) {
-    // continue;
-    // }
-    // System.out.println("");
-    // System.out.println("");
-    // System.out.println("Intrucao com endereço: " + endereco.getEndDeci());
-    // System.out.println(palavra);
-    // System.out.println("");
-    // System.out.println("");
-
-    // }
-    // System.err.println("========== FIM MEMORIA ========");
-
-    // return "";
-    // }
 
 }

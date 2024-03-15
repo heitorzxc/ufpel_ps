@@ -1,5 +1,6 @@
         LDA  #1
-        ADDR A B             ; 
+        ADDR A B   
+        CLEAR  A 
 RESULT:   STA 1       
 COUNTER:  STA 1       
 LOAD_A:  LDA  #5       ; Carrega o valor 5 no acumulador A
@@ -13,5 +14,5 @@ DECREMENT: LDA  COUNTER ; Carrega o valor de 'COUNTER' novamente
           STA  COUNTER ; Armazena o valor decrementado em 'COUNTER'
           COMP #0      ; Compara o valor no acumulador com 0
           JGT  DECREMENT ; Se o valor no acumulador for maior que 0, volta para DECREMENT
-END:      RSUB         ; Retorna / Finaliza o programa
+END:      ADD #1  ; Retorna / Finaliza o programa
 

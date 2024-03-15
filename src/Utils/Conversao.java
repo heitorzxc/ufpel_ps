@@ -12,6 +12,21 @@ public class Conversao {
         return Integer.toBinaryString(number);
     }
 
+    public static String converterHexParaBinarioNBits(String hex, int n) {
+        int valorInteiro = Integer.parseInt(hex, 16);
+        String binario = Integer.toBinaryString(valorInteiro);
+        
+        while (binario.length() < n) {
+            binario = "0" + binario;
+        }
+        if (binario.length() > n) {
+            binario = binario.substring(binario.length() - n);
+        }
+        
+        return binario;
+    }
+
+
     public static String intToBin(String number, int width) {
         String binary = Integer.toBinaryString(Integer.parseInt(number));
         return String.format("%" + width + "s", binary).replace(' ', '0');

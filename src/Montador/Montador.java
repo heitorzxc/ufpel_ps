@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import src.Exceptions.IvalidInstructionFormatError;
 import src.Exceptions.RegisterIdenfierError;
@@ -32,10 +34,10 @@ public class Montador {
         output = new ArrayList<>();
 
         lerArquivo(path);
-
         primeiroPasso();
         printSYMTAB();
         segundoPasso();
+        gerarArquivoOutput("./testez.txt");
     }
 
     public void lerArquivo(String path) {
@@ -81,9 +83,9 @@ public class Montador {
                 continue;
             }
 
+
             Instrucao instrucao = Instrucoes.getInstrucaoPorNome(operacao);
 
-            System.err.println("OPERACAO =>>>" + operacao);
 
             if (instrucao == null) {
                 System.err.println("Instrução invalida!! => " + operacao);
@@ -91,40 +93,20 @@ public class Montador {
             }
 
             String[] operandos = getOperandos(linha);
-            System.err.println("INSTRUÇÃO" + instrucao.getNome());
-            for (String operando : operandos) {
-                System.err.println("OPERANDO AAAA ->" + operando);
-                // output.add();
-            }
-
             String codigoBinario = "";
 
-            if (instrucao.isFormat34()) {
-                codigoBinario = traduzirBinario(instrucao, operandos);
-                output.add(codigoBinario);
-            } else {
-                System.err.println(" ");
-                System.err.println(" ");
-                System.err.println(" ");
-                codigoBinario = Conversao.hexToBin(instrucao.getOpcode()) + "00";
-
-                System.err.println("Entrou aqui");
-                output.add(codigoBinario);
-                for (String operando : operandos) {
-                    System.err.println("OPERANDO AAAA ->" + Conversao.hexToBin(operando));
-                    output.add(Conversao.hexToBin(operando));
-                }
-
-                System.err.println(" ");
-
-            }
+            codigoBinario = traduzirBinario(instrucao, operandos, instrucao.isFormat34());
 
             if (!codigoBinario.isEmpty()) {
                 System.err.println(" ");
                 System.err.println(" ");
+                System.err.println("Operacao " + operacao);
                 System.err.println("Código Binario: " + codigoBinario);
+                System.err.println("Tamanho do Binario: " + codigoBinario.length());
+                System.out.println("Opcode do código binário ->  " + converterBinarioParaHex(codigoBinario));
+                System.err.println(" ");
+                System.err.println(" ");
                 output.add(codigoBinario);
-                System.out.println("Endereço: " + endereco + ", Código Binário: " + codigoBinario);
             }
 
             endereco++;
@@ -132,47 +114,79 @@ public class Montador {
 
     }
 
-    private String traduzirBinario(Instrucao instrucao, String[] operandos) {
+    public void gerarArquivoOutput(String caminhoArquivo) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(caminhoArquivo))) {
+            for (String linha : output) {
+                pw.println(linha);
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao escrever no arquivo: " + e.getMessage());
+        }
+    }
 
+    
+
+    private String traduzirBinario(Instrucao instrucao, String[] operandos, boolean isFormat34) {
         StringBuilder codigo = new StringBuilder();
-
+        
         String nixbpe = "110000";
-        codigo.append(Conversao.hexToBin(instrucao.getOpcode()));
-        Integer endereco = 0;
-
-        for (String operando : operandos) {
-            // System.err.println("operando ----------- >" + operando);
-
-            if (operando.startsWith("#")) {
-                // IMEDIATOS
-                nixbpe = "010000";
-                operando = operando.substring(1); // remove o #
-                endereco = Integer.parseInt(operando); // garantindo que vai ser int
-            } else if (operando.startsWith("@")) {
-                // INDIRETO
-                nixbpe = "100000";
-                operando = operando.substring(1); // Remove o @
-
-                if (SYMTAB.containsKey(operando)) {
-                    endereco = SYMTAB.get(operando);
+        Integer endereco = 0; 
+    
+        if (isFormat34) {
+            for (String operando : operandos) {
+                if (operando.startsWith("#")) {
+                    // IMEDIATOS
+                    nixbpe = "010000"; 
+                    operando = operando.substring(1); // Remove o '#'
+                    endereco = Integer.parseInt(operando); // Converte o valor imediato para inteiro
+                } else if (operando.startsWith("@")) {
+                    // INDIRETO
+                    nixbpe = "100000"; 
+                    operando = operando.substring(1); // Remove o '@'
+                    if (SYMTAB.containsKey(operando)) {
+                        endereco = SYMTAB.get(operando); 
+                    }
+                } else if (SYMTAB.containsKey(operando)) {
+                    // DIRETO
+                    endereco = SYMTAB.get(operando); 
                 }
-            } else if (SYMTAB.containsKey(operando)) {
-                // o endereço do label vai ta na tabeal de simbolos
-                endereco = SYMTAB.get(operando);
+
+                break;
             }
 
+            String opcodeBinario = Conversao.converterHexParaBinarioNBits(instrucao.getOpcode(), 8);
+            codigo.append(opcodeBinario); 
+
+            for (String operando : operandos) {
+                String codigoRegistrador = registradorEmBinario(operando); 
+                codigo.append(codigoRegistrador);
+            }
+
+            // // PRECISA SER 6 BITS
+            // // System.err.println("OPCODE" + instrucao.getOpcode() + "  " +  "OPCODE APPENDADO = " + Conversao.converterHexParaBinarioNBits(instrucao.getOpcode(), 6));
+            // codigo.append(Conversao.converterHexParaBinarioNBits(instrucao.getOpcode(), 6)); // opcode appendado
+
+            // codigo.append(nixbpe);
+
+            // // Sim, por enquanto estou ignorando instruções de tamanho 4.
+            // codigo.append(Conversao.intToBin(endereco.toString(), 12)); 
+
+            return codigo.toString();
+        } 
+
+        // Se chegou aqui é formato 2
+
+        // Integer enderecoInteger = Conversao.hexToInt(instrucao.getOpcode());
+        codigo.append(Conversao.converterHexParaBinarioNBits(instrucao.getOpcode(), 6) + "00");   // Opcode 8 bits
+
+        // Operandos vão ser registradores
+        for (String operando : operandos) {
+            codigo.append(Conversao.converterHexParaBinarioNBits(operando, 4));
         }
-
-        codigo.append(nixbpe);
-        // System.err.println("ENDERECO =>>>>" + endereco);
-        // System.err.println("CODIGO +>>>>" + codigo.toString());
-        // System.err.println("ENDERECO CONVERTIDO =>>>>" +
-        // Conversao.intToBin(endereco));
-
-        
-
+    
         return codigo.toString();
     }
+    
 
     public void printSYMTAB() {
         System.out.println("Tabela de Símbolos (SYMTAB):");
@@ -190,19 +204,71 @@ public class Montador {
 
     public String[] getOperandos(String linha) {
         String[] parts = linha.trim().split("\\s+");
-
-        // Se houver apenas duas partes, pode ser uma instrução de Formato 2 com um
-        // registrador como operando.
+    
+        // Caso a linha contenha apenas o opcode e um operando (ou nenhum operando).
         if (parts.length == 2) {
-            // Retorna o segundo elemento como um array de um único operando.
             return new String[] { parts[1] };
-        } else if (parts.length > 2) {
-            // Se existirem mais partes, assumimos que os operandos começam na terceira
-            // posição.
-            return Arrays.copyOfRange(parts, 2, parts.length);
         }
-        // Retorna um array vazio caso não haja operandos além do opcode.
+        // Caso a linha contenha o opcode seguido por dois ou mais operandos.
+        else if (parts.length > 2) {
+            // Retorna todos os elementos após o opcode.
+            return Arrays.copyOfRange(parts, 1, parts.length);
+        }
+    
+        // Retorna um array vazio caso não haja operandos.
         return new String[0];
+    }
+    
+    // public String[] getOperandos(String linha) {
+    //     String[] parts = linha.trim().split("\\s+");
+
+    //     if (parts.length == 2) {
+    //         return new String[] { parts[1] };
+    //     } else if (parts.length > 2) {
+    //         return Arrays.copyOfRange(parts, 2, parts.length);
+    //     }
+
+    //     return new String[0];
+    // }
+
+    private String registradorEmBinario (String registrador) {
+        switch (registrador) {
+            case "A":
+                return "0000";
+            case "X":
+                return "0001";
+            case "L":
+                return "0010";
+            case "B":
+                return "0011";
+            case "S":
+                return "0100";
+            case "T":
+                return "0101";
+            case "PC":
+                return "0110";
+            case "SW":
+                return "0111";
+            default:
+                return "777777777"; // deu errado
+        }
+    }
+
+    public static String converterBinarioParaHex(String binario) {
+        // Pegar os primeiros 6 bits da string de entrada
+        String primeiros6Bits = binario.substring(0, 6);
+        // Adicionar 2 bits '00' no final
+        String bitsModificados = primeiros6Bits;
+        // Converter o valor modificado para hexadecimal
+        int valorDecimal = Integer.parseInt(bitsModificados, 2);
+        String valorHexadecimal = Integer.toHexString(valorDecimal).toUpperCase();
+
+        // Logar informações
+        // System.out.println("Binário original: " + binario);
+        // System.out.println("Binário modificado: " + bitsModificados);
+        // System.out.println("Hexadecimal: " + valorHexadecimal);
+
+        return valorHexadecimal;
     }
 
     public static String getOperacao(String linha) {
@@ -211,8 +277,6 @@ public class Montador {
 
         if (primeiraParte.endsWith(":")) {
             if (partes.length > 1) {
-                // System.err.println("Rótulo encontrado: " + primeiraParte + " | Operação: " +
-                // partes[1]);
                 return partes[1];
             }
         } else {
@@ -221,36 +285,4 @@ public class Montador {
 
         return partes.length > 0 ? primeiraParte : null;
     }
-
-    public String getNixbpe(String opcode, String[] operandos) {
-        Integer nix;
-
-        String operando = operandos[0];
-
-        switch (operando.charAt(0)) { // tipos de enderecamento
-            case IMEDIATO:
-                nix = 16;
-                break;
-
-            case INDIRETO:
-                nix = 32;
-                break;
-
-            default: // direto
-                nix = 48;
-                break;
-        }
-
-        if (operando.endsWith("X")) // usa o registrador X para o endereçamento
-            nix = nix | 8;
-
-        if (operando.endsWith("B")) // usa o registrador B para o endereçamento
-            nix = nix | 4;
-
-        if (opcode.startsWith("+")) // opernado é 20 bits
-            return Conversao.intToBin(nix | 1);
-
-        return Conversao.intToBin(nix.toString(), 6);
-    }
-
 }

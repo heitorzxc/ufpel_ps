@@ -20,24 +20,39 @@ public class Instrucoes {
     public static void inicializaInstrucoes() {
         instrucaoPorOpcode = new HashMap<>();
         instrucaoPorNome = new HashMap<>();
-
+        
+        setInstrucao(new ADD());
+        setInstrucao(new ADDR());
+        setInstrucao(new AND());
+        setInstrucao(new CLEAR());
+        setInstrucao(new DIV());
+        setInstrucao(new DIVR());
+        setInstrucao(new J());
+        setInstrucao(new JEQ());
+        setInstrucao(new JGT());
+        setInstrucao(new JLT());
+        setInstrucao(new JSUB());
         setInstrucao(new LDA());
         setInstrucao(new LDB());
         setInstrucao(new LDL());
         setInstrucao(new LDS());
         setInstrucao(new LDT());
-        setInstrucao(new ADD());
-        setInstrucao(new SUB());
-        setInstrucao(new DIV());
+        setInstrucao(new LDX());
         setInstrucao(new MUL());
         setInstrucao(new MULR());
-        setInstrucao(new DIVR());
-        setInstrucao(new ADDR());
-        setInstrucao(new SUBR());
+        setInstrucao(new OR());
         setInstrucao(new RMO());
+        setInstrucao(new RSUB());
+        setInstrucao(new SHIFTL());
+        setInstrucao(new SHIFTR());
         setInstrucao(new STA());
-        setInstrucao(new CLEAR());
-        setInstrucao(new J());
+        setInstrucao(new STB());
+        setInstrucao(new STL());
+        setInstrucao(new STS());
+        setInstrucao(new STT());
+        setInstrucao(new SUB());
+        setInstrucao(new SUBR());
+      
     }
 
     public static void setInstrucao(Instrucao instrucao) {

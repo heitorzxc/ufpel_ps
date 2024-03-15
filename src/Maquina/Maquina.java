@@ -36,7 +36,7 @@ public class Maquina {
     private Maquina() {
         this.memoria = Memoria.getInstance();
         this.registradores = BancoRegistradores.getInstance();
-        Instrucoes.inicializaInstrucoes(); // seta as instrucoes disponiveis
+        Instrucoes.inicializaInstrucoes(); 
     }
 
     public void setAquivo(String caminho_arquivo) throws RegisterIdenfierError, ValueOutOfBoundError {
@@ -60,7 +60,7 @@ public class Maquina {
 
                 verificaCodigo(linha);
                 memoria.setValor(endereco, linha.trim());
-                System.out.println(memoria.getValor(endereco));
+                // System.out.println(memoria.getValor(endereco));
                 ++endereco;
             }
         } catch (Exception e) {
@@ -74,14 +74,15 @@ public class Maquina {
     }
 
     private void verificaCodigo(String linha) throws IvalidInstructionFormatError {
-        System.err.println(linha.length());
+        // System.err.println(linha.length());
         if (!FORMATOSVALIDOS.contains(linha.length())) {
+            // System.err.println(linha.length());
             throw new IvalidInstructionFormatError(linha + " é uma instrucção inválida!");
         }
 
     }
 
-    public Boolean executarPrograma() throws Exception {
+    public Boolean executarPrograma() throws Exception  {
         System.out.println("ENTROU EXECUTAR");
         memoria.printMemoria();
         while (true) {

@@ -9,15 +9,28 @@ public abstract class Instrucao {
   private String nome = "";
   private String opcode = "";
   private Integer numeroDeOperandos = 0;
+  private boolean isFmt34 = false;
+
+  Instrucao(String nome, String opcode, Integer numeroDeOperandos, boolean isFmt34) {
+    this.nome = nome;
+    this.opcode = opcode;
+    this.numeroDeOperandos = numeroDeOperandos;
+    this.isFmt34 = isFmt34;
+  }
 
   Instrucao(String nome, String opcode, Integer numeroDeOperandos) {
     this.nome = nome;
     this.opcode = opcode;
     this.numeroDeOperandos = numeroDeOperandos;
+    this.isFmt34 = false;
   }
 
   public String getNome() {
     return this.nome;
+  }
+
+  public boolean isFormat34() {
+    return isFmt34;
   }
 
   public String getOpcode() {

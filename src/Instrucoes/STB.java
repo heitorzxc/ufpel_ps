@@ -11,7 +11,7 @@ import src.Utils.Conversao;
 public class STB extends Instrucao {
 
     public STB() {
-        super("STB", "78", 2);
+        super("STB", "78", 2, true);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

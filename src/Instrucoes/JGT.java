@@ -7,7 +7,7 @@ import src.Utils.Conversao;
 
 public class JGT extends Instrucao {
     public JGT() {
-        super("JGT", "34", 1);
+        super("JGT", "34", 1, true);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

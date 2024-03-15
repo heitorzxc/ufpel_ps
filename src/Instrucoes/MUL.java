@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class MUL extends Instrucao {
   public MUL() {
-    super("MUL", "20", 1);
+    super("MUL", "20", 1, true);
   }
 
   public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

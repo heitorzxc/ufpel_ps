@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class LDB extends Instrucao {
   public LDB() {
-    super("LDB", "68", 1);
+    super("LDB", "68", 1, true);
   }
 
   public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

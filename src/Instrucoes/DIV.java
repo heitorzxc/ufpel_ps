@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class DIV extends Instrucao {
   public DIV() {
-    super("DIV", "24", 1);
+    super("DIV", "24", 1, true);
   }
 
   public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

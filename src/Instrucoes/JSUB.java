@@ -7,7 +7,7 @@ import src.Utils.Conversao;
 
 public class JSUB extends Instrucao {
     public JSUB() {
-        super("JSUB", "48", 1);
+        super("JSUB", "48", 1, true);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

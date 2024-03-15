@@ -7,7 +7,7 @@ import src.Utils.Conversao;
 
 public class J extends Instrucao {
   public J() {
-    super("J", "3C", 1);
+    super("J", "3C", 1, true);
   }
 
   public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

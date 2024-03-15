@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class LDL extends Instrucao {
 	public LDL() {
-		super("LDL", "8", 1);
+		super("LDL", "8", 1, true);
 	}
 
 	public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

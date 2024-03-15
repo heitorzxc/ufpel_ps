@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class LDT extends Instrucao {
 	public LDT() {
-		super("LDT", "74", 1);
+		super("LDT", "74", 1, true);
 	}
 
 	public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

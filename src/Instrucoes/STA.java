@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class STA extends Instrucao {
     public STA() {
-        super("STA", "0C", 2);
+        super("STA", "0C", 2, true);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

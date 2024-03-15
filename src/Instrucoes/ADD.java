@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class ADD extends Instrucao {
   public ADD() {
-    super("ADD", "18", 1);
+    super("ADD", "18", 1, true);
   }
 
   public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

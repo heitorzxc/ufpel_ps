@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class LDX extends Instrucao {
 	public LDX() {
-		super("LDX", "4", 1);
+		super("LDX", "4", 1, true);
 	}
 
 	public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class OR extends Instrucao {
   public OR() {
-    super("OR", "44", 2);
+    super("OR", "44", 2, true);
   }
 
   public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

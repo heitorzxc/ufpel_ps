@@ -11,7 +11,7 @@ import src.Utils.Conversao;
 public class STL extends Instrucao {
 
     public STL() {
-        super("STL", "14", 2);
+        super("STL", "14", 2, true);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

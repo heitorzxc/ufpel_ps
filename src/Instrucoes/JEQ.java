@@ -7,7 +7,7 @@ import src.Utils.Conversao;
 
 public class JEQ extends Instrucao {
     public JEQ() {
-        super("JEQ", "30", 1);
+        super("JEQ", "30", 1, true);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

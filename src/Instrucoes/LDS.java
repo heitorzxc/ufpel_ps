@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class LDS extends Instrucao {
     public LDS() {
-        super("LDS", "6C", 1);
+        super("LDS", "6C", 1, true);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {
@@ -32,14 +32,16 @@ public class LDS extends Instrucao {
                 enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getEndereco());
             }
 
-            System.err.println(memoria.getValor(enderecoDestino)); // Pegando endereço armazenado na posição enderecoDestino
+            System.err.println(memoria.getValor(enderecoDestino)); // Pegando endereço armazenado na posição
+                                                                   // enderecoDestino
             System.err.println(memoria.getValor(enderecoDestino).getInstrucaoBinario());
-            System.err.println("Valor no endereço " + enderecoDestino + "=>" + memoria.getValor(enderecoDestino).getInstrucaoBinario());
+            System.err.println("Valor no endereço " + enderecoDestino + "=>"
+                    + memoria.getValor(enderecoDestino).getInstrucaoBinario());
             valorMem = Conversao.StrNumBinC2(memoria.getValor(enderecoDestino).getInstrucaoBinario());
         }
 
         registradores.setValor("S", valorMem);
-         System.err.println(registradores.getValor("S"));
+        System.err.println(registradores.getValor("S"));
     }
 }
 

@@ -10,7 +10,7 @@ import src.Utils.Conversao;
  *******/
 public class STX extends Instrucao {
     public STX() {
-        super("STX", "10", 2);
+        super("STX", "10", 2, true);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

@@ -19,36 +19,23 @@ import src.Registradores.BancoRegistradores;
 import src.Utils.Arquivos;
 import src.Utils.Conversao;
 
-// START -> Specify name and starting address for the program.
-// END -> Indicate the end of the source program and (optionally) specify the
-// first executable instruction in the program.
-// BYTE -> Generate character or hexadecimal constant, occupying as many
-// bytes as needed to represent the constant.
-// WORD -> Generate one-word integer constant.
-// RESB -> Reserve the indicated number of bytes for a data area.
-// RESW -> Reserve the indicated number of words for a data area.
-
-// LABEL // OPERATION // OPERANDO 1 // OPERANDO 2
-
 public class Montador {
-    private HashMap<String, Integer> SYMTAB = new HashMap<>(); // TABELA DE
-    // TABELA DE INSTRUCOES é obtida com o uso de Instrucoes.getInstrucaoPorNome
+    private HashMap<String, Integer> SYMTAB = new HashMap<>();
     private ArrayList<String> input;
-    private ArrayList<String> intermediario;
-    private ArrayList<String> finalCode;
+    private ArrayList<String> output;
 
     private static final char INDIRETO = '@';
     private static final char IMEDIATO = '#';
 
-    public Montador() throws Exception {
+    public Montador(String path) {
         input = new ArrayList<>();
-        intermediario = new ArrayList<>();
-        try {
-            primeiroPasso();
-            segundoPasso();
-        } catch (Exception exception) {
-            throw new Exception("Erro durante a montagem: " + exception.getMessage(), exception);
-        }
+        output = new ArrayList<>();
+
+        lerArquivo(path);
+
+        primeiroPasso();
+        printSYMTAB();
+        segundoPasso();
     }
 
     public void lerArquivo(String path) {
@@ -57,7 +44,7 @@ public class Montador {
 
             while ((linha = br.readLine()) != null) {
                 if (!linha.trim().isEmpty()) { // pulando linhas vázias
-                    input.add(linha.split(";")[0]); // adicionando no input sem os comentários
+                    input.add(linha.split(";")[0].trim()); // adicionando no input sem os comentários
                 }
             }
         } catch (Exception e) {
@@ -65,99 +52,174 @@ public class Montador {
         }
     }
 
-    private void primeiroPasso() throws Exception {
-        int LOCCTR = 0;
+    private void primeiroPasso() {
+        int endereco = 0;
 
-        String linha = input.get(0);
-        String label;
-        String opcode = getOpcode(linha);
-        String[] operandos;
-
-        int contadorLinha = 0;
-
-        if (opcode != null && opcode.equals("START")) {
-            LOCCTR = Conversao.binToInt(getOperandos(linha)[0]);
-            contadorLinha++;
-        }
-
-        while (opcode != "END") {
-            linha = input.get(contadorLinha);
-            label = getLabel(linha);
-            opcode = getOpcode(linha);
-            operandos = getOperandos(linha);
-
-            if (opcode.equals("END")) {
-                break;
-            }
+        for (String linha : input) {
+            String label = getLabel(linha);
+            // System.err.println(label);
 
             if (label != null) {
                 if (SYMTAB.containsKey(label)) {
-                    // se já ta na tabela de símbolos da erro
-                    throw new Exception("Erro - Label já definido");
-                } else {
-                    SYMTAB.put(label, LOCCTR);
+                    // throw new Exception("Rótulo duplicado: " + label);
                 }
+                SYMTAB.put(label, endereco);
             }
 
-            LOCCTR += 1;
-            intermediario.add(linha);
+            endereco++;
         }
     }
 
-    private void segundoPasso() throws Exception {
-        int index = 0;
-        String linha = intermediario.get(index);
+    private void segundoPasso() {
+        int endereco = 0;
 
-        String opcode = getOpcode(linha);
-        int end;
+        for (String linha : input) {
+            String operacao = getOperacao(linha);
 
-        if (opcode.equals("START")) {
-            end = Conversao.binToInt(getOperandos(linha)[0]);
-            index++;
-        }
-        while (opcode != "END") {
-            Instrucao instrucao = Instrucoes.getInstrucaoPorNome(opcode);
-            String[] operandos = getOperandos(linha);
-
-            if (instrucao != null) {
-                StringBuilder linhaOutput = new StringBuilder(Conversao.hexToBin(instrucao.getOpcode()));
-
-                if (operandos.length == 1) {
-                    // formato 3/4
-                }
-
-                else if (operandos.length == 2) {
-
-                }
-
-                if (operandos.length > 0 && SYMTAB.containsKey(operandos[0])) {
-                    linhaOutput.append(SYMTAB.get(operandos[0]));
-                }
-                finalCode.add(linhaOutput.toString());
+            if (operacao == null) {
+                System.err.println("operacao null");
+                continue;
             }
 
-            index++;
+            Instrucao instrucao = Instrucoes.getInstrucaoPorNome(operacao);
+
+            System.err.println("OPERACAO =>>>" + operacao);
+
+            if (instrucao == null) {
+                System.err.println("Instrução invalida!! => " + operacao);
+                continue;
+            }
+
+            String[] operandos = getOperandos(linha);
+            System.err.println("INSTRUÇÃO" + instrucao.getNome());
+            for (String operando : operandos) {
+                System.err.println("OPERANDO AAAA ->" + operando);
+                // output.add();
+            }
+
+            String codigoBinario = "";
+
+            if (instrucao.isFormat34()) {
+                codigoBinario = traduzirBinario(instrucao, operandos);
+                output.add(codigoBinario);
+            } else {
+                System.err.println(" ");
+                System.err.println(" ");
+                System.err.println(" ");
+                codigoBinario = Conversao.hexToBin(instrucao.getOpcode()) + "00";
+
+                System.err.println("Entrou aqui");
+                output.add(codigoBinario);
+                for (String operando : operandos) {
+                    System.err.println("OPERANDO AAAA ->" + Conversao.hexToBin(operando));
+                    output.add(Conversao.hexToBin(operando));
+                }
+
+                System.err.println(" ");
+
+            }
+
+            if (!codigoBinario.isEmpty()) {
+                System.err.println(" ");
+                System.err.println(" ");
+                System.err.println("Código Binario: " + codigoBinario);
+                output.add(codigoBinario);
+                System.out.println("Endereço: " + endereco + ", Código Binário: " + codigoBinario);
+            }
+
+            endereco++;
+        }
+
+    }
+
+    private String traduzirBinario(Instrucao instrucao, String[] operandos) {
+
+        StringBuilder codigo = new StringBuilder();
+
+        String nixbpe = "110000";
+        codigo.append(Conversao.hexToBin(instrucao.getOpcode()));
+        Integer endereco = 0;
+
+        for (String operando : operandos) {
+            // System.err.println("operando ----------- >" + operando);
+
+            if (operando.startsWith("#")) {
+                // IMEDIATOS
+                nixbpe = "010000";
+                operando = operando.substring(1); // remove o #
+                endereco = Integer.parseInt(operando); // garantindo que vai ser int
+            } else if (operando.startsWith("@")) {
+                // INDIRETO
+                nixbpe = "100000";
+                operando = operando.substring(1); // Remove o @
+
+                if (SYMTAB.containsKey(operando)) {
+                    endereco = SYMTAB.get(operando);
+                }
+            } else if (SYMTAB.containsKey(operando)) {
+                // o endereço do label vai ta na tabeal de simbolos
+                endereco = SYMTAB.get(operando);
+            }
+
+        }
+
+        codigo.append(nixbpe);
+        // System.err.println("ENDERECO =>>>>" + endereco);
+        // System.err.println("CODIGO +>>>>" + codigo.toString());
+        // System.err.println("ENDERECO CONVERTIDO =>>>>" +
+        // Conversao.intToBin(endereco));
+
+        
+
+        return codigo.toString();
+    }
+
+    public void printSYMTAB() {
+        System.out.println("Tabela de Símbolos (SYMTAB):");
+        for (String label : SYMTAB.keySet()) {
+            Integer endereco = SYMTAB.get(label);
+            System.out.println(label + ": " + endereco);
         }
     }
 
     public String getLabel(String linha) {
         String[] parts = linha.trim().split("\\s+");
-        String label = parts[0].endsWith(":") ? parts[0].substring(0,
-                parts[0].length() - 1) : null;
+        String label = parts[0].endsWith(":") ? parts[0].substring(0, parts[0].length() - 1) : null;
         return label;
     }
 
     public String[] getOperandos(String linha) {
         String[] parts = linha.trim().split("\\s+");
-        if (parts.length > 2) {
+
+        // Se houver apenas duas partes, pode ser uma instrução de Formato 2 com um
+        // registrador como operando.
+        if (parts.length == 2) {
+            // Retorna o segundo elemento como um array de um único operando.
+            return new String[] { parts[1] };
+        } else if (parts.length > 2) {
+            // Se existirem mais partes, assumimos que os operandos começam na terceira
+            // posição.
             return Arrays.copyOfRange(parts, 2, parts.length);
         }
-        return new String[0]; // Retorna um array vazio caso não haja operandos
+        // Retorna um array vazio caso não haja operandos além do opcode.
+        return new String[0];
     }
 
-    public static String getOpcode(String linha) {
-        String[] parts = linha.trim().split("\\s+");
-        return parts.length >= 2 ? parts[1] : null;
+    public static String getOperacao(String linha) {
+        String[] partes = linha.split("\\s+");
+        String primeiraParte = partes[0];
+
+        if (primeiraParte.endsWith(":")) {
+            if (partes.length > 1) {
+                // System.err.println("Rótulo encontrado: " + primeiraParte + " | Operação: " +
+                // partes[1]);
+                return partes[1];
+            }
+        } else {
+            // System.err.println("Operação sem rótulo: " + primeiraParte);
+        }
+
+        return partes.length > 0 ? primeiraParte : null;
     }
 
     public String getNixbpe(String opcode, String[] operandos) {

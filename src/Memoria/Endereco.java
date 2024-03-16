@@ -42,7 +42,7 @@ public class Endereco {
             // 6 bits 6 bits 12 bits
             // OPCODE + NIXBPE + DISP
 
-            opcode = Integer.toHexString(Integer.parseInt(instrucaoBinario.substring(0, 6) + "00", 2)).toUpperCase();
+            opcode = Integer.toHexString(Integer.parseInt(instrucaoBinario.substring(0, 6), 2)).toUpperCase();
             System.out.println("Tamanho 24 =>" + opcode);
             System.out.println("INSTRUÇÃO IDENTIFICADA => " + Instrucoes.getInstrucaoPorOpcode(opcode).getNome());
             System.err.println(" ");

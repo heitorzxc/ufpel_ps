@@ -9,7 +9,7 @@ import src.Registradores.BancoRegistradores;
  *******/
 public class CLEAR extends Instrucao {
     public CLEAR() {
-        super("CLEAR", "4", 1);
+        super("CLEAR", "B4", 1);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {

@@ -1,5 +1,7 @@
 package src.Utils;
 
+import java.math.BigInteger;
+
 public class Conversao {
 
     // Inteiro para Hexadecimal
@@ -12,20 +14,27 @@ public class Conversao {
         return Integer.toBinaryString(number);
     }
 
-    public static String converterHexParaBinarioNBits(String hex, int n) {
-        int valorInteiro = Integer.parseInt(hex, 16);
-        String binario = Integer.toBinaryString(valorInteiro);
+    public static String hexToBinary(String hex, int nBits) {
+        // Converte o hexadecimal para decimal
+        int decimalValue = Integer.parseInt(hex, 16);
         
-        while (binario.length() < n) {
-            binario = "0" + binario;
-        }
-        if (binario.length() > n) {
-            binario = binario.substring(binario.length() - n);
+        // Converte o valor decimal para binário
+        String binaryString = Integer.toBinaryString(decimalValue);
+        
+        // Verifica se o binário precisa de padding
+        if (binaryString.length() < nBits) {
+            // Calcula quantos zeros são necessários para o padding
+            int padding = nBits - binaryString.length();
+            
+            // Adiciona zeros à esquerda até atingir o tamanho desejado
+            for (int i = 0; i < padding; i++) {
+                binaryString = "0" + binaryString;
+            }
         }
         
-        return binario;
+        // Retorna o binário ajustado para n bits
+        return binaryString;
     }
-
 
     public static String intToBin(String number, int width) {
         String binary = Integer.toBinaryString(Integer.parseInt(number));

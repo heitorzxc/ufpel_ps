@@ -1,17 +1,12 @@
         LDA  #1
         ADDR A B   
-        CLEAR  A 
-RESULT:   STA 1       
-COUNTER:  STA 1       
+        CLEAR X   
 LOAD_A:  LDA  #5       ; Carrega o valor 5 no acumulador A
          ADD  #10     ; Adiciona 10 ao valor no acumulador A ; primeiro pega o regs X dps soma com 10
-STORE:    STA  RESULT   ; Armazena o resultado no endereço 'RESULT'
 INCREMENT: LDA  COUNTER ; Carrega o valor no endereço 'COUNTER' no acumulador
           ADD  #1      ; Incrementa o valor no acumulador
-          STA  COUNTER ; Armazena o valor incrementado de volta em 'COUNTER'
 DECREMENT: LDA  COUNTER ; Carrega o valor de 'COUNTER' novamente
           SUB  #1      ; Decrementa o valor no acumulador
-          STA  COUNTER ; Armazena o valor decrementado em 'COUNTER'
           COMP #0      ; Compara o valor no acumulador com 0
           JGT  DECREMENT ; Se o valor no acumulador for maior que 0, volta para DECREMENT
 END:      ADD #1  ; Retorna / Finaliza o programa

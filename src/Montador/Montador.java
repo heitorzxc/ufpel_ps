@@ -103,7 +103,6 @@ public class Montador {
                 System.err.println("Operacao " + operacao);
                 System.err.println("Código Binario: " + codigoBinario);
                 System.err.println("Tamanho do Binario: " + codigoBinario.length());
-                System.out.println("Opcode do código binário ->  " + converterBinarioParaHex(codigoBinario));
                 System.err.println(" ");
                 System.err.println(" ");
                 output.add(codigoBinario);
@@ -154,34 +153,32 @@ public class Montador {
                 break;
             }
 
-            String opcodeBinario = Conversao.converterHexParaBinarioNBits(instrucao.getOpcode(), 8);
+            String opcodeBinario = Conversao.hexToBinary(instrucao.getOpcode(), 6); // opcode 6 bits
+            
+            // // Sim, por enquanto estou ignorando instruções de tamanho 4.
             codigo.append(opcodeBinario); 
-
-            for (String operando : operandos) {
-                String codigoRegistrador = registradorEmBinario(operando); 
-                codigo.append(codigoRegistrador);
-            }
+            codigo.append(nixbpe);
+            codigo.append(Conversao.intToBin(endereco.toString(), 12)); 
 
             // // PRECISA SER 6 BITS
             // // System.err.println("OPCODE" + instrucao.getOpcode() + "  " +  "OPCODE APPENDADO = " + Conversao.converterHexParaBinarioNBits(instrucao.getOpcode(), 6));
-            // codigo.append(Conversao.converterHexParaBinarioNBits(instrucao.getOpcode(), 6)); // opcode appendado
-
-            // codigo.append(nixbpe);
-
-            // // Sim, por enquanto estou ignorando instruções de tamanho 4.
-            // codigo.append(Conversao.intToBin(endereco.toString(), 12)); 
 
             return codigo.toString();
         } 
 
-        // Se chegou aqui é formato 2
-
-        // Integer enderecoInteger = Conversao.hexToInt(instrucao.getOpcode());
-        codigo.append(Conversao.converterHexParaBinarioNBits(instrucao.getOpcode(), 6) + "00");   // Opcode 8 bits
+        // FORMATO 2
+        codigo.append(Conversao.hexToBinary(instrucao.getOpcode(), 8));   // Opcode 8 bits
 
         // Operandos vão ser registradores
-        for (String operando : operandos) {
-            codigo.append(Conversao.converterHexParaBinarioNBits(operando, 4));
+        if(operandos.length == 1){
+            codigo.append(registradorEmBinario(operandos[0]));
+            codigo.append("0000");
+        } else if(operandos.length == 2) {
+            for (String operando : operandos) {
+                codigo.append(registradorEmBinario(operando));
+            }
+        } else {
+            System.err.println("MAIS DE 2 OPERANDOOOOOOOOOOS");
         }
     
         return codigo.toString();
@@ -205,31 +202,16 @@ public class Montador {
     public String[] getOperandos(String linha) {
         String[] parts = linha.trim().split("\\s+");
     
-        // Caso a linha contenha apenas o opcode e um operando (ou nenhum operando).
         if (parts.length == 2) {
             return new String[] { parts[1] };
         }
-        // Caso a linha contenha o opcode seguido por dois ou mais operandos.
         else if (parts.length > 2) {
-            // Retorna todos os elementos após o opcode.
             return Arrays.copyOfRange(parts, 1, parts.length);
         }
     
-        // Retorna um array vazio caso não haja operandos.
         return new String[0];
     }
-    
-    // public String[] getOperandos(String linha) {
-    //     String[] parts = linha.trim().split("\\s+");
 
-    //     if (parts.length == 2) {
-    //         return new String[] { parts[1] };
-    //     } else if (parts.length > 2) {
-    //         return Arrays.copyOfRange(parts, 2, parts.length);
-    //     }
-
-    //     return new String[0];
-    // }
 
     private String registradorEmBinario (String registrador) {
         switch (registrador) {
@@ -252,23 +234,6 @@ public class Montador {
             default:
                 return "777777777"; // deu errado
         }
-    }
-
-    public static String converterBinarioParaHex(String binario) {
-        // Pegar os primeiros 6 bits da string de entrada
-        String primeiros6Bits = binario.substring(0, 6);
-        // Adicionar 2 bits '00' no final
-        String bitsModificados = primeiros6Bits;
-        // Converter o valor modificado para hexadecimal
-        int valorDecimal = Integer.parseInt(bitsModificados, 2);
-        String valorHexadecimal = Integer.toHexString(valorDecimal).toUpperCase();
-
-        // Logar informações
-        // System.out.println("Binário original: " + binario);
-        // System.out.println("Binário modificado: " + bitsModificados);
-        // System.out.println("Hexadecimal: " + valorHexadecimal);
-
-        return valorHexadecimal;
     }
 
     public static String getOperacao(String linha) {

@@ -22,6 +22,6 @@ public class Main_Montador {
 
         Maquina maquina = Maquina.getInstance();
         maquina.setAquivo("./testez.txt");
-        // maquina.executarPrograma();
+        maquina.executarPrograma();
     }
 }

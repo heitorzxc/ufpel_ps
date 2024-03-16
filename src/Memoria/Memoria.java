@@ -63,11 +63,13 @@ public class Memoria {
         if (!enderecoValido(endereco)) {
             throw new ValueOutOfBoundError(endereco + " esta fora dos limites da memoria!");
         }
+
+        System.err.println(valor);
+        System.err.println(valor.length());
+
         String valorExpandido = valor.length() < 8 ? Conversao.expandeBinario(valor, 8) : valor;
 
-
-        System.err.println("Instrução Identificada -> " + new Endereco(valorExpandido).getOpcode());
-        // memoria.set(endereco, new Endereco(valorExpandido));
+        memoria.set(endereco, new Endereco(valorExpandido));
     }
 
     public void printMemoria() {

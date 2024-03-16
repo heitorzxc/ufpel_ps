@@ -1,40 +1,46 @@
+package src.Ligador;
 
-// import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
 
-// // import java.io.File;
+import src.Instrucoes.Instrucoes;
+import src.Montador.Montador;
 
-// //montador toda vez que encontra macro x troca x por {a, b, c, d, e, ...}
-// //então no final da montagem temos um assembly totalmente expandido
-// //então joga pro ligador esse assembly
+public class Ligador {
+	public ArrayList<String[]> programas = new ArrayList<>();
 
-// // Tabelinha da aula:
-// // label (#0) | operação | operando (#1)
-// // <vazio>    | operação | operando (#2) | operando (#3)
-// // label (#4) | operação | operando (#5) | imediato (@32)
+	public Ligador(String[] pathsProgramas) {
+		Instrucoes.inicializaInstrucoes();
 
-// public class Ligador {
+		inicializaProgramas(pathsProgramas);
+	}
 
-//   private File saida;
+	public void inicializaProgramas(String[] paths) {
+		for(String path : paths) {
+			programas.add(lePrograma(path));
+		}
+	}
 
-//   Ligador() {
-//   }
+	public String[] lePrograma(String path) {
+		ArrayList<String> inputList = new ArrayList<>();
+	
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+			String linha;
+	
+			while ((linha = br.readLine()) != null) {
+				if (!linha.trim().isEmpty()) {
+					inputList.add(linha.trim());
+				}
+			}
+	
+			return inputList.toArray(new String[0]);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("ERRO LENDO PATH");
+			return new String[0];
+		}
+	}
+	
 
-//   public void executar(String entrada) {
-//     Object saida = step2(step1(entrada));
-
-//     // return saida;
-//   }
-
-//   public String step1(String entrada) {
-//     File saida;
-
-//     return "saida";
-//   }
-
-//   public String step2(String entrada) {
-//     File saida;
-
-//     return "";
-//   }
-
-// }
+}

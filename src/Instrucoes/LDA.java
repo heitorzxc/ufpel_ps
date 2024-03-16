@@ -36,7 +36,6 @@ public class LDA extends Instrucao {
     }
 
     System.err.println("ValorMem =>" + valorMem);
-
     registradores.setValor("A", valorMem);
     System.err.println("VALOR DO REG A PÓS ALTERAÇÃO =>" + registradores.getValor("A"));
   }

@@ -1,5 +1,5 @@
-END: LDA #5
-LDS #4
-LDT #6
+END: LDA #25
+LDS #23
+LDT #26
 MULR S T
 J END

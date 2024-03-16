@@ -1,0 +1,10 @@
+MACRO SUM A, B
+  LDA #A
+  LDT #B
+  ADDR A, T
+MEND
+
+LDS #12
+LDT @1
+MULR S, T
+SUM 10,20

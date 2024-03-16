@@ -14,11 +14,11 @@ import src.Montador.MontadorAntigo;
 public class Main_Montador {
 
     public static void main(String[] args) throws Exception {
-        Instrucoes.inicializaInstrucoes();
+        // Instrucoes.inicializaInstrucoes();
 
-        ProcessadorDeMacros2 processador = new ProcessadorDeMacros2("./entrada_macro.txt");
+        // ProcessadorDeMacros2 processador = new ProcessadorDeMacros2("./entrada_macro.txt");
         // processador.processar();
-        Montador montador = new Montador("./saida_macro.txt");
+        // Montador montador = new Montador("./saida_macro.txt");
         // Montador montador = new Montador("./resources/codigo/exemplo4.txt");
 
         Maquina maquina = Maquina.getInstance();

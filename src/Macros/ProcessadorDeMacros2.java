@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class ProcessadorDeMacros2 {
@@ -13,14 +14,27 @@ public class ProcessadorDeMacros2 {
     private HashMap<String, Macro> macros;
     private ArrayList<String> outputExpandido = new ArrayList<>();
 
-    public ProcessadorDeMacros2(String inputFile) {
+    public ProcessadorDeMacros2() {
         input = new ArrayList<>();
         outputExpandido = new ArrayList<>();
         macros = new HashMap<>();
 
-        lerArquivo(inputFile);
-        processar();
-        gerarArquivoOutput("./saida_macro.txt");
+        // lerArquivo(inputFile);
+        // processar();
+        // gerarArquivoOutput("./saida_macro.txt");
+    }
+
+    public void processa(String[] programa, String outputPath) {
+        input = new ArrayList<>(Arrays.asList(programa)); 
+        // lerArquivo(inputPath);
+        executa();
+        gerarArquivoOutput(outputPath);
+    }
+
+    public void reset(){
+        input = new ArrayList<>();
+        outputExpandido = new ArrayList<>();
+        macros = new HashMap<>();
     }
 
      public void lerArquivo(String path) {
@@ -49,7 +63,7 @@ public class ProcessadorDeMacros2 {
     }
 
     // Não considerando macros aninhadas, 
-    public void processar() {
+    public void executa() {
         boolean definindoMacro = false; // Se achar uma definição de macro esse aqui vai pra true até achar o fim
         Macro macroAtual = null;
         String nomeMacro = "";

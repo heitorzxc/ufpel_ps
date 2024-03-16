@@ -1,0 +1,4 @@
+LDS #23
+LDT #26
+MULR S T
+ADDR 23, 26

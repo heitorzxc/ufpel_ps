@@ -29,6 +29,8 @@ public class ProcessadorDeMacros {
         }
     }
 
+    
+
     public void leArquivo(String file) throws FileNotFoundException {
         ArrayList<String> code = new ArrayList<>();
 

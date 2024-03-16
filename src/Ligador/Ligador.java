@@ -5,15 +5,31 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 import src.Instrucoes.Instrucoes;
+import src.Macros.ProcessadorDeMacros2;
 import src.Montador.Montador;
 
 public class Ligador {
-	public ArrayList<String[]> programas = new ArrayList<>();
+	private ArrayList<String[]> programas = new ArrayList<>();
+	private ProcessadorDeMacros2 processadorMacros = new ProcessadorDeMacros2();
+	private Montador montador = new Montador();
 
 	public Ligador(String[] pathsProgramas) {
 		Instrucoes.inicializaInstrucoes();
-
 		inicializaProgramas(pathsProgramas);
+		montaProgramas();
+	}
+
+	public void montaProgramas(){
+		int indexPrograma = 0; 
+
+		for(String[] programa : programas){
+			processadorMacros.reset();
+			processadorMacros.processa(programa, "./saida_macro" + indexPrograma + ".txt");
+			montador.reset();
+			montador.montagem("./saida_macro" + indexPrograma + ".txt", "./saida_montador" + indexPrograma + ".txt");
+
+			indexPrograma++;
+		}
 	}
 
 	public void inicializaProgramas(String[] paths) {

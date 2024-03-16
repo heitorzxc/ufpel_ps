@@ -29,16 +29,25 @@ public class Montador {
     private static final char INDIRETO = '@';
     private static final char IMEDIATO = '#';
 
-    public Montador(String path) {
+    public Montador() {
         input = new ArrayList<>();
         output = new ArrayList<>();
-
-        lerArquivo(path);
+    }
+    
+    public void montagem(String inputPath, String outputPath) {
+        lerArquivo(inputPath);
         primeiroPasso();
         printSYMTAB();
         segundoPasso();
-        gerarArquivoOutput("./testez.txt");
+        gerarArquivoOutput(outputPath);
     }
+
+    public void reset(){
+        input = new ArrayList<>();
+        output = new ArrayList<>();
+        SYMTAB = new HashMap<>();
+    }
+
 
     public void lerArquivo(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {

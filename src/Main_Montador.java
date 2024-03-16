@@ -6,6 +6,7 @@ import java.io.IOException;
 import src.Exceptions.IvalidInstructionFormatError;
 import src.Exceptions.RegisterIdenfierError;
 import src.Instrucoes.Instrucoes;
+import src.Ligador.Ligador;
 import src.Macros.ProcessadorDeMacros2;
 import src.Maquina.Maquina;
 import src.Montador.Montador;
@@ -20,7 +21,10 @@ public class Main_Montador {
         // processador.processar();
         // Montador montador = new Montador("./saida_macro.txt");
         // Montador montador = new Montador("./resources/codigo/exemplo4.txt");
+        String[] paths = {"./resources/macros/programa1.txt", "./resources/macros/programa2.txt"};
 
+
+        Ligador ligador = new Ligador(paths);
         Maquina maquina = Maquina.getInstance();
         maquina.setAquivo("./testez.txt");
         maquina.executarPrograma();

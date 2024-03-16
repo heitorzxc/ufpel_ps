@@ -17,9 +17,6 @@ public class LDA extends Instrucao {
     String nixbpe = instrucao.getNIXBPE();
     Integer enderecoDestino = Conversao.StrNumBinC2(instrucao.getEndereco());
 
-    System.err.println("chegou aqui");
-
-    System.err.println(nixbpe);
     Integer valorMem = 0;
 
     if (nixbpe.startsWith("01")) { // IMEDIATO

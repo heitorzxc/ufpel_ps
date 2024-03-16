@@ -19,6 +19,9 @@ public class ProcessadorDeMacros {
 
         leArquivo(inputFile);
         ArrayList<String> finalCode = montaCodigoFinal();
+          // defineMacro(code);
+        // buscaParametros(code);
+        // substituiParametro();
 
         System.out.println("------------- código final --------------");
         for (int i = 0; i < finalCode.size(); i++) {
@@ -45,8 +48,8 @@ public class ProcessadorDeMacros {
             throw new FileNotFoundException("Arquivo não encontrado");
         }
 
-        defineMacro(code);
-        buscaParametros(code);
+        // defineMacro(code);
+        // buscaParametros(code);
         // substituiParametro();
     }
 

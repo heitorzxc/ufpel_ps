@@ -8,6 +8,6 @@ public class Main_Macros {
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
         ProcessadorDeMacros Macro = new ProcessadorDeMacros("resources/macros/exemplo2.txt",
-                "resources/macros/saida.asm");
+                "./testemacroo.txt");
     }
 }

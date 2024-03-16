@@ -1,0 +1,13 @@
+START 0
+LDS QUATRO
+LDT SEIS
+MULR S,T
+STT RESULTADO
+; QUATRO e SEIS são tratados como símbolos que precisam ser definidos em outro lugar
+LDA RESULTADO
+J FIM
+; QUATRO e SEIS são tratados como símbolos que precisam ser definidos em outro lugar
+; ou manipulados diretamente pelas instruções/macro.
+; RESULTADO também é tratado de maneira similar.
+FIM     WD
+END

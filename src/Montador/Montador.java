@@ -153,10 +153,10 @@ public class Montador {
                 break;
             }
 
-            String opcodeBinario = Conversao.hexToBinary(instrucao.getOpcode(), 6); // opcode 6 bits
+            String opcodeBinario = Conversao.hexToBinary(instrucao.getOpcode(), 8); // opcode 6 bits
             
             // // Sim, por enquanto estou ignorando instruções de tamanho 4.
-            codigo.append(opcodeBinario); 
+            codigo.append(opcodeBinario.substring(0, 6)); 
             codigo.append(nixbpe);
             codigo.append(Conversao.intToBin(endereco.toString(), 12)); 
 

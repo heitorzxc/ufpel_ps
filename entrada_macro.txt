@@ -1,17 +1,10 @@
-MACRO mult a,b
-LDS a
-LDT b
-MULR S,T
+MACRO MULT A,B
+    LDS #A
+    LDT #B
+    MULR S,T
 MEND
 
-        START 0
-        mult QUATRO,SEIS
-        STT RESULTADO
-; QUATRO e SEIS são tratados como símbolos que precisam ser definidos em outro lugar
-        LDA RESULTADO
-        J FIM
-; QUATRO e SEIS são tratados como símbolos que precisam ser definidos em outro lugar
-; ou manipulados diretamente pelas instruções/macro.
-; RESULTADO também é tratado de maneira similar.
-FIM     WD
-        END
+END: LDA #5
+
+MULT 4,6
+J END

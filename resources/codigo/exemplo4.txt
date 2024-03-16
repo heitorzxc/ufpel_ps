@@ -1,4 +1,5 @@
         LDA  #1
+        LDS #4
         ADDR A B   
         CLEAR X   
 LOAD_A:  LDA  #5       ; Carrega o valor 5 no acumulador A

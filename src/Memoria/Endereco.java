@@ -25,7 +25,6 @@ public class Endereco {
             return;
         }
 
-        System.err.println(instrucaoBinario);
         if (tamanho == 16) {
             // FORMATO 2
             // 8 bits 4 bits 4 bits

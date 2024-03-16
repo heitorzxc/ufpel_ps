@@ -32,7 +32,7 @@ public class LDA extends Instrucao {
       }
 
 
-      valorMem = Conversao.StrNumBinC2(memoria.getValor(enderecoDestino).getInstrucaoBinario());
+      valorMem = Conversao.StrNumBinC2(memoria.getValor(enderecoDestino).getEndereco());
     }
 
     System.err.println("ValorMem =>" + valorMem);

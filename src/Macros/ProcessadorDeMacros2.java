@@ -118,7 +118,11 @@ public class ProcessadorDeMacros2 {
 
             ArrayList<String> macroExpandida = macro.expandir(parametrosReais);
 
-            outputExpandido.addAll(macroExpandida);
+            for (String linhaExpandida : macroExpandida) {
+                // Substitui vírgulas por espaços em cada linha expandida da macro antes de adicionar ao output
+                String linhaModificada = linhaExpandida.replace(",", " ");
+                outputExpandido.add(linhaModificada);
+            }
         } else { // se n eh uma chmada de macro
             outputExpandido.add(linha);
         }

@@ -18,6 +18,8 @@ public class LDS extends Instrucao {
         Integer enderecoDestino = Conversao.StrNumBinC2(instrucao.getEndereco());
 
         Integer valorMem = 0;
+        
+        System.err.println("endereco desttttino " + enderecoDestino);
 
         if (nixbpe.startsWith("01")) { // IMEDIATO
             valorMem = enderecoDestino;
@@ -37,11 +39,12 @@ public class LDS extends Instrucao {
             // System.err.println(memoria.getValor(enderecoDestino).getInstrucaoBinario());
             // System.err.println("Valor no endereço " + enderecoDestino + "=>"
                     // + memoria.getValor(enderecoDestino).getInstrucaoBinario());
-            valorMem = Conversao.StrNumBinC2(memoria.getValor(enderecoDestino).getInstrucaoBinario());
+            System.err.println(memoria.getValor(enderecoDestino).getEndereco());
+            valorMem = Conversao.StrNumBinC2(memoria.getValor(enderecoDestino).getEndereco());
         }
 
         registradores.setValor("S", valorMem);
-        System.err.println(registradores.getValor("S"));
+        System.err.println("REG S VALOR => " + registradores.getValor("S"));
     }
 }
 

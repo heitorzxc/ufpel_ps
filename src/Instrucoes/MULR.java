@@ -19,5 +19,6 @@ public class MULR extends Instrucao {
     Integer valorReg2 = registradores.getValor(operandos[1]);
 
     registradores.setValor(operandos[1], valorReg1 * valorReg2);
+    System.err.println(registradores.getValor(operandos[1]));
   }
 }

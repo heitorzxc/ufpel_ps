@@ -18,10 +18,11 @@ public class Main_Montador {
 
         ProcessadorDeMacros2 processador = new ProcessadorDeMacros2("./entrada_macro.txt");
         // processador.processar();
+        Montador montador = new Montador("./saida_macro.txt");
         // Montador montador = new Montador("./resources/codigo/exemplo4.txt");
 
-        // Maquina maquina = Maquina.getInstance();
-        // maquina.setAquivo("./testez.txt");
-        // maquina.executarPrograma();
+        Maquina maquina = Maquina.getInstance();
+        maquina.setAquivo("./testez.txt");
+        maquina.executarPrograma();
     }
 }

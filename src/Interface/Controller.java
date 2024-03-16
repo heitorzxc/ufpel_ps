@@ -1,22 +1,19 @@
 package src.Interface;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 
-import javax.print.DocFlavor.STRING;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -29,11 +26,13 @@ import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Montador.Montador;
 import src.Registradores.BancoRegistradores;
-import src.Utils.Arquivos;
 import src.Exceptions.RegisterIdenfierError;
+import src.Exceptions.ValueOutOfBoundError;
+import src.Instrucoes.Instrucoes;
 import src.Maquina.Maquina;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.effect.DropShadow;
@@ -48,13 +47,10 @@ public class Controller {
     private Memoria memoria;
 
     @FXML
-    private String textoPrompt;
+    private boolean isBinaryFile;
 
     @FXML
-    private Button RUNBUTTON;
-
-    @FXML
-    private Button STEPBUTTON;
+    private boolean isAssembled;
 
     // Exibição dos registradores
     @FXML
@@ -81,21 +77,12 @@ public class Controller {
     @FXML
     private TextField registerX;
 
-    @FXML
-    private TextField textOutput;
-
-    @FXML
-    private TextField textInstrucao;
-
     // Tabela de represenação da memória
     @FXML
     private TableView<Endereco> tableView;
 
     @FXML
-    private TableColumn<Endereco, String> colunaEndereco;
-
-    @FXML
-    private TableColumn<Endereco, String> colunaNumBin;
+    private TableColumn<Maquina, Number> colunaEndereco;
 
     @FXML
     private TableColumn<Endereco, String> colunaInsHexa;
@@ -104,10 +91,7 @@ public class Controller {
     private TableColumn<Endereco, String> colunaOpcode;
 
     @FXML
-    private TableColumn<Endereco, String> colunaEnderecoBinario;
-
-    @FXML
-    private TableColumn<Endereco, String> colunaNixbpe;
+    private TableColumn<Endereco, String> colunaNomeInstrucao;
 
     // Botões LOAD, RUN, STEP, MOUNT...
     @FXML
@@ -132,69 +116,88 @@ public class Controller {
 
     DropShadow dropShadow = new DropShadow();
 
-    // ÍCONE LOAD - CLIQUE
     @FXML
     void LOADimgClick(MouseEvent event) {
-        
+
         FileChooser fileChooser = new FileChooser();
-           
         fileChooser.setTitle("Escolha um Arquivo");
-   
+    
         // Exibir a janela de seleção de arquivo
         Stage stage = (Stage) LOADimg.getScene().getWindow();
         selectedFile = fileChooser.showOpenDialog(stage);
-   
+    
         // Processar o arquivo selecionado
         if (selectedFile != null) {
             handleTERMINAL("Arquivo selecionado: " + selectedFile.getName());
-            try {  //Mostrar o código do arquivo na caixa CÓDIGO
-                for (String line : Arquivos.lerArquivo(selectedFile.getAbsolutePath())) {
-                    textCODE.appendText(line + "\n"); // Adiciona cada elemento com uma quebra de linha
+            try {
+                byte[] fileBytes = Files.readAllBytes(selectedFile.toPath());
+                isBinaryFile = true;
+    
+                // Verifica se o arquivo contém algum caracter que não é binário
+                for (byte b : fileBytes) {
+                    if ((b < 32 && b != 9 && b != 10 && b != 13) || b > 126) {
+                        isBinaryFile = false;
+                        break;
+                    }
                 }
-            } catch (FileNotFoundException e) {
+    
+                // Le o conteúdo do arquivo e exibir no textCODE
+                String content = new String(fileBytes);
+                textCODE.setText(content);
+    
+                // Atualiza o arquivo apenas quando a tecla enter for clicado (evita eventuais alteraçoes sem intencao)
+                textCODE.setOnKeyPressed(keyEvent -> {
+                    if (keyEvent.getCode() == KeyCode.ENTER) {
+                        // Salvar o novo conteúdo no arquivo quando a tecla Enter for pressionada
+                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile))) {
+                            writer.write(textCODE.getText());
+                        } catch (IOException e) {
+                            exibirMensagemErro("Erro de Escrita", "", "Ocorreu um erro ao salvar as alterações no arquivo.");
+                        }
+                    }
+                });
+    
+            } catch (IOException e) {
                 exibirMensagemErro("Erro de Leitura", "", "Ocorreu um erro na leitura do arquivo.");
             }
         } else {
             handleTERMINAL("Nenhum arquivo selecionado.");
         }
-       }
-
+    }
+          
 
     // ÍCONE MOUNT - CLIQUE
     @FXML
     void MOUNTimgClick(MouseEvent event) {
-        
-        try {
-
-
-            //Definir a chamada ao montador.
-
-
-
-        } catch (Exception e) {
-            exibirMensagemErro("Erro na Montagem", "", "Erro na Montagem. Revise o código.");
-        }
+        configurarExecução(); // aqui vai chamar o metodo que vai montar ou carregar diretamente na maquina se for binario
     }
 
     // ÍCONE STEP - CLIQUE
     @FXML
     void STEPimgclick(MouseEvent event)  {
-        updateInterface();
-        try {
-            Maquina.getInstance().step();
-        } catch (Exception e) {
-            exibirMensagemErro("Erro de execução", "", "Insira um código assembly ou selecione um arquivo!");
+        if(!isAssembled || isBinaryFile){
+           configurarExecução();
+        }else{ // se ja esta montado, executa a maquina
+            try {
+                Maquina.getInstance().step();
+                tableView.refresh(); //atualiza a tabela para atualizar a cor (provisório)
+            } catch (Exception e) {
+                exibirMensagemErro("Erro de execução", "", "Insira um código assembly ou selecione um arquivo!");
+            }
         }
     }
 
     // ÍCONE RUN - CLIQUE
     @FXML
     void RUNimgclick(MouseEvent event) {
-        updateInterface();
-        try {
-            Maquina.getInstance().executarPrograma();
-        } catch (Exception e) {
-            exibirMensagemErro("Erro de execução", "", "Insira um código assembly ou selecione um arquivo!");
+        if(!isAssembled || isBinaryFile){
+            configurarExecução();
+        }else{ // se  já está montado, executa a maquina
+            try {
+                Maquina.getInstance().executarPrograma();
+            } catch (Exception e) {
+                exibirMensagemErro("Erro de execução", "", "Insira um código assembly ou selecione um arquivo!");
+            }
         }
     }
 
@@ -222,15 +225,46 @@ public class Controller {
     // Criação e exibição da tabela que representa a memória
     @FXML
     public void handleTABLE() {
-        // colunaEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
-        colunaNumBin.setCellValueFactory(new PropertyValueFactory<>("InstrucaoBinario"));
+        
+        
+        //colunaEndereco.setCellValueFactory(column -> new ReadOnlyObjectWrapper<>(tableView.getItems().indexOf(column.getValue()) + 1));
+        colunaEndereco.setCellValueFactory(cellData -> {
+            ObservableList<Endereco> memoria = Memoria.getInstance().getMemoria(); // Obtém a lista de memória
+            int index = memoria.indexOf(cellData.getValue()); // Obtém o índice do objeto Endereco na lista
+            return new ReadOnlyObjectWrapper<>(index); // Retorna o índice como um ReadOnlyObjectWrapper
+        });       
         colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("InstrucaoHexa"));
         colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
-        colunaEnderecoBinario.setCellValueFactory(new PropertyValueFactory<>("Endereco"));
-      //  colunaNixbpe.setCellValueFactory(new PropertyValueFactory<>("NIXBPE"));
+        colunaNomeInstrucao.setCellValueFactory(new PropertyValueFactory<>("NomeInstrucao"));
         tableView.setItems(Memoria.getInstance().getMemoria());
 
-        // Configura o listener para a Memória
+        //aqui define a cor da linha
+        tableView.setRowFactory(tv -> new TableRow<Endereco>() {
+            @Override
+            protected void updateItem(Endereco item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setStyle(""); // Define o estilo padrão se o item estiver vazio
+                } else {
+                    if(registerPC.getText().equals("")){
+                        registerPC.setText("0");
+                    }
+                    if (colunaEndereco.getCellData(getIndex()) == Integer.valueOf(registerPC.getText())) {
+                        // Destaca a linha correspondente ao endereço atual
+                        setStyle("-fx-background-color: yellow;"); // Altera a cor de fundo da linha
+                    } else {
+                        setStyle(""); // Define o estilo padrão se não estiver sendo executado
+                    }
+                }
+            }
+        });
+        
+    }
+
+    // Atualização da interface
+    @FXML
+    public void setListeners() {
+        handleTABLE();
         Memoria.getInstance().setListener((ListChangeListener<Endereco>) change -> {
             while (change.next()) {
                 if (change.wasAdded() || change.wasRemoved() || change.wasUpdated()) {
@@ -238,13 +272,6 @@ public class Controller {
                 }
             }
         });
-    }
-
-    // Atualização da interface
-    @FXML
-    public void updateInterface() {
-
-        handleTABLE();
 
         ChangeListener<Number> listener = (observable, oldValue, newValue) -> {
             atualizarRegistradores();
@@ -252,19 +279,6 @@ public class Controller {
         BancoRegistradores.getInstance().setListener(listener);
     }
 
-    // TESTE RUN
-    @FXML
-    void testeRUN(ActionEvent event) throws Exception {
-        updateInterface();
-        Maquina.getInstance().executarPrograma();
-    }
-
-    // TESTE STEP
-    @FXML
-    void testeSTEP(ActionEvent event) throws Exception {
-        updateInterface();
-        Maquina.getInstance().step();
-    }
 
     // Exibir mensagem de erro
     private void exibirMensagemErro(String title, String header, String content) {
@@ -273,6 +287,42 @@ public class Controller {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.show();
+    }
+    // Exibir mensagem de aviso
+    private void exibirMensagemAviso(String title, String header, String content) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.show();
+    }
+    //Configurar execução
+    public void configurarExecução(){
+        
+            //Se o arquivo for binario, carrega diretamente na máquina
+            if(isBinaryFile){
+                exibirMensagemAviso("Arquivo Selecionado é Binário","", "Carregando Diretamente na Memória");
+                try {
+                    Maquina.getInstance().setAquivo(selectedFile.getAbsolutePath());
+                    handleTERMINAL("Memória Carregada");
+                } catch (RegisterIdenfierError | ValueOutOfBoundError e) {
+                    exibirMensagemErro("Erro ao Carregar Memória", "", "Não foi possivel carregar a memória!");
+                }
+                isAssembled=true; // defini como montado para não reentrar na configuração
+            }else{
+                try {
+                    //Chamar o montador e passar o arquivo e configurar maquina
+                    Instrucoes.inicializaInstrucoes();
+                    Montador montador = new Montador(selectedFile.getAbsolutePath());
+
+                    Maquina.getInstance().setAquivo("./testez.txt");
+
+                    isAssembled=true; // "status" da montagem
+                    handleTERMINAL("Arquivo Montado");   
+                } catch (Exception e) {
+                  exibirMensagemErro("Erro ao Montar", "", "Não foi possivel montar, verifique o arquivo");
+                }
+            }
     }
     
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
@@ -339,9 +389,4 @@ public class Controller {
         textTERMINAL.appendText(dado + "\n");
     }
 
-    // Imprimir na caixa de código
-    @FXML
-    public void handleCODE(String code) {
-        textCODE.appendText(code + "\n");
-    }
 }

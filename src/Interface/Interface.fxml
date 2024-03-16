@@ -1,130 +1,177 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="661.0" prefWidth="990.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.Interface.Controller">
    <children>
-      <Pane layoutX="9.0" layoutY="87.0" prefHeight="200.0" prefWidth="406.0" style="-fx-border-color: #808080;">
+      <Pane layoutX="9.0" layoutY="87.0" prefHeight="200.0" prefWidth="340.0" style="-fx-border-color: #808080;">
          <children>
-            <Label layoutX="6.0" layoutY="6.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="A">
+            <Label layoutX="23.0" layoutY="16.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="A">
                <padding>
                   <Insets left="5.0" right="5.0" />
-               </padding></Label>
-            <Label layoutX="6.0" layoutY="36.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="X">
+               </padding>
+               <font>
+                  <Font size="13.0" />
+               </font></Label>
+            <Label layoutX="23.0" layoutY="54.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="X">
                <padding>
                   <Insets left="5.0" right="5.0" />
-               </padding></Label>
-            <Label layoutX="7.0" layoutY="65.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="L">
+               </padding>
+               <font>
+                  <Font size="13.0" />
+               </font></Label>
+            <Label layoutX="24.0" layoutY="94.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="L">
                <padding>
                   <Insets left="5.0" right="5.0" />
-               </padding></Label>
-            <TextField fx:id="registerA" editable="false" layoutX="29.0" layoutY="2.0" prefHeight="14.0" prefWidth="60.0" promptText="0" style="-fx-background-radius: 6;" />
-            <TextField fx:id="registerX" editable="false" layoutX="29.0" layoutY="32.0" prefHeight="25.0" prefWidth="60.0" promptText="0" style="-fx-background-radius: 6;" />
-            <TextField fx:id="registerL" editable="false" layoutX="29.0" layoutY="61.0" prefHeight="25.0" prefWidth="60.0" promptText="0" style="-fx-background-radius: 6;" />
-            <TextField fx:id="registerB" editable="false" layoutX="29.0" layoutY="89.0" prefHeight="25.0" prefWidth="60.0" promptText="0" style="-fx-background-radius: 6;" />
-            <Label layoutX="6.0" layoutY="93.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="B">
+               </padding>
+               <font>
+                  <Font size="13.0" />
+               </font></Label>
+            <TextField fx:id="registerA" editable="false" layoutX="48.0" layoutY="11.0" prefHeight="30.0" prefWidth="82.0" promptText="0" style="-fx-background-radius: 6;">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <TextField fx:id="registerX" editable="false" layoutX="48.0" layoutY="49.0" prefHeight="30.0" prefWidth="82.0" promptText="0" style="-fx-background-radius: 6;">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <TextField fx:id="registerL" editable="false" layoutX="48.0" layoutY="88.0" prefHeight="30.0" prefWidth="82.0" promptText="0" style="-fx-background-radius: 6;">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <TextField fx:id="registerB" editable="false" layoutX="48.0" layoutY="129.0" prefHeight="30.0" prefWidth="82.0" promptText="0" style="-fx-background-radius: 6;">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <Label layoutX="23.0" layoutY="134.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="B">
                <padding>
                   <Insets left="5.0" right="5.0" />
-               </padding></Label>
-            <Label layoutX="107.0" layoutY="93.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="PC">
+               </padding>
+               <font>
+                  <Font size="13.0" />
+               </font></Label>
+            <Label layoutX="162.0" layoutY="136.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="PC">
                <padding>
                   <Insets left="1.0" right="1.0" />
-               </padding></Label>
-            <Label layoutX="103.0" layoutY="6.0" prefHeight="17.0" prefWidth="25.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="  W" textAlignment="CENTER">
+               </padding>
+               <font>
+                  <Font size="13.0" />
+               </font></Label>
+            <Label layoutX="158.0" layoutY="16.0" prefHeight="17.0" prefWidth="25.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="  W" textAlignment="CENTER">
                <padding>
                   <Insets right="5.0" />
-               </padding></Label>
-            <Label layoutX="107.0" layoutY="36.0" prefHeight="17.0" prefWidth="6.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="T">
+               </padding>
+               <font>
+                  <Font size="13.0" />
+               </font></Label>
+            <Label layoutX="162.0" layoutY="55.0" prefHeight="17.0" prefWidth="6.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="T">
                <padding>
                   <Insets left="5.0" right="5.0" />
-               </padding></Label>
-            <Label layoutX="107.0" layoutY="65.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="S">
+               </padding>
+               <font>
+                  <Font size="13.0" />
+               </font></Label>
+            <Label layoutX="162.0" layoutY="93.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="S">
                <padding>
                   <Insets left="5.0" right="5.0" />
-               </padding></Label>
-            <TextField fx:id="registerW" editable="false" layoutX="131.0" layoutY="2.0" prefHeight="25.0" prefWidth="60.0" promptText="0" style="-fx-background-radius: 6;" />
-            <TextField fx:id="registerT" editable="false" layoutX="131.0" layoutY="32.0" prefHeight="25.0" prefWidth="60.0" promptText="0" style="-fx-background-radius: 6;" />
-            <TextField fx:id="registerS" editable="false" layoutX="131.0" layoutY="61.0" prefHeight="25.0" prefWidth="60.0" promptText="0" style="-fx-background-radius: 6;" />
-            <TextField fx:id="registerPC" editable="false" layoutX="131.0" layoutY="89.0" prefHeight="25.0" prefWidth="60.0" promptText="0" style="-fx-background-radius: 6;" />
-            <TextField fx:id="textOutput" editable="false" layoutX="177.0" layoutY="146.0" prefHeight="40.0" prefWidth="109.0" style="-fx-background-radius: 10;" />
-            <Label layoutX="177.0" layoutY="129.0" prefHeight="17.0" prefWidth="50.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 8;" text="Output">
-               <padding>
-                  <Insets left="5.0" right="5.0" />
-               </padding></Label>
-            <TextField fx:id="textInstrucao" editable="false" layoutX="25.0" layoutY="146.0" prefHeight="40.0" prefWidth="136.0" style="-fx-background-radius: 10;" />
-            <Label layoutX="25.0" layoutY="129.0" prefHeight="17.0" prefWidth="60.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 8;" text="Instrução">
-               <padding>
-                  <Insets left="5.0" right="5.0" />
-               </padding></Label>
+               </padding>
+               <font>
+                  <Font size="13.0" />
+               </font></Label>
+            <TextField fx:id="registerW" editable="false" layoutX="191.0" layoutY="11.0" prefHeight="30.0" prefWidth="82.0" promptText="0" style="-fx-background-radius: 6;">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <TextField fx:id="registerT" editable="false" layoutX="191.0" layoutY="49.0" prefHeight="30.0" prefWidth="82.0" promptText="0" style="-fx-background-radius: 6;">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <TextField fx:id="registerS" editable="false" layoutX="191.0" layoutY="89.0" prefHeight="30.0" prefWidth="82.0" promptText="0" style="-fx-background-radius: 6;">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <TextField fx:id="registerPC" editable="false" layoutX="191.0" layoutY="130.0" prefHeight="30.0" prefWidth="82.0" promptText="0" style="-fx-background-radius: 6;">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
          </children>
       </Pane>
-      <Pane layoutX="612.0" layoutY="20.0" prefHeight="270.0" prefWidth="364.0" style="-fx-border-color: #808080;">
+      <Pane layoutX="576.0" layoutY="24.0" prefHeight="266.0" prefWidth="400.0" style="-fx-border-color: #808080;">
          <children>
-            <TextArea fx:id="textCODE" layoutX="1.0" opacity="0.8" prefHeight="270.0" prefWidth="364.0" promptText="Insira o seu código aqui, ou carregue o arquivo clicando em LOAD." />
+            <TextArea fx:id="textCODE" layoutX="1.0" layoutY="3.0" opacity="0.8" prefHeight="267.0" prefWidth="400.0" promptText="Selecione um Arquivo para Vizualizar" style="-fx-border-color: #808080;" />
          </children>
       </Pane>
-      <Label layoutX="3.0" layoutY="462.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 8;" text="Terminal:">
+      <Label layoutX="3.0" layoutY="426.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 8;" text="Terminal">
          <padding>
             <Insets left="5.0" right="5.0" />
-         </padding></Label>
-      <Label layoutX="5.0" layoutY="69.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 8;" text="Registradores:">
+         </padding>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="5.0" layoutY="69.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 8;" text="Registradores">
          <padding>
             <Insets left="5.0" right="5.0" />
-         </padding></Label>
-      <Label layoutX="612.0" layoutY="5.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="Código:">
+         </padding>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="576.0" layoutY="5.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="Código">
          <padding>
             <Insets left="5.0" right="5.0" />
-         </padding></Label>
+         </padding>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
     <AnchorPane layoutX="89.0" layoutY="471.0" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="182.0" />
-      <TextArea fx:id="textTERMINAL" editable="false" layoutX="5.0" layoutY="482.0" opacity="0.8" prefHeight="164.0" prefWidth="415.0" promptText="..." style="-fx-background-radius: 10;" />
-      <Label layoutX="481.0" layoutY="342.0" prefHeight="17.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="Exibição da memória:">
+      <TextArea fx:id="textTERMINAL" editable="false" layoutX="5.0" layoutY="446.0" opacity="0.8" prefHeight="200.0" prefWidth="415.0" promptText="..." style="-fx-background-radius: 10;" />
+      <Label layoutX="481.0" layoutY="342.0" prefHeight="17.0" style="-fx-background-color: #e6e8eb; -fx-background-radius: 6;" text="Exibição da Memória">
          <padding>
             <Insets left="5.0" right="5.0" />
-         </padding></Label>
+         </padding>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
       <TableView fx:id="tableView" layoutX="481.0" layoutY="360.0" prefHeight="286.0" prefWidth="495.0">
          <columns>
-            <TableColumn fx:id="colunaEndereco" prefWidth="43.2000732421875" text="End" />
-            <TableColumn fx:id="colunaEnderecoBinario" prefWidth="148.0" text="End. Binário" />
-            <TableColumn fx:id="colunaInsHexa" prefWidth="68.7999267578125" text="InstHexa" />
-            <TableColumn fx:id="colunaNixbpq" prefWidth="53.60003662109375" text="NIXBPQ" />
-            <TableColumn fx:id="colunaNumBin" prefWidth="122.39996337890625" text="NUMBIN" />
-            <TableColumn fx:id="colunaOpcode" prefWidth="57.5999755859375" text="OPCODE" />
+            <TableColumn fx:id="colunaEndereco" prefWidth="78.4000244140625" style="-fx-alignment: CENTER;" text="Endereço" />
+            <TableColumn fx:id="colunaOpcode" prefWidth="101.5999755859375" style="-fx-alignment: CENTER;" text="Opcode" />
+            <TableColumn fx:id="colunaNomeInstrucao" prefWidth="165.60003662109375" style="-fx-alignment: CENTER;" text="Nome" />
+            <TableColumn fx:id="colunaInsHexa" prefWidth="150.39996337890625" style="-fx-alignment: CENTER;" text="Instrução Hexa" />
          </columns></TableView>
-      <Button fx:id="RUNBUTTON" layoutX="19.0" layoutY="299.0" mnemonicParsing="false" onAction="#testeRUN" text="TesteRun" />
-      <Button fx:id="STEPBUTTON" layoutX="108.0" layoutY="299.0" mnemonicParsing="false" onAction="#testeSTEP" text="TesteStep" />
       <ToolBar layoutX="3.0" pickOnBounds="false" prefHeight="50.0" prefWidth="147.0">
         <items>
             <ImageView fx:id="LOADimg" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#LOADimgClick" onMouseEntered="#LOADimgEntered" onMouseExited="#LOADimgExit" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/img/procurando.png" />
-               </image></ImageView>
+               </image>
+               </ImageView>
             <ImageView fx:id="MOUNTimg" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#MOUNTimgClick" onMouseEntered="#MOUNTimgEntered" onMouseExited="#MOUNTimgExit" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/img/mont.png.png" />
-               </image></ImageView>
+               </image> 
+               </ImageView>
             <ImageView fx:id="RUNimg" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#RUNimgclick" onMouseEntered="#RUNimgEntered" onMouseExited="#RUNimgExit" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/img/play.png" />
-               </image></ImageView>
+               </image>
+               </ImageView>
             <ImageView fx:id="STEPimg" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#STEPimgclick" onMouseEntered="#STEPimgEntered" onMouseExited="#STEPimgExit" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../resources/img/playpause.png" />
-               </image></ImageView>
-        </items>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
+               </image>
+               </ImageView>
+         </items>
       </ToolBar>
-   </children>
-</AnchorPane>
+      </children>
+   </AnchorPane>

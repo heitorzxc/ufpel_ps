@@ -9,12 +9,12 @@ public class Endereco {
     private String nixbpe;
     private String insHexa;
 
+    private String nomeInstrucao;
     private String enderecoBinario;
     private String operando1, operando2;
 
     public Endereco(String instrucao) {
         this.instrucaoBinario = instrucao.toUpperCase();
-
         interpretarInstrucao();
     }
 
@@ -25,6 +25,7 @@ public class Endereco {
             return;
         }
 
+        System.err.println(instrucaoBinario);
         if (tamanho == 16) {
             // FORMATO 2
             // 8 bits 4 bits 4 bits
@@ -35,20 +36,23 @@ public class Endereco {
             System.out.println("Tamanho 16 =>" + opcode);
             System.out.println("INSTRUÇÃO IDENTIFICADA => " + Instrucoes.getInstrucaoPorOpcode(opcode).getNome());
             System.err.println(" ");
+            nomeInstrucao = Instrucoes.getInstrucaoPorOpcode(opcode).getNome();
             operando1 = instrucaoBinario.substring(8, 12); // Primeiro registrador
             operando2 = instrucaoBinario.substring(12, 16); // Segundo registrador
+            insHexa = Conversao.binToHex(instrucaoBinario).toUpperCase();
         } else if (tamanho == 24) {
             // Formato 3
             // 6 bits 6 bits 12 bits
             // OPCODE + NIXBPE + DISP
 
-            opcode = Integer.toHexString(Integer.parseInt(instrucaoBinario.substring(0, 6), 2)).toUpperCase();
+            opcode = Integer.toHexString(Integer.parseInt(instrucaoBinario.substring(0, 6) + "00", 2)).toUpperCase();
             System.out.println("Tamanho 24 =>" + opcode);
             System.out.println("INSTRUÇÃO IDENTIFICADA => " + Instrucoes.getInstrucaoPorOpcode(opcode).getNome());
             System.err.println(" ");
+            nomeInstrucao = Instrucoes.getInstrucaoPorOpcode(opcode).getNome();
             nixbpe = instrucaoBinario.substring(6, 12);
             enderecoBinario = instrucaoBinario.substring(12);
-
+            insHexa = Conversao.binToHex(instrucaoBinario).toUpperCase();
         } else if (tamanho == 32) {
             // FORMATO 4
             // 6 bits 6 bits 20 bits
@@ -57,8 +61,10 @@ public class Endereco {
             System.out.println("Tamanho 32 =>" + opcode);
             System.out.println("INSTRUÇÃO IDENTIFICADA => " + Instrucoes.getInstrucaoPorOpcode(opcode).getNome());
             System.err.println(" ");
+            nomeInstrucao = Instrucoes.getInstrucaoPorOpcode(opcode).getNome();
             nixbpe = instrucaoBinario.substring(6, 12);
             enderecoBinario = instrucaoBinario.substring(12);
+            insHexa = Conversao.binToHex(instrucaoBinario).toUpperCase();
             // A diferença para o formato 3 está na interpretação do endereço, que é mais
             // extenso.
         }
@@ -82,6 +88,10 @@ public class Endereco {
 
     public String getEndereco() {
         return this.enderecoBinario;
+    }
+
+    public String getNomeInstrucao(){
+        return this.nomeInstrucao;
     }
 
     public String[] getOperandos() {

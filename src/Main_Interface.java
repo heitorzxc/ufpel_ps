@@ -1,6 +1,10 @@
-package src.Interface;
+package src;
+
+
+import java.net.URL;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.collections.MapChangeListener;
 import javafx.fxml.FXMLLoader;
@@ -14,9 +18,10 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+import src.Interface.Controller;
 import src.Maquina.Maquina;
-import src.Memoria.*;
-import src.Registradores.Registrador;
+
 
 public class Main_Interface extends Application {
 
@@ -26,15 +31,14 @@ public class Main_Interface extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-
+    URL arquivo = getClass().getResource("./Interface/Interface.fxml");
+    
     // Carregar o arquivo FXML
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("Interface.fxml"));
+    FXMLLoader loader = new FXMLLoader(arquivo);
     Parent root = loader.load();
-    Controller controller = loader.getController();
 
-     Maquina maquina = Maquina.getInstance();
-     maquina.setAquivo("./resources/binarios/exemplo.txt");
-        
+    Controller controller = loader.getController();
+    controller.setListeners();
 
     // Carregar a imagem de fundo
      Image image = new Image("./resources/img/fundo1-ferrugem.png");

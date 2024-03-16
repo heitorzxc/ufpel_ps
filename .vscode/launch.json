@@ -6,6 +6,14 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Main_Interface",
+      "request": "launch",
+      "mainClass": "src.Main_Interface",
+      "projectName": "ufpel_ps_455a9f07",
+      "vmArgs": "--module-path \"resources/javafx-sdk-21.0.2/lib/\" --add-modules javafx.fxml,javafx.controls"
+    },
+    {
+      "type": "java",
       "name": "Main_Montador",
       "request": "launch",
       "mainClass": "src.Main_Montador",

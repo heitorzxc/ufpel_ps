@@ -1,7 +1,1 @@
-LDS #12
-LDT @1
-MULR S T
-LDA #10
-LDT #20
-ADDR A T
-HIO
+STA #1

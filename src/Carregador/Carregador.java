@@ -19,12 +19,6 @@ public class Carregador {
 
 	public void executar(String path){
 		carregarCodigo(path);
-
-		try {
-			maquina.executarPrograma();
-		} catch (Exception exception) {
-			System.err.println("Exception na execucao do Montador!");
-		}
   	}
 
 	private void carregarCodigo(String path) {

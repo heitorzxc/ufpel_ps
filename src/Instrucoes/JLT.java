@@ -26,6 +26,8 @@ public class JLT extends Instrucao {
             }
 
             registradores.setValor("PC", enderecoDestino);
+        } else {
+            registradores.setValor("PC", registradores.getValor("PC") + 1);
         }
     }
 }

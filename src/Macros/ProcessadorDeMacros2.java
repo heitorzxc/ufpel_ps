@@ -44,7 +44,7 @@ public class ProcessadorDeMacros2 {
 
             while ((linha = br.readLine()) != null) {
                 if (!linha.trim().isEmpty()) { // pulando linhas vázias
-                    input.add(linha.trim());
+                    input.add(linha.split(";")[0].trim());
                 }
             }
         } catch (Exception e) {

@@ -7,11 +7,13 @@ import src.Utils.Conversao;
 
 public class JEQ extends Instrucao {
     public JEQ() {
-        super("JEQ", "30", 1, true);
+        super("JEQ", "30", 3, true);
     }
 
     public void executar(Endereco instrucao, BancoRegistradores registradores, Memoria memoria) throws Exception {
         String nixbpe = instrucao.getNIXBPE();
+
+        System.err.println(registradores.getValor("SW"));
 
         if (registradores.getValor("SW") == 0) {
             Integer enderecoDestino = Conversao.StrNumBinC2(instrucao.getEndereco());
@@ -26,6 +28,8 @@ public class JEQ extends Instrucao {
             }
 
             registradores.setValor("PC", enderecoDestino);
+        } else {
+            registradores.setValor("PC", registradores.getValor("PC") + 1);
         }
     }
 }

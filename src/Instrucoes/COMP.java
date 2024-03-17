@@ -32,7 +32,7 @@ public class COMP extends Instrucao {
   
         valorMem = Conversao.StrNumBinC2(memoria.getValor(enderecoDestino).getInstrucaoBinario());
       }
-  
+
       if (valorReg < valorMem) {
         registradores.setValor("SW", -1); // Indica que A < memória
       } else if (valorReg.equals(valorMem)) {

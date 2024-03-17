@@ -62,11 +62,6 @@ public class Registrador {
 	}
 
 	public void setValor(Integer novoValor) throws ValueOutOfBoundError {
-		// Garante que o número esteja dentro do limite de 24 bits
-		if (novoValor < 0 || novoValor >= Math.pow(2, this.tamanho)) {
-			throw new ValueOutOfBoundError("Valor " + novoValor + " está foram do limite de 24 bits!");
-		}
-
 		this.valor.set(novoValor);
 	}
 

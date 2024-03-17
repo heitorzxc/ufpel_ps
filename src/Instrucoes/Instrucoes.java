@@ -46,6 +46,8 @@ public class Instrucoes {
         setInstrucao(new SUB());
         setInstrucao(new SUBR());
         setInstrucao(new HIO());
+        setInstrucao(new COMP());
+        setInstrucao(new COMPR());
       
     }
 

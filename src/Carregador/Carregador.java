@@ -19,7 +19,12 @@ public class Carregador {
 
 	public void executar(String path){
 		carregarCodigo(path);
-  	}
+		try {
+			maquina.executarPrograma();
+		} catch(Exception ex) {
+			System.out.println("DEU MEU PAU");
+		}
+	}
 
 	private void carregarCodigo(String path) {
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {

@@ -218,12 +218,10 @@ public class Controller {
     @FXML
     public void handleTABLE() {
         
-        
-        //colunaEndereco.setCellValueFactory(column -> new ReadOnlyObjectWrapper<>(tableView.getItems().indexOf(column.getValue()) + 1));
         colunaEndereco.setCellValueFactory(cellData -> {
-            ObservableList<Endereco> memoria = Memoria.getInstance().getMemoria(); // Obtém a lista de memória
-            int index = memoria.indexOf(cellData.getValue()); // Obtém o índice do objeto Endereco na lista
-            return new ReadOnlyObjectWrapper<>(index); // Retorna o índice como um ReadOnlyObjectWrapper
+            ObservableList<Endereco> memoria = Memoria.getInstance().getMemoria();
+            int index = memoria.indexOf(cellData.getValue()); 
+            return new ReadOnlyObjectWrapper<>(index); 
         });       
         colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("InstrucaoHexa"));
         colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
@@ -280,30 +278,23 @@ public class Controller {
         alert.setContentText(content);
         alert.show();
     }
-    // Exibir mensagem de aviso
-    private void exibirMensagemAviso(String title, String header, String content) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.setContentText(content);
-        alert.show();
-    }
+
     //Configurar execução
     public void configurarExecução(){
 
         try {
+
             Instrucoes.inicializaInstrucoes();
 
             Ligador ligador = new Ligador();
-
             ligador.executar(paths);
-
+           
             Carregador carregador = new Carregador();
             carregador.executar("./resources/saidas/entrada_maquina.txt");
             
             isAssembled=true; // "status" da montagem
             handleTERMINAL("Arquivo Montado"); 
-              
+
         } catch (Exception e) {
             exibirMensagemErro("Erro ao Montar", "", "Não foi possivel montar, verifique o arquivo");
         }

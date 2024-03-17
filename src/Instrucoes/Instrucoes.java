@@ -45,6 +45,7 @@ public class Instrucoes {
         setInstrucao(new STT());
         setInstrucao(new SUB());
         setInstrucao(new SUBR());
+        setInstrucao(new HIO());
       
     }
 

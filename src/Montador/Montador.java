@@ -127,6 +127,7 @@ public class Montador {
         if (isFormatoEstendido) {
             instrucao = Instrucoes.getInstrucaoPorNome(operacao.substring(1));
         } else {
+            System.err.println("OPERARARARARARARA -> " + operacao);
             instrucao = Instrucoes.getInstrucaoPorNome(operacao);
         }
 
@@ -170,6 +171,7 @@ public class Montador {
             return codigo.toString();
         } 
 
+        
         // FORMATO 2
         codigo.append(Conversao.hexToBinary(instrucao.getOpcode(), 8));   // Opcode 8 bits
 

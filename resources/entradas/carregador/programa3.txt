@@ -1,7 +1,11 @@
 MACRO SUM X,Y
   LDA #X
   LDT #Y
-  label: ADDR A,T
+  ADDR A,T
 MEND
 
-STA #1
+LDS #12
+LDT @1
+MULR S,T
+SUM 10,20
+HIO

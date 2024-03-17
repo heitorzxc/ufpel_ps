@@ -59,6 +59,9 @@ public class Maquina {
 
         if (instrucao.getInstrucaoBinario().length() == 8){
             // Skipando posições vazias de memória (Tamanho 8 é usado como pos vazia)
+            if (instrucao.getOpcode().equals("F4")) { // encontr0️⃣ou um "valorPc"
+                return false;
+            }
             return true;
         }
 
@@ -81,11 +84,6 @@ public class Maquina {
             }
         }
        
-        
-        if (instrucao.getOpcode().equals("F4")) { // encontr0️⃣ou um "valorPc"
-            return false;
-        }
-
         Instrucao operacao = Instrucoes.getInstrucaoPorOpcode(instrucao.getOpcode());
         operacao.executar(instrucao, registradores, memoria);
 

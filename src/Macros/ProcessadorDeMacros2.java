@@ -105,7 +105,12 @@ public class ProcessadorDeMacros2 {
             // if(linha.)
 
             if(definindoMacro) { // se chegou aqui e esta definindo macro, vai fazer parte do corpo
-                corpoMacro.add(linha);
+                if(macros.get(linha.split(" ")[0]) != null){  // achou uma macro aninhada
+                    System.err.println("CHEEEEEEEGOU AQUI");
+                    processarLinha(linha);
+                } else {
+                    corpoMacro.add(linha);
+                }
             } else {  // se chegou aqui vai estar fora de definicao de macro
                 processarLinha(linha);
             }

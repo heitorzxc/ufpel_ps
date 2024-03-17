@@ -26,7 +26,12 @@ public class ProcessadorDeMacros2 {
 
     public void processa(String[] programa, String outputPath) {
         input = new ArrayList<>(Arrays.asList(programa)); 
-        // lerArquivo(inputPath);
+        executa();
+        gerarArquivoOutput(outputPath);
+    }
+
+    public void processa(String inputPath, String outputPath) {
+        lerArquivo(inputPath);
         executa();
         gerarArquivoOutput(outputPath);
     }
@@ -132,13 +137,14 @@ public class ProcessadorDeMacros2 {
 
             ArrayList<String> macroExpandida = macro.expandir(parametrosReais);
 
+
             for (String linhaExpandida : macroExpandida) {
                 // Substitui vírgulas por espaços em cada linha expandida da macro antes de adicionar ao output
                 String linhaModificada = linhaExpandida.replace(",", " ");
                 outputExpandido.add(linhaModificada);
             }
         } else { // se n eh uma chmada de macro
-            outputExpandido.add(linha);
+            outputExpandido.add(linha.replace(",", " "));
         }
 
     }

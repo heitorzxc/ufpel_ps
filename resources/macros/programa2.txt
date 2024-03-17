@@ -1,7 +1,7 @@
-MACRO SUM A,B
-  LDA #A
-  LDT #B
-  ADDR A, T
+MACRO SUM X,Y
+  LDA #X
+  LDT #Y
+  ADDR A,T
 MEND
 
 LDS #12

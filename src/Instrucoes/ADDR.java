@@ -19,5 +19,6 @@ public class ADDR extends Instrucao {
     Integer reg2 = registradores.getValor(operandos[1]);
 
     registradores.setValor(operandos[1], reg1 + reg2);
+    System.err.println(registradores.getValor(operandos[1]));
   }
 }

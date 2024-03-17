@@ -26,15 +26,12 @@ public class Montador {
     private ArrayList<String> input;
     private ArrayList<String> output;
 
-    private static final char INDIRETO = '@';
-    private static final char IMEDIATO = '#';
-
     public Montador() {
         input = new ArrayList<>();
         output = new ArrayList<>();
     }
     
-    public void montagem(String inputPath, String outputPath) {
+    public void executar(String inputPath, String outputPath) {
         lerArquivo(inputPath);
         primeiroPasso();
         printSYMTAB();
@@ -48,13 +45,12 @@ public class Montador {
         SYMTAB = new HashMap<>();
     }
 
-
     public void lerArquivo(String path) {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String linha;
 
             while ((linha = br.readLine()) != null) {
-                if (!linha.trim().isEmpty()) { // pulando linhas vázias
+                if (!linha.trim().isEmpty()) { // pulando linhas vazias
                     input.add(linha.split(";")[0].trim()); // adicionando no input sem os comentários
                 }
             }
@@ -72,7 +68,7 @@ public class Montador {
 
             if (label != null) {
                 if (SYMTAB.containsKey(label)) {
-                    // throw new Exception("Rótulo duplicado: " + label);
+                    System.err.println("Erro: label ja definido");
                 }
                 SYMTAB.put(label, endereco);
             }
@@ -169,9 +165,6 @@ public class Montador {
             codigo.append(nixbpe);
             codigo.append(Conversao.intToBin(endereco.toString(), 12)); 
 
-            // // PRECISA SER 6 BITS
-            // // System.err.println("OPCODE" + instrucao.getOpcode() + "  " +  "OPCODE APPENDADO = " + Conversao.converterHexParaBinarioNBits(instrucao.getOpcode(), 6));
-
             return codigo.toString();
         } 
 
@@ -241,6 +234,7 @@ public class Montador {
             case "SW":
                 return "0111";
             default:
+                System.err.println("ERRO -> " + registrador + " Registrador nao identificado");
                 return "777777777"; // deu errado
         }
     }

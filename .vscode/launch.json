@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Main_Carregador",
+      "request": "launch",
+      "mainClass": "src.Main_Carregador",
+      "projectName": "ufpel_ps_65ab2446"
+    },
+    {
+      "type": "java",
       "name": "Main_Interface",
       "request": "launch",
       "mainClass": "src.Main_Interface",

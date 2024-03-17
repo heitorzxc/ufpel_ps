@@ -36,51 +36,43 @@ public class Maquina {
     private Maquina() {
         this.memoria = Memoria.getInstance();
         this.registradores = BancoRegistradores.getInstance();
-        Instrucoes.inicializaInstrucoes(); 
     }
 
-    public void setAquivo(String caminho_arquivo) throws RegisterIdenfierError, ValueOutOfBoundError {
-        this.arquivo = caminho_arquivo;
+    // public void setAquivo(String caminho_arquivo) throws RegisterIdenfierError, ValueOutOfBoundError {
+    //     this.arquivo = caminho_arquivo;
 
-        carregarCodigo();
-    }
+    //     carregarCodigo();
+    // }
 
     public void restart() throws RegisterIdenfierError, ValueOutOfBoundError {
         registradores.setValor("PC", 0);
     }
 
-    private void carregarCodigo() {
-        try (BufferedReader br = new BufferedReader(new FileReader(this.arquivo))) {
-            String linha;
-            Integer endereco = 0;
+    // private void carregarCodigo() {
+    //     try (BufferedReader br = new BufferedReader(new FileReader(this.arquivo))) {
+    //         String linha;
+    //         Integer endereco = 0;
 
-            while ((linha = br.readLine()) != null) {
-                if (linha.equals(""))
-                    continue;
+    //         while ((linha = br.readLine()) != null) {
+    //             if (linha.equals(""))
+    //                 continue;
 
-                verificaCodigo(linha);
-                memoria.setValor(endereco, linha.trim());
-                // System.out.println(memoria.getValor(endereco));
-                ++endereco;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            status.set(false);
-        }
-    }
+    //             verificaCodigo(linha);
+    //             memoria.setValor(endereco, linha.trim());
+    //             // System.out.println(memoria.getValor(endereco));
+    //             ++endereco;
+    //         }
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //         status.set(false);
+    //     }
+    // }
 
     public void setListenerStatus(ChangeListener<Boolean> listener) {
         this.status.addListener(listener);
     }
 
-    private void verificaCodigo(String linha) throws IvalidInstructionFormatError {
-        // System.err.println(linha.length());
-        if (!FORMATOSVALIDOS.contains(linha.length())) {
-            // System.err.println(linha.length());
-            throw new IvalidInstructionFormatError(linha + " é uma instrucção inválida!");
-        }
-
-    }
+    
 
     public Boolean executarPrograma() throws Exception  {
         System.out.println("ENTROU EXECUTAR");

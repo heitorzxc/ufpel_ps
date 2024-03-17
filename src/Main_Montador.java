@@ -15,18 +15,21 @@ import src.Montador.MontadorAntigo;
 public class Main_Montador {
 
     public static void main(String[] args) throws Exception {
-        // Instrucoes.inicializaInstrucoes();
+        Instrucoes.inicializaInstrucoes();
 
-        // ProcessadorDeMacros2 processador = new ProcessadorDeMacros2("./entrada_macro.txt");
-        // processador.processar();
-        // Montador montador = new Montador("./saida_macro.txt");
-        // Montador montador = new Montador("./resources/codigo/exemplo4.txt");
-        String[] paths = {"./resources/macros/programa1.txt", "./resources/macros/programa2.txt"};
+        ProcessadorDeMacros2 processadorMacros = new ProcessadorDeMacros2();
+        processadorMacros.reset();
+        processadorMacros.processa("./resources/macros/programa1.txt", "./testes/saida1.txt");
+        Montador montador = new Montador();
+        montador.executar("./testes/saida1.txt", "./testes/saida_montador_prog_2.txt");
+
+        // String[] paths = {"./resources/macros/programa1.txt", "./resources/macros/programa2.txt"};
 
 
-        Ligador ligador = new Ligador(paths);
-        Maquina maquina = Maquina.getInstance();
-        maquina.setAquivo("./testez.txt");
-        maquina.executarPrograma();
+        // Ligador ligador = new Ligador();
+        // ligador.executar(paths);
+        // Maquina maquina = Maquina.getInstance();
+        // maquina.setAquivo("./testez.txt");
+        // maquina.executarPrograma();
     }
 }

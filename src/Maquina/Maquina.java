@@ -1,5 +1,8 @@
 package src.Maquina;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import src.Exceptions.RegisterIdenfierError;
@@ -15,6 +18,7 @@ public class Maquina {
     public BancoRegistradores registradores;
     public Memoria memoria;
     private SimpleBooleanProperty status = new SimpleBooleanProperty(true);
+    private ArrayList<String> JUMPS = new ArrayList<>();
 
     private static Maquina instance = null;
 
@@ -25,6 +29,7 @@ public class Maquina {
     }
 
     private Maquina() {
+        JUMPS = new ArrayList<>(Arrays.asList("J", "JEQ", "JGT", "JLT", "JSUB"));
         this.memoria = Memoria.getInstance();
         this.registradores = BancoRegistradores.getInstance();
     }
@@ -84,8 +89,11 @@ public class Maquina {
         Instrucao operacao = Instrucoes.getInstrucaoPorOpcode(instrucao.getOpcode());
         operacao.executar(instrucao, registradores, memoria);
 
-        registradores.setValor("PC", valorPc + 1);
+        if(JUMPS.contains(instrucao.getNomeInstrucao())){
+            return true;
+        }
 
+        registradores.setValor("PC", valorPc + 1);
         return true;
     }
 }

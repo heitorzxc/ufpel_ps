@@ -1,0 +1,14 @@
+MACRO SUM X,Y
+  LDA #X
+  LDT #Y
+  label: ADDR A,T
+MEND
+
+FIM: LDA #8
+LDS #12
+LDT @1
+MULR S,T
+SUM 10,20
+J FIM
+SUM 10,20
+ADDR A,S

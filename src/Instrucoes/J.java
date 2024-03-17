@@ -24,7 +24,7 @@ public class J extends Instrucao {
       enderecoDestino = Conversao.StrNumBinC2(enderecoMemoria.getInstrucaoBinario());
     }
 
-    System.err.println(enderecoDestino);
+    System.err.println("Endereco ->" + enderecoDestino);
     registradores.setValor("PC", enderecoDestino); // Imediato
   }
 }

@@ -1,24 +1,16 @@
 package src.Montador;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import src.Exceptions.IvalidInstructionFormatError;
-import src.Exceptions.RegisterIdenfierError;
 import src.Instrucoes.Instrucoes;
 import src.Instrucoes.Instrucao;
-import src.Registradores.BancoRegistradores;
-import src.Utils.Arquivos;
 import src.Utils.Conversao;
 
 public class Montador {
@@ -36,6 +28,8 @@ public class Montador {
         primeiroPasso();
         printSYMTAB();
         segundoPasso();
+
+        System.err.println(outputPath);
         gerarArquivoOutput(outputPath);
     }
 
@@ -128,8 +122,6 @@ public class Montador {
         }
     }
 
-    
-
     private String traduzirBinario(Instrucao instrucao, String[] operandos, boolean isFormat34) {
         StringBuilder codigo = new StringBuilder();
         
@@ -160,7 +152,6 @@ public class Montador {
 
             String opcodeBinario = Conversao.hexToBinary(instrucao.getOpcode(), 8); // opcode 6 bits
             
-            // // Sim, por enquanto estou ignorando instruções de tamanho 4.
             codigo.append(opcodeBinario.substring(0, 6)); 
             codigo.append(nixbpe);
             codigo.append(Conversao.intToBin(endereco.toString(), 12)); 
@@ -180,7 +171,7 @@ public class Montador {
                 codigo.append(registradorEmBinario(operando));
             }
         } else {
-            System.err.println("MAIS DE 2 OPERANDOOOOOOOOOOS");
+            System.err.println("Erro: mais de 2 operandos");
         }
     
         return codigo.toString();
@@ -235,7 +226,7 @@ public class Montador {
                 return "0111";
             default:
                 System.err.println("ERRO -> " + registrador + " Registrador nao identificado");
-                return "777777777"; // deu errado
+                return null; // deu errado   
         }
     }
 

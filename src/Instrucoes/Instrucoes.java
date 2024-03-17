@@ -2,19 +2,12 @@ package src.Instrucoes;
 
 import java.util.HashMap;
 
-import src.Exceptions.InvalidInstructionError;
-import src.Utils.Conversao;
-
 public class Instrucoes {
     private static HashMap<String, Instrucao> instrucaoPorOpcode;
     private static HashMap<String, Instrucao> instrucaoPorNome;
 
-    // private static final String INDIRETO = "indireto";
-    // private static final String DIRETO = "direto";
-    // private static final String IMEDIATO = "imediato";
 
-    private Instrucoes() { // impedir de instanciar
-
+    private Instrucoes() { 
     }
 
     public static void inicializaInstrucoes() {

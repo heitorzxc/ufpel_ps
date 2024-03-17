@@ -7,18 +7,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import src.Instrucoes.Instrucoes;
 import src.Macros.ProcessadorDeMacros2;
 import src.Montador.Montador;
 
 public class Ligador {
-	private ArrayList<String[]> programas = new ArrayList<>();
-	private ArrayList<String> programasMontadosPaths = new ArrayList<>();
-	private ProcessadorDeMacros2 processadorMacros = new ProcessadorDeMacros2();
-	private Montador montador = new Montador();
+	private ArrayList<String[]> programas;
+	private ArrayList<String> programasMontadosPaths;
+	private ProcessadorDeMacros2 processadorMacros;
+	private Montador montador;
 
 	public Ligador() {
-		
+		programas = new ArrayList<>();
+		programasMontadosPaths = new ArrayList<>();
+		processadorMacros = new ProcessadorDeMacros2();
+		montador = new Montador();
 	}
 
 	public void executar(String[] pathsProgramas){
@@ -34,11 +36,11 @@ public class Ligador {
 
 		for(String[] programa : programas){
 			processadorMacros.reset();
-			processadorMacros.processa(programa, "./saida_macro" + indexPrograma + ".txt");
+			processadorMacros.processa(programa, "./resources/saidas/saida_macro" + indexPrograma + ".txt");
 			montador.reset();
 
-			programaMontadoPath = "./saida_montador" + indexPrograma + ".txt";
-			montador.executar("./saida_macro" + indexPrograma + ".txt", programaMontadoPath);
+			programaMontadoPath = "./resources/saidas/saida_montador" + indexPrograma + ".txt";
+			montador.executar("./resources/saidas/saida_macro" + indexPrograma + ".txt", programaMontadoPath);
 			programasMontadosPaths.add(programaMontadoPath);
 
 			indexPrograma++;
@@ -46,9 +48,7 @@ public class Ligador {
 	}
 
 	public void unificaProgramas() {
-    String arquivoFinal = "./entrada_maquina.txt";
-    
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(arquivoFinal))) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("./resources/saidas/entrada_maquina.txt"))) {
         for (String pathProgramaMontado : programasMontadosPaths) {
             ArrayList<String> conteudoPrograma = lerConteudoArquivoFinal(pathProgramaMontado);
             

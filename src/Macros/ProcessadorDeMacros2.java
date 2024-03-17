@@ -67,7 +67,6 @@ public class ProcessadorDeMacros2 {
         }
     }
 
-    // Não considerando macros aninhadas, 
     public void executa() {
         boolean definindoMacro = false; // Se achar uma definição de macro esse aqui vai pra true até achar o fim
         Macro macroAtual = null;

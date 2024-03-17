@@ -1,13 +1,7 @@
 package src.Maquina;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.Arrays;
-import java.util.List;
-
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
-import src.Exceptions.IvalidInstructionFormatError;
 import src.Exceptions.RegisterIdenfierError;
 import src.Exceptions.ValueOutOfBoundError;
 import src.Instrucoes.Instrucao;
@@ -20,10 +14,7 @@ import src.Utils.Conversao;
 public class Maquina {
     public BancoRegistradores registradores;
     public Memoria memoria;
-    private String arquivo;
     private SimpleBooleanProperty status = new SimpleBooleanProperty(true);
-
-    private List<Integer> FORMATOSVALIDOS = Arrays.asList(8, 16, 24, 32);
 
     private static Maquina instance = null;
 
@@ -84,18 +75,17 @@ public class Maquina {
     }
 
     public Boolean step() throws Exception {
-        // PC PRECISA SER INICIALIZADO NA POSIÇÃO COM A PRIMEIRA INSTRUÇÃO! MAS A INSTRUÇÃO VAI TA NO 0?
-        Integer end = registradores.getValor("PC");
+        Integer valorPc = registradores.getValor("PC");
 
-        Endereco instrucao = memoria.getValor(end);
+        Endereco instrucao = memoria.getValor(valorPc);
 
-        // TODO: Remover essa gambiarra, tratar as posições vazias da memoria
         if (instrucao.getInstrucaoBinario().length() == 8){
+            // Skipando posições vazias de memória (Tamanho 8 é usado como pos vazia)
             return false;
         }
 
         System.out.println("--- Instrução Atual ---");
-        System.out.println("VALOR PC  => " + end);
+        System.out.println("VALOR PC  => " + valorPc);
         System.out.println("Instrução Completa: " + instrucao.getInstrucaoBinario());
         System.out.println("Tamanho da Instrução: " + instrucao.getInstrucaoBinario().length());
         System.out.println("Opcode: " + instrucao.getOpcode());
@@ -112,19 +102,15 @@ public class Maquina {
             }
         }
        
-        // System.err.println(" ");
-     
         
-        if (instrucao.getOpcode().equals("F4")) { // encontr0️⃣ou um "end"
-            // registradores.setValor("SW", 0);
+        if (instrucao.getOpcode().equals("F4")) { 
             return false;
         }
 
         Instrucao operacao = Instrucoes.getInstrucaoPorOpcode(instrucao.getOpcode());
         operacao.executar(instrucao, registradores, memoria);
 
-        // System.out.println(registradores);
-        registradores.setValor("PC", end + 1);
+        registradores.setValor("PC", valorPc + 1);
 
         return true;
     }

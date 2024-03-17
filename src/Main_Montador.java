@@ -1,16 +1,15 @@
 package src;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+// import java.io.FileNotFoundException;
+// import java.io.IOException;
 
-import src.Exceptions.IvalidInstructionFormatError;
-import src.Exceptions.RegisterIdenfierError;
+// import src.Exceptions.IvalidInstructionFormatError;
+// import src.Exceptions.RegisterIdenfierError;
 import src.Instrucoes.Instrucoes;
-import src.Ligador.Ligador;
+// import src.Ligador.Ligador;
 import src.Macros.ProcessadorDeMacros2;
-import src.Maquina.Maquina;
+// import src.Maquina.Maquina;
 import src.Montador.Montador;
-import src.Montador.MontadorAntigo;
 
 public class Main_Montador {
 
@@ -24,7 +23,6 @@ public class Main_Montador {
         montador.executar("./testes/saida1.txt", "./testes/saida_montador_prog_2.txt");
 
         // String[] paths = {"./resources/macros/programa1.txt", "./resources/macros/programa2.txt"};
-
 
         // Ligador ligador = new Ligador();
         // ligador.executar(paths);

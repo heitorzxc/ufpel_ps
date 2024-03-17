@@ -1,5 +1,0 @@
-END: LDA #25
-LDS #23
-LDT #26
-MULR S T
-J END

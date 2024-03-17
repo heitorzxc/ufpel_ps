@@ -84,7 +84,7 @@ public class Endereco {
     public String getInstrucaoBinario() {
         return this.instrucaoBinario;
     }
-
+    
     public String getEndereco() {
         return this.enderecoBinario;
     }

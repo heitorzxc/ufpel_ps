@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import src.Exceptions.IvalidInstructionFormatError;
-import src.Exceptions.RegisterIdenfierError;
-import src.Exceptions.ValueOutOfBoundError;
 import src.Maquina.Maquina;
 import src.Memoria.Memoria;
 
@@ -40,7 +38,6 @@ public class Carregador {
 
             verificaCodigo(linha);
             memoria.setValor(endereco, linha.trim());
-            // System.out.println(memoria.getValor(endereco));
             ++endereco;
         }
     } catch (Exception e) {

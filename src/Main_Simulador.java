@@ -1,6 +1,6 @@
 package src;
 
-import src.Maquina.Maquina;
+// import src.Maquina.Maquina;
 
 public class Main_Simulador {
 

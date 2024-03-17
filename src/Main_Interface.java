@@ -4,9 +4,6 @@ package src;
 import java.net.URL;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.collections.ListChangeListener;
-import javafx.collections.MapChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -20,7 +17,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import src.Interface.Controller;
-import src.Maquina.Maquina;
 
 
 public class Main_Interface extends Application {

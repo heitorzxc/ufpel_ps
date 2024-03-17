@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
+import javax.print.DocFlavor.STRING;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -26,9 +28,11 @@ import src.Memoria.Endereco;
 import src.Memoria.Memoria;
 import src.Montador.Montador;
 import src.Registradores.BancoRegistradores;
+import src.Carregador.Carregador;
 import src.Exceptions.RegisterIdenfierError;
 import src.Exceptions.ValueOutOfBoundError;
 import src.Instrucoes.Instrucoes;
+import src.Ligador.Ligador;
 import src.Maquina.Maquina;
 
 import javafx.scene.image.ImageView;
@@ -41,13 +45,13 @@ public class Controller {
 
     // Gerais
     @FXML
-    private File selectedFile;
+    private List<File> selectedFile;
 
     @FXML
     private Memoria memoria;
 
     @FXML
-    private boolean isBinaryFile;
+    private String[] paths;
 
     @FXML
     private boolean isAssembled;
@@ -121,44 +125,32 @@ public class Controller {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Escolha um Arquivo");
+      
     
         // Exibir a janela de seleção de arquivo
         Stage stage = (Stage) LOADimg.getScene().getWindow();
-        selectedFile = fileChooser.showOpenDialog(stage);
+        selectedFile = fileChooser.showOpenMultipleDialog(stage);
     
         // Processar o arquivo selecionado
-        if (selectedFile != null) {
-            handleTERMINAL("Arquivo selecionado: " + selectedFile.getName());
-            try {
-                byte[] fileBytes = Files.readAllBytes(selectedFile.toPath());
-                isBinaryFile = true;
-    
-                // Verifica se o arquivo contém algum caracter que não é binário
-                for (byte b : fileBytes) {
-                    if ((b < 32 && b != 9 && b != 10 && b != 13) || b > 126) {
-                        isBinaryFile = false;
-                        break;
-                    }
+        if (selectedFile != null && !selectedFile.isEmpty()) {
+
+            paths = new String[selectedFile.size()]; //Lista de caminhos
+            for (int i = 0; i < selectedFile.size(); i++) {
+                paths[i] = selectedFile.get(i).getPath();
+            }
+
+            for (File selectedFile : selectedFile) {
+                textCODE.appendText("Arquivo selecionado: " + selectedFile.getName() + "\n");
+                try {
+                    byte[] fileBytes = Files.readAllBytes(selectedFile.toPath());
+                          
+                    // Le o conteúdo do arquivo e exibir no textCODE
+                    String content = new String(fileBytes);
+                    textCODE.appendText(content + "\n");
+        
+                } catch (IOException e) {
+                    exibirMensagemErro("Erro de Leitura", "", "Ocorreu um erro na leitura do arquivo.");
                 }
-    
-                // Le o conteúdo do arquivo e exibir no textCODE
-                String content = new String(fileBytes);
-                textCODE.setText(content);
-    
-                // Atualiza o arquivo apenas quando a tecla enter for clicado (evita eventuais alteraçoes sem intencao)
-                textCODE.setOnKeyPressed(keyEvent -> {
-                    if (keyEvent.getCode() == KeyCode.ENTER) {
-                        // Salvar o novo conteúdo no arquivo quando a tecla Enter for pressionada
-                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(selectedFile))) {
-                            writer.write(textCODE.getText());
-                        } catch (IOException e) {
-                            exibirMensagemErro("Erro de Escrita", "", "Ocorreu um erro ao salvar as alterações no arquivo.");
-                        }
-                    }
-                });
-    
-            } catch (IOException e) {
-                exibirMensagemErro("Erro de Leitura", "", "Ocorreu um erro na leitura do arquivo.");
             }
         } else {
             handleTERMINAL("Nenhum arquivo selecionado.");
@@ -175,7 +167,7 @@ public class Controller {
     // ÍCONE STEP - CLIQUE
     @FXML
     void STEPimgclick(MouseEvent event)  {
-        if(!isAssembled || isBinaryFile){
+        if(!isAssembled){
            configurarExecução();
         }else{ // se ja esta montado, executa a maquina
             try {
@@ -190,7 +182,7 @@ public class Controller {
     // ÍCONE RUN - CLIQUE
     @FXML
     void RUNimgclick(MouseEvent event) {
-        if(!isAssembled || isBinaryFile){
+        if(!isAssembled){
             configurarExecução();
         }else{ // se  já está montado, executa a maquina
             try {
@@ -298,33 +290,24 @@ public class Controller {
     }
     //Configurar execução
     public void configurarExecução(){
-        
-            //Se o arquivo for binario, carrega diretamente na máquina
-            if(isBinaryFile){
-                exibirMensagemAviso("Arquivo Selecionado é Binário","", "Carregando Diretamente na Memória");
-                try {
-                    Maquina.getInstance().setAquivo(selectedFile.getAbsolutePath());
-                    handleTERMINAL("Memória Carregada");
-                } catch (RegisterIdenfierError | ValueOutOfBoundError e) {
-                    exibirMensagemErro("Erro ao Carregar Memória", "", "Não foi possivel carregar a memória!");
-                }
-                isAssembled=true; // defini como montado para não reentrar na configuração
-            }else{
-                try {
-                    //Chamar o montador e passar o arquivo e configurar maquina
-                    Instrucoes.inicializaInstrucoes();
-                    Montador montador = new Montador(selectedFile.getAbsolutePath());
 
-                    Maquina.getInstance().setAquivo("./testez.txt");
+        try {
+            Instrucoes.inicializaInstrucoes();
 
-                    isAssembled=true; // "status" da montagem
-                    handleTERMINAL("Arquivo Montado");   
-                } catch (Exception e) {
-                  exibirMensagemErro("Erro ao Montar", "", "Não foi possivel montar, verifique o arquivo");
-                }
-            }
+            Ligador ligador = new Ligador();
+
+            ligador.executar(paths);
+
+            Carregador carregador = new Carregador();
+            carregador.executar("./resources/saidas/entrada_maquina.txt");
+            
+            isAssembled=true; // "status" da montagem
+            handleTERMINAL("Arquivo Montado"); 
+              
+        } catch (Exception e) {
+            exibirMensagemErro("Erro ao Montar", "", "Não foi possivel montar, verifique o arquivo");
+        }
     }
-    
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
     @FXML
     void LOADimgEntered(MouseEvent event) {

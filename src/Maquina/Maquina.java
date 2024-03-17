@@ -51,9 +51,10 @@ public class Maquina {
 
         Endereco instrucao = memoria.getValor(valorPc);
 
+
         if (instrucao.getInstrucaoBinario().length() == 8){
             // Skipando posições vazias de memória (Tamanho 8 é usado como pos vazia)
-            return false;
+            return true;
         }
 
         System.out.println("--- Instrução Atual ---");
@@ -63,6 +64,7 @@ public class Maquina {
         System.out.println("Tamanho da Instrução: " + instrucao.getInstrucaoBinario().length());
         System.out.println("Opcode: " + instrucao.getOpcode());
         System.out.println("Nixbpe: " + instrucao.getNIXBPE());
+        System.err.println(" ");
 
         String []operandos = instrucao.getOperandos();
 

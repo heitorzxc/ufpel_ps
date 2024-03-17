@@ -1,13 +1,10 @@
 package src.Interface;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-import javax.print.DocFlavor.STRING;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
@@ -26,17 +23,14 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import src.Memoria.Endereco;
 import src.Memoria.Memoria;
-import src.Montador.Montador;
 import src.Registradores.BancoRegistradores;
 import src.Carregador.Carregador;
 import src.Exceptions.RegisterIdenfierError;
-import src.Exceptions.ValueOutOfBoundError;
 import src.Instrucoes.Instrucoes;
 import src.Ligador.Ligador;
 import src.Maquina.Maquina;
 
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.effect.DropShadow;
@@ -161,20 +155,21 @@ public class Controller {
     // ÍCONE MOUNT - CLIQUE
     @FXML
     void MOUNTimgClick(MouseEvent event) {
-        configurarExecução(); // aqui vai chamar o metodo que vai montar ou carregar diretamente na maquina se for binario
+        configurarExecução(); // aqui vai chamar o metodo que vai montar
     }
 
     // ÍCONE STEP - CLIQUE
     @FXML
     void STEPimgclick(MouseEvent event)  {
         if(!isAssembled){
+            handleTERMINAL("Arquivo ainda não foi montado!");
+            handleTERMINAL("Montando...");
            configurarExecução();
         }else{ // se ja esta montado, executa a maquina
             try {
                 Maquina.getInstance().step();
                 tableView.refresh(); //atualiza a tabela para atualizar a cor (provisório)
             } catch (Exception e) {
-                exibirMensagemErro("Erro de execução", "", "Insira um código assembly ou selecione um arquivo!");
             }
         }
     }
@@ -183,12 +178,13 @@ public class Controller {
     @FXML
     void RUNimgclick(MouseEvent event) {
         if(!isAssembled){
+            handleTERMINAL("Arquivo ainda não foi montado!");
+            handleTERMINAL("Montando...");
             configurarExecução();
         }else{ // se  já está montado, executa a maquina
             try {
                 Maquina.getInstance().executarPrograma();
             } catch (Exception e) {
-                exibirMensagemErro("Erro de execução", "", "Insira um código assembly ou selecione um arquivo!");
             }
         }
     }
@@ -217,7 +213,7 @@ public class Controller {
     // Criação e exibição da tabela que representa a memória
     @FXML
     public void handleTABLE() {
-        
+        //Posições da memória
         colunaEndereco.setCellValueFactory(cellData -> {
             ObservableList<Endereco> memoria = Memoria.getInstance().getMemoria();
             int index = memoria.indexOf(cellData.getValue()); 

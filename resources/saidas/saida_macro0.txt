@@ -1,12 +1,1 @@
-FIM: LDA #8
-LDS #12
-LDT @1
-MULR S T
-LDA #10
-LDT #20
-label: ADDR A T
-J FIM
-LDA #10
-LDT #20
-label: ADDR A T
-ADDR A S
+STA #1

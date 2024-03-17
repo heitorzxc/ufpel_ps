@@ -4,12 +4,4 @@ MACRO SUM X,Y
   label: ADDR A,T
 MEND
 
-LOOP: LDA #10     
-      LDS #12     
-      LDT #1       
-      MULR S,T     
-      ADDR A,T     
-      COMP #1000  
-      JLT #0
-      J LOOP       
-FIM:  HLT         
+STA #1

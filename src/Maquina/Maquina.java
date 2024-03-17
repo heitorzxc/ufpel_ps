@@ -29,47 +29,19 @@ public class Maquina {
         this.registradores = BancoRegistradores.getInstance();
     }
 
-    // public void setAquivo(String caminho_arquivo) throws RegisterIdenfierError, ValueOutOfBoundError {
-    //     this.arquivo = caminho_arquivo;
-
-    //     carregarCodigo();
-    // }
-
     public void restart() throws RegisterIdenfierError, ValueOutOfBoundError {
         registradores.setValor("PC", 0);
     }
-
-    // private void carregarCodigo() {
-    //     try (BufferedReader br = new BufferedReader(new FileReader(this.arquivo))) {
-    //         String linha;
-    //         Integer endereco = 0;
-
-    //         while ((linha = br.readLine()) != null) {
-    //             if (linha.equals(""))
-    //                 continue;
-
-    //             verificaCodigo(linha);
-    //             memoria.setValor(endereco, linha.trim());
-    //             // System.out.println(memoria.getValor(endereco));
-    //             ++endereco;
-    //         }
-    //     } catch (Exception e) {
-    //         e.printStackTrace();
-    //         status.set(false);
-    //     }
-    // }
 
     public void setListenerStatus(ChangeListener<Boolean> listener) {
         this.status.addListener(listener);
     }
 
-    
-
     public Boolean executarPrograma() throws Exception  {
         System.out.println("ENTROU EXECUTAR");
         memoria.printMemoria();
         while (true) {
-            if (!step()) // programa parou
+            if (!step()) 
                 return false;
         }
     }
@@ -86,11 +58,11 @@ public class Maquina {
 
         System.out.println("--- Instrução Atual ---");
         System.out.println("VALOR PC  => " + valorPc);
-        System.out.println("Instrução Completa: " + instrucao.getInstrucaoBinario());
+        System.out.println("Instrução => " + Instrucoes.getInstrucaoPorOpcode(instrucao.getOpcode()).getNome());
+        System.out.println("Binario Instrucao Completa: " + instrucao.getInstrucaoBinario());
         System.out.println("Tamanho da Instrução: " + instrucao.getInstrucaoBinario().length());
         System.out.println("Opcode: " + instrucao.getOpcode());
         System.out.println("Nixbpe: " + instrucao.getNIXBPE());
-        System.out.println("Instrução => " + Instrucoes.getInstrucaoPorOpcode(instrucao.getOpcode()).getNome());
 
         String []operandos = instrucao.getOperandos();
 
@@ -103,7 +75,7 @@ public class Maquina {
         }
        
         
-        if (instrucao.getOpcode().equals("F4")) { 
+        if (instrucao.getOpcode().equals("F4")) { // encontr0️⃣ou um "valorPc"
             return false;
         }
 

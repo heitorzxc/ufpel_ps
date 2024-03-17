@@ -18,10 +18,6 @@ public class ProcessadorDeMacros2 {
         input = new ArrayList<>();
         outputExpandido = new ArrayList<>();
         macros = new HashMap<>();
-
-        // lerArquivo(inputFile);
-        // processar();
-        // gerarArquivoOutput("./saida_macro.txt");
     }
 
     public void processa(String[] programa, String outputPath) {
@@ -106,6 +102,8 @@ public class ProcessadorDeMacros2 {
                 continue;
             }
 
+            // if(linha.)
+
             if(definindoMacro) { // se chegou aqui e esta definindo macro, vai fazer parte do corpo
                 corpoMacro.add(linha);
             } else {  // se chegou aqui vai estar fora de definicao de macro
@@ -135,7 +133,6 @@ public class ProcessadorDeMacros2 {
             } 
 
             ArrayList<String> macroExpandida = macro.expandir(parametrosReais);
-
 
             for (String linhaExpandida : macroExpandida) {
                 // Substitui vírgulas por espaços em cada linha expandida da macro antes de adicionar ao output

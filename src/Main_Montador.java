@@ -18,9 +18,12 @@ public class Main_Montador {
 
         ProcessadorDeMacros2 processadorMacros = new ProcessadorDeMacros2();
         processadorMacros.reset();
-        processadorMacros.processa("./resources/macros/programa1.txt", "./testes/saida1.txt");
+        processadorMacros.processa("./resources/entradas/carregador/programa1.txt", "./testes/saida1.txt");
+        // Montador montador = new Montador();
+
         Montador montador = new Montador();
-        montador.executar("./testes/saida1.txt", "./testes/saida_montador_prog_2.txt");
+        montador.executar("./testes/saida1.txt", "./testes/saida_montador.txt");
+        // montador.executar("./testes/saida1.txt", "./testes/saida_montador_prog_2.txt");
 
         // String[] paths = {"./resources/macros/programa1.txt", "./resources/macros/programa2.txt"};
 

@@ -4,6 +4,8 @@ public class Macro {
     private String nome;
     private ArrayList<String> parametros;
     private ArrayList<String> corpo;
+    
+    private int chamadas = 0;
 
     public Macro(String nome, ArrayList<String> parametros, ArrayList<String> corpo) {
         this.nome = nome;
@@ -37,9 +39,15 @@ public class Macro {
 
     public ArrayList<String> expandir(ArrayList<String> parametrosReais) {
         ArrayList<String> corpoExpandido = new ArrayList<>();
+
         for (String linha : corpo) {
             String linhaExpandida = new String(linha);
+
+            System.err.println("LINHA EXPANDIDA => " + linhaExpandida);
+            
             for (int i = 0; i < parametros.size(); i++) {
+                System.err.println(parametros.get(i));
+                // System.err.println(parametrosReais.get(i));
                 linhaExpandida = linhaExpandida.replace(parametros.get(i), parametrosReais.get(i));
             }
             corpoExpandido.add(linhaExpandida);

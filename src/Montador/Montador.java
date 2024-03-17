@@ -82,19 +82,10 @@ public class Montador {
                 continue;
             }
 
-
-            Instrucao instrucao = Instrucoes.getInstrucaoPorNome(operacao);
-
-
-            if (instrucao == null) {
-                System.err.println("Instrução invalida!! => " + operacao);
-                continue;
-            }
-
             String[] operandos = getOperandos(linha);
             String codigoBinario = "";
 
-            codigoBinario = traduzirBinario(instrucao, operandos, instrucao.isFormat34());
+            codigoBinario = traduzirBinario(operacao, operandos);
 
             if (!codigoBinario.isEmpty()) {
                 System.err.println(" ");
@@ -122,11 +113,26 @@ public class Montador {
         }
     }
 
-    private String traduzirBinario(Instrucao instrucao, String[] operandos, boolean isFormat34) {
+    private String traduzirBinario(String operacao, String[] operandos) {
         StringBuilder codigo = new StringBuilder();
         
+        System.err.println("Operandos => " + operandos);
+
+        Instrucao instrucao;
+        
         String nixbpe = "110000";
-        Integer endereco = 0; 
+        Integer endereco = 0;
+
+        boolean isFormatoEstendido = operacao.startsWith("+");
+        if (isFormatoEstendido) {
+            instrucao = Instrucoes.getInstrucaoPorNome(operacao.substring(1));
+        } else {
+            instrucao = Instrucoes.getInstrucaoPorNome(operacao);
+        }
+
+        boolean isFormat34 = instrucao.isFormat34();
+
+        System.err.println("Instrucao => " + instrucao);
     
         if (isFormat34) {
             for (String operando : operandos) {
@@ -154,7 +160,12 @@ public class Montador {
             
             codigo.append(opcodeBinario.substring(0, 6)); 
             codigo.append(nixbpe);
-            codigo.append(Conversao.intToBin(endereco.toString(), 12)); 
+
+            if(isFormatoEstendido) {
+                codigo.append(Conversao.intToBin(endereco.toString(), 20)); 
+            } else{
+                codigo.append(Conversao.intToBin(endereco.toString(), 12)); 
+            }
 
             return codigo.toString();
         } 

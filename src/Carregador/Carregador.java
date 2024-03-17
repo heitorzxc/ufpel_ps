@@ -3,57 +3,53 @@ package src.Carregador;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
-import java.util.List;
 
 import src.Exceptions.IvalidInstructionFormatError;
 import src.Maquina.Maquina;
 import src.Memoria.Memoria;
 
 public class Carregador {
-  Maquina maquina;
-  public Memoria memoria;
+	Maquina maquina;
+	public Memoria memoria;
 
-  public Carregador(){
-    maquina = Maquina.getInstance();
-    memoria = Memoria.getInstance();
-  }
+	public Carregador(){
+		maquina = Maquina.getInstance();
+		memoria = Memoria.getInstance();
+	}
 
-  public void executar(String path){
-    carregarCodigo(path);
-    try {
-        maquina.executarPrograma();
-    } catch (Exception exception) {
-        System.err.println("exception na execucao!");
-    }
-  }
+	public void executar(String path){
+		carregarCodigo(path);
 
-  private void carregarCodigo(String path) {
-    try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-        String linha;
-        Integer endereco = 0;
+		try {
+			maquina.executarPrograma();
+		} catch (Exception exception) {
+			System.err.println("Exception na execucao do Montador!");
+		}
+  	}
 
-        while ((linha = br.readLine()) != null) {
-            if (linha.equals(""))
-                continue;
+	private void carregarCodigo(String path) {
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+			String linha;
+			Integer endereco = 0;
 
-            verificaCodigo(linha);
-            memoria.setValor(endereco, linha.trim());
-            ++endereco;
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        System.err.println("Erro no carregamento");
-    }
-  }
+			while ((linha = br.readLine()) != null) {
+				if (linha.equals(""))
+					continue;
 
-  private void verificaCodigo(String linha) throws IvalidInstructionFormatError {
-        // System.err.println(linha.length());
-        if (!FORMATOSVALIDOS.contains(linha.length())) {
-            // System.err.println(linha.length());
-            throw new IvalidInstructionFormatError(linha + " é uma instrucção inválida!");
-        }
+				verificaCodigo(linha);
+				memoria.setValor(endereco, linha.trim());
+				++endereco;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Erro no carregamento");
+		}
+	}
 
-    }
-
-     private List<Integer> FORMATOSVALIDOS = Arrays.asList(8, 16, 24, 32);
+	private void verificaCodigo(String linha) throws IvalidInstructionFormatError {
+		if (!Arrays.asList(8, 16, 24, 32).contains(linha.length())) {
+			throw new IvalidInstructionFormatError(linha + " é uma instrucção inválida!");
+		}
+	}
+    
 }

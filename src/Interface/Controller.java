@@ -162,6 +162,8 @@ public class Controller {
     @FXML
     void STEPimgclick(MouseEvent event)  {
         if(!isAssembled){
+            handleTERMINAL("Arquivo ainda não foi montado!");
+            handleTERMINAL("Montando...");
            configurarExecução();
         }else{ // se ja esta montado, executa a maquina
             try {
@@ -176,6 +178,8 @@ public class Controller {
     @FXML
     void RUNimgclick(MouseEvent event) {
         if(!isAssembled){
+            handleTERMINAL("Arquivo ainda não foi montado!");
+            handleTERMINAL("Montando...");
             configurarExecução();
         }else{ // se  já está montado, executa a maquina
             try {

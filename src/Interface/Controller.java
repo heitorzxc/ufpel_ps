@@ -155,7 +155,7 @@ public class Controller {
     // ÍCONE MOUNT - CLIQUE
     @FXML
     void MOUNTimgClick(MouseEvent event) {
-        configurarExecução(); // aqui vai chamar o metodo que vai montar ou carregar diretamente na maquina se for binario
+        configurarExecução(); // aqui vai chamar o metodo que vai montar
     }
 
     // ÍCONE STEP - CLIQUE
@@ -209,7 +209,7 @@ public class Controller {
     // Criação e exibição da tabela que representa a memória
     @FXML
     public void handleTABLE() {
-        
+        //Posições da memória
         colunaEndereco.setCellValueFactory(cellData -> {
             ObservableList<Endereco> memoria = Memoria.getInstance().getMemoria();
             int index = memoria.indexOf(cellData.getValue()); 

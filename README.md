@@ -19,27 +19,48 @@ Semestre letivo: 2023/2. </br>
 ### Documentação e controle de branches:
 1. Leonardo Madruga Wille Duarte.
 
-### Branch refatorando (ambiente de produção vigente):
+### Linha do tempo do projeto:
 
-1. Projeto não estava Orientado à Objetos.
-2. Refatorando as classes para atender à POO:
-3. Simulador.
-4. Montador.
-5. Processador de Macros.
-6. Ligador.
-7. Carregador.
-8. Dependências externas à API Java importadas.
+### Primeiro branch "main":
+1. Linha de desenvolvimento inicial do projeto para o simulador.
+2. Protótipo de interface gráfica usando JFrame.
+
+### Código absorvido de "pe-refatorando": 
+1. Separação das instruções por classe.
+2. Memória como coleção (banco) de objetos (registradores).
+
+### Código absorvido de "interface":
+1. JFrame substituído por JavaFX.
+2. Correção de bugs para exibição de dados na tela.
+3. Divisão do código em pacotes (packages).
+
+### Código absorvido de "pe-instrucoes_refact":
+1. Refatoração da camada de instruções.
+2. Adaptação de métodos para compatibilidade entre classes.
+
+### Criação do branch "refatorando":
+1. Projeto refatorado para POO (OK).
+3. Simulador refatorado para POO (OK).
+4. Montador com suporte à montar 1 ou 2 programas (OK).
+5. Processador de Macros (OK).
+7. Ligador para o simulador SIC/SIC-XE (OK).
+8. Carregador para o simulador SIC/SIC-XE (OK).
+9. O código-fonte de "refatorando" agora é o novo branch "main".
 
 ### Dependências externas:
-
 1. Dependências externas no diretório: "/resources/javafx-sdk-21.0.2/".
 2. Importação feita via arquivos JSON no diretório: "./vscode/".
 
 ### Importante:
-
 1. Trata-se de um SIMULADOR e não de um EMULADOR do SIC/SIC-XE.
-2. Para fins didáticos, adotou-se PC+1 para cada instrução lida, ao invés de PC + tamanho.
+2. Para fins didáticos, adotou-se (PC) + (1) para cada instrução lida, ao invés de (PC) + (Tamanho Instrução).
 3. Diante de PC+1, a função JUMP faz o pulo para a linha especificada.
+
+### Preparação do ambiente:
+1. Priorize efetuar o download do arquivo .zip ao invés de clonar o repositório.
+2. O download preserva os arquivos JSON responsáveis pelas dependências JavaFX no VS Code.
+3. O simulador foi projetado em ambiente Windows x64 por meio de LiveShare.
+4. A execução é feita por meio dos botões de "Play" ou "Run" conforme apresentado no vídeo.
 
 ### Principais arquivos:
 1. main/src/Instrucoes: Pacote de instruções SIC/SIC-XE em uma instruções por arquivo.
@@ -49,7 +70,6 @@ Semestre letivo: 2023/2. </br>
 5. main/src/Registradores: Suporte à memória do simulador SIC/SIC-XE.
 
 ### Pacote de instruções suportadas:
-
 1. ADD.java - Realiza a adição de dois operandos e armazena o resultado no acumulador.
 2. ADDR.java - Realiza a adição de dois registradores e armazena o resultado no registrador especificado.
 3. CLEAR.java - Limpa o conteúdo de um registrador.
@@ -82,24 +102,3 @@ Semestre letivo: 2023/2. </br>
 30. JEQ.java - Desvio (Jump) para o endereço se operação retorna zero (jump if result is equal to zero).
 31. JGT.java - Desvio (Jump) para o endereço se operação retorna positivo (jump if address bigger than t).
 32. JLT.java - Desvio (Jump) para o endereço se operação retorna negativo (jump if address less than t).
-
-### Linha do tempo do projeto:
-
-### Branch main:
-1. Linha de desenvolvimento inicial do projeto para o simulador.
-2. Protótipo de interface gráfica usando JFrame.
-
-### Código absorvido do branch "pe-refatorando": 
-1. Separação das instruções por classe.
-2. Memória como coleção (banco) de objetos (registradores).
-
-### Código absorvido do branch "interface":
-1. JFrame substituído por JavaFX.
-2. Correção de bugs para exibição de dados na tela.
-3. Divisão do código em pacotes (packages).
-
-### Código absorvido do branch "pe-instrucoes_refact":
-1. Refatoração da camada de instruções.
-2. Adaptação de métodos para compatibilidade entre classes.
-
-Última atualização: 11/03/2024.

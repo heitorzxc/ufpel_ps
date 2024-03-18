@@ -119,6 +119,8 @@ public class Controller {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Escolha um Arquivo");
+        String currentDirectory = System.getProperty("user.dir");
+        fileChooser.setInitialDirectory(new File(currentDirectory));
       
     
         // Exibir a janela de seleção de arquivo

@@ -22,7 +22,7 @@ public class Montador {
         input = new ArrayList<>();
         output = new ArrayList<>();
     }
-    
+
     public void executar(String inputPath, String outputPath) {
         lerArquivo(inputPath);
         primeiroPasso();
@@ -33,7 +33,7 @@ public class Montador {
         gerarArquivoOutput(outputPath);
     }
 
-    public void reset(){
+    public void reset() {
         input = new ArrayList<>();
         output = new ArrayList<>();
         SYMTAB = new HashMap<>();
@@ -58,7 +58,6 @@ public class Montador {
 
         for (String linha : input) {
             String label = getLabel(linha);
-            // System.err.println(label);
 
             if (label != null) {
                 if (SYMTAB.containsKey(label)) {
@@ -115,11 +114,11 @@ public class Montador {
 
     private String traduzirBinario(String operacao, String[] operandos) {
         StringBuilder codigo = new StringBuilder();
-        
+
         System.err.println("Operandos => " + operandos);
 
         Instrucao instrucao;
-        
+
         String nixbpe = "110000";
         Integer endereco = 0;
 
@@ -127,72 +126,69 @@ public class Montador {
         if (isFormatoEstendido) {
             instrucao = Instrucoes.getInstrucaoPorNome(operacao.substring(1));
         } else {
-            System.err.println("OPERARARARARARARA -> " + operacao);
             instrucao = Instrucoes.getInstrucaoPorNome(operacao);
         }
 
         boolean isFormat34 = instrucao.isFormat34();
 
         System.err.println("Instrucao => " + instrucao);
-    
+
         if (isFormat34) {
             for (String operando : operandos) {
                 if (operando.startsWith("#")) {
                     // IMEDIATOS
-                    nixbpe = isFormatoEstendido ? "010001" :"010000"; 
+                    nixbpe = isFormatoEstendido ? "010001" : "010000";
                     operando = operando.substring(1); // Remove o '#'
                     endereco = Integer.parseInt(operando); // Converte o valor imediato para inteiro
                 } else if (operando.startsWith("@")) {
                     // INDIRETO
-                    nixbpe = isFormatoEstendido ? "100001" : "100000"; 
+                    nixbpe = isFormatoEstendido ? "100001" : "100000";
                     operando = operando.substring(1); // Remove o '@'
                     if (SYMTAB.containsKey(operando)) {
-                        endereco = SYMTAB.get(operando); 
+                        endereco = SYMTAB.get(operando);
                     }
                 } else if (SYMTAB.containsKey(operando)) {
                     // DIRETO
-                    endereco = SYMTAB.get(operando); 
+                    endereco = SYMTAB.get(operando);
                 }
 
                 break;
             }
 
             String opcodeBinario = Conversao.hexToBinary(instrucao.getOpcode(), 8); // opcode 6 bits
-            
-            codigo.append(opcodeBinario.substring(0, 6)); 
+
+            codigo.append(opcodeBinario.substring(0, 6));
             codigo.append(nixbpe);
 
-            if(isFormatoEstendido) {
-                codigo.append(Conversao.intToBin(endereco.toString(), 20)); 
-            } else{
-                codigo.append(Conversao.intToBin(endereco.toString(), 12)); 
+            if (isFormatoEstendido) {
+                codigo.append(Conversao.intToBin(endereco.toString(), 20));
+            } else {
+                codigo.append(Conversao.intToBin(endereco.toString(), 12));
             }
 
             return codigo.toString();
-        } 
+        }
 
-        
         // FORMATO 2
-        codigo.append(Conversao.hexToBinary(instrucao.getOpcode(), 8));   // Opcode 8 bits
+        codigo.append(Conversao.hexToBinary(instrucao.getOpcode(), 8)); // Opcode 8 bits
 
         // Operandos vão ser registradores
-        for(String operando : operandos) {
+        for (String operando : operandos) {
             System.err.println(operando);
         }
-        if(operandos.length == 1){
+        if (operandos.length == 1) {
             codigo.append(registradorEmBinario(operandos[0]));
             codigo.append("0000");
-        } else if(operandos.length == 2) {
+        } else if (operandos.length == 2) {
             for (String operando : operandos) {
                 codigo.append(registradorEmBinario(operando));
             }
         } else {
             System.err.println("Erro: mais de 2 operandos");
         }
-    
+
         return codigo.toString();
     }
-    
 
     public void printSYMTAB() {
         System.out.println("Tabela de Símbolos (SYMTAB):");
@@ -210,19 +206,17 @@ public class Montador {
 
     public String[] getOperandos(String linha) {
         String[] parts = linha.trim().split("\\s+");
-    
+
         int startIndex = parts[0].endsWith(":") ? 2 : 1;
-    
+
         if (parts.length > startIndex) {
             return Arrays.copyOfRange(parts, startIndex, parts.length);
         }
-    
-        return new String[0]; 
+
+        return new String[0];
     }
-    
 
-
-    private String registradorEmBinario (String registrador) {
+    private String registradorEmBinario(String registrador) {
         switch (registrador) {
             case "A":
                 return "0000";
@@ -242,7 +236,7 @@ public class Montador {
                 return "0111";
             default:
                 System.err.println("ERRO -> " + registrador + " Registrador nao identificado");
-                return null; // deu errado   
+                return null; // deu errado
         }
     }
 

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
@@ -121,16 +120,15 @@ public class Controller {
         fileChooser.setTitle("Escolha um Arquivo");
         String currentDirectory = System.getProperty("user.dir");
         fileChooser.setInitialDirectory(new File(currentDirectory));
-      
-    
+
         // Exibir a janela de seleção de arquivo
         Stage stage = (Stage) LOADimg.getScene().getWindow();
         selectedFile = fileChooser.showOpenMultipleDialog(stage);
-    
+
         // Processar o arquivo selecionado
         if (selectedFile != null && !selectedFile.isEmpty()) {
 
-            paths = new String[selectedFile.size()]; //Lista de caminhos
+            paths = new String[selectedFile.size()]; // Lista de caminhos
             for (int i = 0; i < selectedFile.size(); i++) {
                 paths[i] = selectedFile.get(i).getPath();
             }
@@ -139,11 +137,11 @@ public class Controller {
                 textCODE.appendText("Arquivo selecionado: " + selectedFile.getName() + "\n");
                 try {
                     byte[] fileBytes = Files.readAllBytes(selectedFile.toPath());
-                          
+
                     // Le o conteúdo do arquivo e exibir no textCODE
                     String content = new String(fileBytes);
                     textCODE.appendText(content + "\n");
-        
+
                 } catch (IOException e) {
                     exibirMensagemErro("Erro de Leitura", "", "Ocorreu um erro na leitura do arquivo.");
                 }
@@ -152,7 +150,6 @@ public class Controller {
             handleTERMINAL("Nenhum arquivo selecionado.");
         }
     }
-          
 
     // ÍCONE MOUNT - CLIQUE
     @FXML
@@ -162,15 +159,15 @@ public class Controller {
 
     // ÍCONE STEP - CLIQUE
     @FXML
-    void STEPimgclick(MouseEvent event)  {
-        if(!isAssembled){
+    void STEPimgclick(MouseEvent event) {
+        if (!isAssembled) {
             handleTERMINAL("Arquivo ainda não foi montado!");
             handleTERMINAL("Montando...");
-           configurarExecução();
-        }else{ // se ja esta montado, executa a maquina
+            configurarExecução();
+        } else { // se ja esta montado, executa a maquina
             try {
                 Maquina.getInstance().step();
-                tableView.refresh(); //atualiza a tabela para atualizar a cor (provisório)
+                tableView.refresh(); // atualiza a tabela para atualizar a cor (provisório)
             } catch (Exception e) {
             }
         }
@@ -179,19 +176,18 @@ public class Controller {
     // ÍCONE RUN - CLIQUE
     @FXML
     void RUNimgclick(MouseEvent event) {
-        if(!isAssembled){
+        if (!isAssembled) {
             handleTERMINAL("Arquivo ainda não foi montado!");
             handleTERMINAL("Montando...");
             configurarExecução();
-        }else{ // se  já está montado, executa a maquina
+        } else { // se já está montado, executa a maquina
             try {
                 Maquina.getInstance().executarPrograma();
-                tableView.refresh(); 
+                tableView.refresh();
             } catch (Exception e) {
             }
         }
     }
-
 
     // Atualiza Registradores
     public void atualizarRegistradores() {
@@ -216,18 +212,18 @@ public class Controller {
     // Criação e exibição da tabela que representa a memória
     @FXML
     public void handleTABLE() {
-        //Posições da memória
+        // Posições da memória
         colunaEndereco.setCellValueFactory(cellData -> {
             ObservableList<Endereco> memoria = Memoria.getInstance().getMemoria();
-            int index = memoria.indexOf(cellData.getValue()); 
-            return new ReadOnlyObjectWrapper<>(index); 
-        });       
+            int index = memoria.indexOf(cellData.getValue());
+            return new ReadOnlyObjectWrapper<>(index);
+        });
         colunaInsHexa.setCellValueFactory(new PropertyValueFactory<>("InstrucaoHexa"));
         colunaOpcode.setCellValueFactory(new PropertyValueFactory<>("opcode"));
         colunaNomeInstrucao.setCellValueFactory(new PropertyValueFactory<>("NomeInstrucao"));
         tableView.setItems(Memoria.getInstance().getMemoria());
 
-        //aqui define a cor da linha
+        // aqui define a cor da linha
         tableView.setRowFactory(tv -> new TableRow<Endereco>() {
             @Override
             protected void updateItem(Endereco item, boolean empty) {
@@ -235,7 +231,7 @@ public class Controller {
                 if (empty || item == null) {
                     setStyle(""); // Define o estilo padrão se o item estiver vazio
                 } else {
-                    if(registerPC.getText().equals("")){
+                    if (registerPC.getText().equals("")) {
                         registerPC.setText("0");
                     }
                     if (colunaEndereco.getCellData(getIndex()) == Integer.valueOf(registerPC.getText())) {
@@ -247,7 +243,7 @@ public class Controller {
                 }
             }
         });
-        
+
     }
 
     // Atualização da interface
@@ -268,7 +264,6 @@ public class Controller {
         BancoRegistradores.getInstance().setListener(listener);
     }
 
-
     // Exibir mensagem de erro
     private void exibirMensagemErro(String title, String header, String content) {
         Alert alert = new Alert(AlertType.ERROR);
@@ -278,8 +273,8 @@ public class Controller {
         alert.show();
     }
 
-    //Configurar execução
-    public void configurarExecução(){
+    // Configurar execução
+    public void configurarExecução() {
 
         try {
 
@@ -287,17 +282,18 @@ public class Controller {
 
             Ligador ligador = new Ligador();
             ligador.executar(paths);
-           
+
             Carregador carregador = new Carregador();
             carregador.executar("./resources/saidas/entrada_maquina.txt");
-            
-            isAssembled=true; // "status" da montagem
-            handleTERMINAL("Arquivo Montado"); 
+
+            isAssembled = true; // "status" da montagem
+            handleTERMINAL("Arquivo Montado");
 
         } catch (Exception e) {
             exibirMensagemErro("Erro ao Montar", "", "Não foi possivel montar, verifique o arquivo");
         }
     }
+
     // ---------- SOMBREAMENTO DOS ÍCONES ---------- //
     @FXML
     void LOADimgEntered(MouseEvent event) {

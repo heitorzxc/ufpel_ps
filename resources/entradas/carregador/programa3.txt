@@ -6,7 +6,7 @@ MEND
 
 
 LDA #0
-LDS #0 
+LDS #0
 LDT #101
 INICIO: ADDR A,S
 ADD #1

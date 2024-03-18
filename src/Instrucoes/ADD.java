@@ -40,7 +40,7 @@ public class ADD extends Instrucao {
     System.err.println("valorreg" + valorReg);
 
     registradores.setValor("A", valorReg + valorMem);
-    System.err.println(registradores.getValor("A"));
+    System.err.println(registradores.getValor("S"));
   }
 
 }

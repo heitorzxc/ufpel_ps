@@ -184,6 +184,7 @@ public class Controller {
         }else{ // se  já está montado, executa a maquina
             try {
                 Maquina.getInstance().executarPrograma();
+                tableView.refresh(); 
             } catch (Exception e) {
             }
         }
